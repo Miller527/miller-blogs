@@ -9,9 +9,6 @@ import (
 
 
 
-
-
-
 func init() {
     beego.Router("/index", &controllers.IndexController{})
     beego.Router("/manager/login", &manager.LoginController{})
@@ -20,8 +17,9 @@ func init() {
     //beego.Router("/manager/article-list", &manager.ArticleManagerController{})
     //beego.Router("/manager/admin-list", &manager.UserManagerController{})
 
-	// 执行中间件
-	//登录时候
-	beego.InsertFilter("/manager/*", beego.BeforeStatic, middleware.LoginSessionFilter)
+	// 中间件
+	// 登录认证, 通过session管理
+	beego.InsertFilter("/manager/*", beego.BeforeRouter, middleware.ManagerLoginFilter)
+	beego.InsertFilter("/*", beego.BeforeRouter, middleware.PermissionVerify)
 
 }

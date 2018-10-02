@@ -7,41 +7,40 @@ package manager
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	. "miller-blogs/controllers/base"
 	"miller-blogs/models"
+	"miller-blogs/public"
 )
 
+var logger = public.GetLogger("blog_manager_dev")
 
 // 登录管理后台控制器（管理端）
 type LoginController struct {
 	RbacController
 	Permissions []orm.ParamsList
+	SessionPermissions []string
+
 }
 
-// 获取orm对象和日志
-func (loginMC *LoginController) Prepare() {
-	loginMC.GetOrmer()
-	loginMC.ResponseData = make(map[string]interface{})
-}
+
 // 登录页面
 func (loginMC *LoginController) Get() {
-	fmt.Println(loginMC.Data["RouterPattern"])
-	fmt.Println(loginMC.CruSession)
-	fmt.Println("1111===",loginMC.GetSession("permissions"))
-	fmt.Println("2222===",loginMC.GetSession(loginMC.Ctx.GetCookie(beego.AppConfig.String("sessionname"))))
-	fmt.Println("3333====",loginMC.CruSession)
+	ip := loginMC.Ctx.Input.Context.Request.RemoteAddr
+	fmt.Println(ip )
+	fmt.Println(logger)
+	logger.Info("User login request IP [%s].",ip )
 
-	fmt.Println(loginMC.Ctx.GetCookie(beego.AppConfig.String("sessionname")))
+
+	if loginMC.GetSession("permissions") != nil {
+		loginMC.Ctx.Redirect(302, "/manager/index")
+		return
+	}
 	loginMC.TplName = "manager/login.html"
 }
 
 // 登录请求, 将用户权限写入Session
 func (loginMC *LoginController) Post() {
-
-
-
 	// 登录认证
 	userName := loginMC.GetString("username")
 	userPwd := loginMC.GetString("userpwd")
@@ -59,7 +58,7 @@ func (loginMC *LoginController) Post() {
 	} else {
 		loginMC.UpdateResponseMsg(20100,"登录成功", nil)
 		if permissions == nil {
-			loginMC.PermissionsSession(userName)
+			loginMC.WritePermissionsSession(userName)
 		}
 	}
 	fmt.Println(loginMC.ResponseData)
@@ -74,8 +73,6 @@ func (loginMC *LoginController) QueryPermissions(userName string) bool {
 	_, err := loginMC.OrmObj.QueryTable("permission").
 		Filter("Roles__Role__Users__UserInfo__Uid", userName).
 		ValuesList(&loginMC.Permissions, "name", "url", "type")
-	fmt.Println(err, loginMC.Permissions)
-
 	if err == nil{
 		return true
 	}
@@ -83,7 +80,7 @@ func (loginMC *LoginController) QueryPermissions(userName string) bool {
 }
 
 // 将用户的权限信息写入session, 放到缓存中
-func (loginMC *LoginController) PermissionsSession(userName string) {
+func (loginMC *LoginController) WritePermissionsSession(userName string) {
 	if status := loginMC.QueryPermissions(userName) ; status{
 		fmt.Println(loginMC.Permissions)
 		if  byteStr ,err := json.Marshal(loginMC.Permissions); err == nil{
@@ -96,6 +93,8 @@ func (loginMC *LoginController) PermissionsSession(userName string) {
 		fmt.Println("wori")
 	}
 }
+
+
 
 
 
@@ -157,9 +156,8 @@ type IndexManagerController struct {
 // 带着cookie才可以（RBAC权限）
 func (indexMC *IndexManagerController) Get() {
 
-	fmt.Println("1111---",indexMC.GetSession("permissions"))
-	fmt.Println("2222---",indexMC.GetSession(indexMC.Ctx.GetCookie(beego.AppConfig.String("sessionname"))))
-	fmt.Println("3333---",indexMC.CruSession)
+	//fmt.Println("1111---",indexMC.GetSession("permissions"))
+
 	indexMC.Layout = "manager/base.html"
 
 	indexMC.TplName = "manager/Hui-admin/index.html"
