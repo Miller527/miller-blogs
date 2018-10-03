@@ -20,15 +20,15 @@ type TimeModel struct {
 // 登陆管理后台使用
 type UserInfo struct {
 	Id       int
-	Uid      string    `orm:"size(32)"`
-	Password string    `orm:"size(128)"`
-	Nickname string    `orm:"size(64)"`
-	Email    string    `orm:"size(64)"`
-	Phone    string    `orm:"size(11)"`
-	Roles     []*Role     `orm:"rel(m2m)"`
+	Uid      string  `orm:"size(32)"`
+	Password string  `orm:"size(128)"`
+	Nickname string  `orm:"size(64)"`
+	Email    string  `orm:"size(64)"`
+	Phone    string  `orm:"size(11)"`
+	Roles    []*Role `orm:"rel(m2m)"`
 	//Site     *BlogSite `orm:"rel(fk)"`
-	Mugshot  string // 头像地址, 通过配置的路径拼接
-	Type     string // 管理员和普通用户，普通用户不能后台管理
+	Mugshot string // 头像地址, 通过配置的路径拼接
+	Type    string // 管理员和普通用户，普通用户不能后台管理
 	TimeModel
 }
 
@@ -40,15 +40,14 @@ type Role struct {
 	Permissions []*Permission `orm:"rel(m2m)"`
 }
 
-//manager开头, 用户权限, 即菜单, 一级菜单主要是些详细报表, 二级菜单主要是列表统计详情, 三级菜单主要是按钮
+//manager开头, 用户权限, 即菜单, 一级菜单主要是些详细报表, 二级菜单主要是增删改查操作
 type Permission struct {
-	Id   int
-	Name string
-	Url  string
-	Type bool // 是否是按钮菜单, 按钮菜单的话可以放到页面上, 并且可以根据权限是否显示, 有权限就会显示
-	// 增（添加）、改（更新）、查（详细）、删（单删、批量删除）这些应该做成函数吗
-	//Submenu *Permission  `orm:"rel(fk)"` // 子菜单
-	Roles   []*Role `orm:"reverse(many)"`
+	Id     int
+	Title  string
+	Url    string
+	Icon   string // 菜单图片
+	IsMenu bool   // 是否是菜单
+	Roles  []*Role `orm:"reverse(many)"`
 }
 
 // TODO 公共参数
@@ -193,14 +192,21 @@ type Permission struct {
 //	Tags  []*Tag `orm:"rel(m2m)"`
 //}
 
+// 初始化数据表
+func Initialization() {
+
+}
+
 func init() {
-	dataSource := beego.AppConfig.String("mysqldatasource")
-	driverName := beego.AppConfig.String("mysqldrivername")
+	dataSource := beego.AppConfig.String("data_source")
+	driverName := beego.AppConfig.String("data_driver")
 	fmt.Println(dataSource, driverName)
 
 	orm.RegisterDriver(driverName, orm.DRMySQL)
 	orm.RegisterDataBase("default", driverName, dataSource, 30)
 
 	orm.RegisterModel(new(UserInfo), new(Role), new(Permission))
-	//orm.RunSyncdb("default", false, true)
+	orm.RunSyncdb("default", false, true)
+
+	Initialization()
 }

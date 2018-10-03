@@ -6,7 +6,6 @@ package public
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"path"
 )
@@ -27,16 +26,4 @@ func DirVerify(dirName string) (string, error) {
 	return tmpPath, nil
 }
 
-
-
-// 验证元素是否存在于列表, 并返回索引
-func ElementInList(li []string, ele string) (int, bool) {
-	for index, val := range li{
-		fmt.Println(val, ele)
-		if val == ele {
-			return index, true
-		}
-	}
-	return -1, false
-}
 

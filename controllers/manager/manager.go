@@ -5,220 +5,172 @@
 package manager
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	. "miller-blogs/controllers/base"
-	"miller-blogs/models"
 	"miller-blogs/public"
 )
 
-var logger = public.GetLogger("blog_manager_dev")
+var logger = public.GetLogger("blog_manager")
 
-// 登录管理后台控制器（管理端）
-type LoginController struct {
-	RbacController
-	Permissions []orm.ParamsList
-	SessionPermissions []string
-
-}
-
-
-// 登录页面
-func (loginMC *LoginController) Get() {
-	ip := loginMC.Ctx.Input.Context.Request.RemoteAddr
-	fmt.Println(ip )
-	fmt.Println(logger)
-	logger.Info("User login request IP [%s].",ip )
-
-
-	if loginMC.GetSession("permissions") != nil {
-		loginMC.Ctx.Redirect(302, "/manager/index")
-		return
-	}
-	loginMC.TplName = "manager/login.html"
-}
-
-// 登录请求, 将用户权限写入Session
-func (loginMC *LoginController) Post() {
-	// 登录认证
-	userName := loginMC.GetString("username")
-	userPwd := loginMC.GetString("userpwd")
-	permissions := loginMC.GetSession("permissions")
-
-	var user models.UserInfo
-
-	err := loginMC.OrmObj.QueryTable("user_info").Filter("uid", userName).
-		Filter("password", userPwd).One(&user)
-
-	if err == orm.ErrMultiRows {
-		loginMC.UpdateResponseMsg(40100,"后台异常, 请稍后重试", nil)
-	} else if err == orm.ErrNoRows {
-		loginMC.UpdateResponseMsg(30100,"用户或密码错误", nil)
-	} else {
-		loginMC.UpdateResponseMsg(20100,"登录成功", nil)
-		if permissions == nil {
-			loginMC.WritePermissionsSession(userName)
-		}
-	}
-	fmt.Println(loginMC.ResponseData)
-	loginMC.Data["json"] = &loginMC.ResponseData
-	loginMC.ServeJSON()
-	return
-
-}
-
-// 获取用户的权限信息
-func (loginMC *LoginController) QueryPermissions(userName string) bool {
-	_, err := loginMC.OrmObj.QueryTable("permission").
-		Filter("Roles__Role__Users__UserInfo__Uid", userName).
-		ValuesList(&loginMC.Permissions, "name", "url", "type")
-	if err == nil{
-		return true
-	}
-	return false
-}
-
-// 将用户的权限信息写入session, 放到缓存中
-func (loginMC *LoginController) WritePermissionsSession(userName string) {
-	if status := loginMC.QueryPermissions(userName) ; status{
-		fmt.Println(loginMC.Permissions)
-		if  byteStr ,err := json.Marshal(loginMC.Permissions); err == nil{
-			go loginMC.SetSession("permissions",string(byteStr))
-			go loginMC.SetSession("uid",userName)
-		}else {
-			fmt.Println("json error")
-		}
-	}else{
-		fmt.Println("wori")
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//
-//
-//
-//// 站点管理控制器
-//type SiteManagerController struct {
-//	CurdBaseController
-//}
-//
-//func (siteMC *SiteManagerController) Get() {
-//
-//}
-//
-//func (siteMC *SiteManagerController) Post() {
-//
-//}
-//
-//func (siteMC *SiteManagerController) Put() {
-//
-//}
-//
-//func (siteMC *SiteManagerController) Del() {
-//
-//}
-//
-//
-//
-type HeaderData struct {
-	Name string
-}
-//
 // 管理后台首页，获取数据渲染首页
-type IndexManagerController struct {
+type ManagerIndexController struct {
+	CurdController
+}
+
+// 管理后台首页
+func (indexMC *ManagerIndexController) Get() {
+	indexMC.Layout =  indexMC.GetManagerPagePath("base.html")
+	indexMC.TplName = indexMC.GetManagerPagePath("index.html")
+	indexMC.LayoutSections = make(map[string]string)
+	indexMC.LayoutSections["HeadMeta"] = indexMC.GetManagerPagePath("headmeta.html")
+	indexMC.LayoutSections["Header"] = indexMC.GetManagerPagePath("header.html")
+	indexMC.LayoutSections["LeftMenu"] = indexMC.GetManagerPagePath("leftmenu.html")
+	indexMC.Data["headerData"] = &HeaderData{"Miller"}
+}
+
+
+// 管理后台首页，获取数据渲染首页
+type PermissionManagerController struct {
 	CurdController
 }
 
 // 带着cookie才可以（RBAC权限）
-func (indexMC *IndexManagerController) Get() {
+func (perMC *PermissionManagerController) Get() {
 
 	//fmt.Println("1111---",indexMC.GetSession("permissions"))
 
-	indexMC.Layout = "manager/base.html"
+	perMC.Layout = "manager/base.html"
 
-	indexMC.TplName = "manager/Hui-admin/index.html"
+	perMC.TplName = "manager/Hui-admin/index.html"
 
-	indexMC.LayoutSections = make(map[string]string)
-	indexMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-	indexMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-	indexMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
-	indexMC.Data["headerData"] = &HeaderData{"Miller"}
+	perMC.LayoutSections = make(map[string]string)
+	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
+	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.Data["headerData"] = &HeaderData{"Miller"}
+}
+
+
+func (perMC *PermissionManagerController) Post() {
+
+	//fmt.Println("1111---",indexMC.GetSession("permissions"))
+
+	perMC.Layout = "manager/base.html"
+
+	perMC.TplName = "manager/Hui-admin/index.html"
+
+	perMC.LayoutSections = make(map[string]string)
+	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
+	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.Data["headerData"] = &HeaderData{"Miller"}
+}
+
+func (perMC *PermissionManagerController) Put() {
+
+	//fmt.Println("1111---",indexMC.GetSession("permissions"))
+
+	perMC.Layout = "manager/base.html"
+
+	perMC.TplName = "manager/Hui-admin/index.html"
+
+	perMC.LayoutSections = make(map[string]string)
+	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
+	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.Data["headerData"] = &HeaderData{"Miller"}
+}
+
+func (perMC *PermissionManagerController) Del() {
+
+	//fmt.Println("1111---",indexMC.GetSession("permissions"))
+
+	perMC.Layout = "manager/base.html"
+
+	perMC.TplName = "manager/Hui-admin/index.html"
+
+	perMC.LayoutSections = make(map[string]string)
+	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
+	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.Data["headerData"] = &HeaderData{"Miller"}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+type HeaderData struct {
+	Name string
 }
 //
+
+
+
+
+
+
+
+
+//
 //// TODO 用户管理
-//type UserManagerController struct {
-//	BlogBaseController
-//	UserList []orm.ParamsList
-//}
-//
-//// 基础, 用户登录认证, 初始化表字段等
-//func (userMC *UserManagerController) Prepare() {
-//	userMC.Login()
-//	userMC.TitleInit()
-//}
-//
-//// 初始化表字段, 所有CURD相关的表都得重写该字段
-//func (userMC *UserManagerController) TitleInit() {
-//	userMC.DisplayTitle = []string{"ID", "帐号", "昵称", "邮箱", "手机号", "头像", "类型", "角色id",
-//		"创建时间", "更新时间"}
-//	userMC.FieldTitle = []string{"id", "uid", "nick_name", "email", "phone", "mugshot", "type",
-//		"role__name", "created_time", "updated_time"}
-//	fmt.Println(userMC.DisplayTitle)
-//	fmt.Println(userMC.FieldTitle)
-//}
-//
-//// 用户管理Get接口, 获取用户列表
-//func (userMC *UserManagerController) Get() {
-//	userMC.GetUserList()
-//	userMC.Layout = "manager/base.html"
-//	userMC.TplName = "manager/Hui-admin/admin_list.html"
-//	userMC.LayoutSections = make(map[string]string)
-//	userMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-//	userMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-//	userMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
-//	userMC.Data["headerData"] = &HeaderData{"Miller"}
-//	userMC.Data["tableHeader"] = &userMC.DisplayTitle
-//	userMC.Data["tableField"] = &userMC.FieldTitle
-//
-//	userMC.Data["tableData"] = &userMC.UserList
-//}
-//
-//// 获取用户列表
-//func (userMC *UserManagerController) GetUserList() {
-//	ormObj := orm.NewOrm()
-//	qs, err := ormObj.QueryTable("blog_user").ValuesList(&userMC.UserList, userMC.FieldTitle...)
-//	fmt.Println(qs, err)
-//	fmt.Println()
-//}
-//
-//// 用户管理Post接口, 添加用户
-//func (userMC *UserManagerController) Post() {
-//
-//}
+type UserManagerController struct {
+	CurdController
+	UserList []orm.ParamsList
+}
+
+// 基础, 用户登录认证, 初始化表字段等
+func (userMC *UserManagerController) Prepare() {
+	userMC.TitleInit()
+}
+
+// 初始化表字段, 所有CURD相关的表都得重写该字段
+func (userMC *UserManagerController) TitleInit() {
+	userMC.DisplayTitle = []string{"ID", "帐号", "昵称", "邮箱", "手机号", "头像", "类型", "角色id",
+		"创建时间", "更新时间"}
+	userMC.FieldTitle = []string{"id", "uid", "nick_name", "email", "phone", "mugshot", "type",
+		"role__name", "created_time", "updated_time"}
+	fmt.Println(userMC.DisplayTitle)
+	fmt.Println(userMC.FieldTitle)
+}
+
+// 用户管理Get接口, 获取用户列表
+func (userMC *UserManagerController) Get() {
+
+	//userMC.GetUserList()
+	//userMC.Layout = "manager/base.html"
+	//userMC.TplName = "manager/Hui-admin/admin_list.html"
+	//userMC.LayoutSections = make(map[string]string)
+	//userMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
+	//userMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	//userMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	//userMC.Data["headerData"] = &HeaderData{"Miller"}
+	//userMC.Data["tableHeader"] = &userMC.DisplayTitle
+	//userMC.Data["tableField"] = &userMC.FieldTitle
+	//
+	//userMC.Data["tableData"] = &userMC.UserList
+}
+
+// 获取用户列表
+func (userMC *UserManagerController) getUserList() {
+	ormObj := orm.NewOrm()
+	qs, err := ormObj.QueryTable("blog_user").ValuesList(&userMC.UserList, userMC.FieldTitle...)
+	fmt.Println(qs, err)
+	fmt.Println()
+}
+
+// 用户管理Post接口, 添加用户
+func (userMC *UserManagerController) Post() {
+
+}
 //
 //// 文章管理
 //type ArticleManagerController struct {

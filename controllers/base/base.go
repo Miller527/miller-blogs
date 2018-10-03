@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
+	"path"
 )
 
 // 统一的返回值格式
@@ -17,7 +18,9 @@ type ResponseMsg struct {
 // Public base struct
 type baseController struct {
 	beego.Controller
-	SitePath     string //站点文件路径
+	// Todo 后续改成数据库或者加载到缓存
+	ManagerSite  string //管理后台站点文件路径, 暂定配置文件中配置
+	BlogSite     string //博客站点文件路径, 暂定配置文件中配置
 	OrmObj       orm.Ormer
 	ResponseData ResponseMsg
 	BlogLogger   *logs.BeeLogger
@@ -25,6 +28,7 @@ type baseController struct {
 
 // 按照需求重写该字段
 func (base *baseController) Prepare() {
+	base.SiteManager()
 	base.Initialization()
 }
 
@@ -32,12 +36,17 @@ func (base *baseController) Prepare() {
 func (base *baseController) Initialization() {
 	base.OrmObj = orm.NewOrm()
 	base.ResponseData = ResponseMsg{}
-
 }
 
 // 站点管理
 func (base *baseController) SiteManager() {
+	base.ManagerSite = path.Join("manager", beego.AppConfig.String("manager_file_path"))
+	base.BlogSite = "xxx"
+}
 
+// 获取返回页面文件路径
+func (base *baseController) GetManagerPagePath(filename string) string {
+	return path.Join(base.ManagerSite, filename)
 }
 
 // 更新ResponseData
@@ -59,21 +68,29 @@ type curdBaseController struct {
 	FieldTitle   []string //数据库的字段名，和上面的显示字段从前一一对应, 长度可以不一样，后边缺少的字段是前端自定义的字段
 }
 
-// RBAC base struct
-type rbacBaseController struct {
-}
-
-// 用户登录认证
-func (rbac *rbacBaseController) Login() {
+// 获取model的自定义的默认字段
+func (curd *curdBaseController) DefaultFiledTitles (model struct{})  {
 
 }
 
-// Blog struct
-type BlogController struct {
+
+
+//// Rbac struct
+//type rbacBaseController struct {
+
+//}
+
+
+// Manager struct
+type ManagerController struct {
+
 	baseController
 	curdBaseController
-	rbacBaseController
+	//rbacBaseController
 }
+
+
+
 
 // Curd struct
 type CurdController struct {
@@ -81,8 +98,14 @@ type CurdController struct {
 	curdBaseController
 }
 
-// Rbac struct
-type RbacController struct {
+//// Rbac struct
+//type RbacController struct {
+//	baseController
+//	rbacBaseController
+//}
+
+
+// Blog struct
+type BlogController struct {
 	baseController
-	rbacBaseController
 }

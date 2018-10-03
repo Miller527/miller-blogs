@@ -10,8 +10,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego/utils"
 	"miller-blogs/controllers/base"
-	"miller-blogs/public"
 	"strings"
 )
 
@@ -21,29 +21,33 @@ var urlWhiteList []string
 // app blog black list
 var urlBlackList []string
 
+var urlPrefix = beego.AppConfig.String("manager_router_prefix")
+
 // login session filter
 func ManagerLoginFilter(ctx *context.Context) {
+	url := ctx.Request.RequestURI
 	_, ok := ctx.Input.Session("uid").(string)
-	if ok && ctx.Request.RequestURI == "/manager/login" {
-		ctx.Redirect(302, "/manager/index")
-	} else if !ok && ctx.Request.RequestURI != "/manager/login" {
-		ctx.Redirect(302, "/manager/login")
+	if ok &&url == urlPrefix + "/login" {
+		ctx.Redirect(302, urlPrefix + "/index")
+	} else if !ok && url != urlPrefix + "/login" {
+		ctx.Redirect(302, urlPrefix + "/login")
 	}
 }
 
 // permission verify filter
 func PermissionVerify(ctx *context.Context) {
 	url := ctx.Request.RequestURI
-	if _, blackOk := public.ElementInList(urlBlackList, ctx.Request.RequestURI); blackOk {
+
+	if blackOk := utils.InSlice(url, urlBlackList); blackOk {
 		responseData := base.ResponseMsg{}
 		responseData.Status = 30200
 		responseData.Msg = "无权访问"
 		ctx.Output.JSON(responseData, true, false)
 		return
 	}
-	_, whiteOk := public.ElementInList(urlWhiteList, url)
-	if ! whiteOk && strings.HasPrefix(url, "/manager") {
-		permissionsStr, ok := ctx.Input.Session("permissions").(string)
+
+	if whiteOk := utils.InSlice(url, urlWhiteList); ! whiteOk && strings.HasPrefix(url, urlPrefix) {
+		permissionsStr, ok := ctx.Input.Session(beego.AppConfig.String("permission_key")).(string)
 
 		fmt.Println(permissionsStr, ok)
 		var permissionsData []orm.ParamsList
@@ -58,8 +62,8 @@ func PermissionVerify(ctx *context.Context) {
 		}
 		status := false
 		for _, val := range permissionsData {
-			fmt.Println(val[1], ctx.Request.RequestURI)
-			if ctx.Request.RequestURI == val[1] {
+			fmt.Println(val[1], url)
+			if url == val[1] {
 				status = true
 				break
 			}
@@ -76,8 +80,8 @@ func PermissionVerify(ctx *context.Context) {
 
 // initialization
 func getUrlRequestList() {
-	urlWhiteList = beego.AppConfig.Strings("urlwhitelist")
-	urlBlackList = beego.AppConfig.Strings("urlblacklist")
+	urlWhiteList = beego.AppConfig.Strings("url_white_list")
+	urlBlackList = beego.AppConfig.Strings("url_black_list")
 }
 
 func init() {
