@@ -5,6 +5,7 @@
 package models
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -12,42 +13,50 @@ import (
 )
 
 type TimeModel struct {
-	CreatedTime time.Time `orm:"auto_now_add;type(datetime)"`
-	UpdatedTime time.Time `orm:"auto_now;type(datetime)"`
+	UpdatedTime time.Time `orm:"auto_now;type(datetime)" explain:"更新时间"`
+	CreatedTime time.Time `orm:"auto_now_add;type(datetime)" explain:"创建时间"`
 }
 
 // TODO Rbac基于角色的权限管理
 // 登陆管理后台使用
 type UserInfo struct {
-	Id       int
-	Uid      string  `orm:"size(32)"`
-	Password string  `orm:"size(128)"`
-	Nickname string  `orm:"size(64)"`
-	Email    string  `orm:"size(64)"`
-	Phone    string  `orm:"size(11)"`
-	Roles    []*Role `orm:"rel(m2m)"`
-	//Site     *BlogSite `orm:"rel(fk)"`
-	Mugshot string // 头像地址, 通过配置的路径拼接
-	Type    string // 管理员和普通用户，普通用户不能后台管理
+	Id       int     `explain:"id"`
+	Uid  string  `orm:"size(32)" explain:"帐号"`
+	Password string  `orm:"size(128)" explain:"密码"`
+	Nickname string  `orm:"size(64)" explain:"昵称"`
+	Email    string  `orm:"size(64)" explain:"邮箱"`
+	Phone    string  `orm:"size(11)" explain:"手机"`
+	Roles    []*Role `orm:"rel(m2m)" explain:"角色"`
+	//Site     *BlogSite `orm:"rel(fk)" explain:"站点"`
+	Mugshot string `orm:"size(11)" explain:"头像"` // 头像地址, 通过配置的路径拼接
+	Type    int8   `orm:"size(11)" explain:"类型"` // 账号类型, 0管理员, 1普通用户, 往后排是第三方用户
+	// 普通用户和第三方用户不能后台管理
 	TimeModel
 }
 
+//// 用户登录历史
+//type LoginHistory struct {
+//
+//}
+
 // 用户角色, 访客角色, 只能评论
 type Role struct {
-	Id          int
-	Name        string
-	Users       []*UserInfo   `orm:"reverse(many)"`
-	Permissions []*Permission `orm:"rel(m2m)"`
+	Id          int           `explain:"id"`
+	Rid         string        `orm:"unique" explain:"角色"`
+	Name        string        `orm:"size(64)" explain:"名称"`
+	Users       []*UserInfo   `orm:"reverse(many)" explain:"关联用户"`
+	Permissions []*Permission `orm:"rel(m2m)" explain:"权限列表"`
 }
 
-//manager开头, 用户权限, 即菜单, 一级菜单主要是些详细报表, 二级菜单主要是增删改查操作
+//manager开头, 用户权限, 即菜单, 一级菜单主要是些详细报表, 二级菜单主要是基本功能菜单, 权限不是菜单
 type Permission struct {
-	Id     int
-	Title  string
-	Url    string
-	Icon   string // 菜单图片
-	IsMenu bool   // 是否是菜单
-	Roles  []*Role `orm:"reverse(many)"`
+	Id     int         `orm:"on_delete(cascade)" explain:"id"`
+	Title  string      `orm:"size(128)"  explain:"权限"`
+	Url    string      `orm:"size(256)" explain:"链接地址"`
+	Icon   string      `orm:"null;size(128)" explain:"菜单图标"`
+	IsMenu bool        `explain:"菜单状态"`                                     // 该权限是否是菜单权限
+	Parent *Permission `orm:"null;rel(fk)" explain:"父菜单"` // 必须是子菜单才能有父菜单
+	Roles  []*Role     `orm:"reverse(many);on_delete(cascade)" explain:"所属角色"`
 }
 
 // TODO 公共参数
@@ -192,11 +201,53 @@ type Permission struct {
 //	Tags  []*Tag `orm:"rel(m2m)"`
 //}
 
+type twoLevelMenu struct {
+	title    string
+	url      string
+	children [] map[string]interface{}
+}
+type leftMenuList map[string]interface{}
+
 // 初始化数据表
 func Initialization() {
 
-}
+	z := []*Permission{}
+	obj := orm.NewOrm()
+	a, b := obj.QueryTable("permission").
+		Filter("Roles__Role__Users__UserInfo__Uid", "Miller").
 
+		//ValuesList(&z, "id", "title", "url", "is_menu", "parent")
+		All(&z, "id", "title", "url", "is_menu", "parent")
+	fmt.Println(a, b)
+
+	permissionsList := make([]string, 10)
+	menuDict := make(map[int]interface{}, 10)
+
+	for _, obj := range z {
+		fmt.Println(obj)
+		permissionsList = append(permissionsList, obj.Url)
+		permission := leftMenuList{
+			"title": obj.Title,
+			"url":   obj.Url,
+		}
+		if obj.Id != 0 && obj.IsMenu {
+			if _, ok := menuDict[obj.Id]; ! ok && obj.Parent == nil{
+				menuDict[obj.Id] = leftMenuList{
+					"title":    obj.Title,
+					"url":      obj.Url,
+					"children": [] leftMenuList{},
+				}
+			} else {
+				menuDict[obj.Parent.Id].(leftMenuList)["children"] = append(menuDict[obj.Parent.Id].(leftMenuList)["children"].([] leftMenuList), permission)
+			}
+		}
+	}
+	fmt.Println(menuDict)
+	fmt.Println(menuDict[1])
+	fmt.Println(menuDict[1].(leftMenuList)["children"])
+	c,err := json.Marshal(menuDict)
+	fmt.Println(err,string(c))
+}
 func init() {
 	dataSource := beego.AppConfig.String("data_source")
 	driverName := beego.AppConfig.String("data_driver")
