@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils"
 	"miller-blogs/controllers/base"
 	"strings"
@@ -47,10 +46,10 @@ func PermissionVerify(ctx *context.Context) {
 	}
 
 	if whiteOk := utils.InSlice(url, urlWhiteList); ! whiteOk && strings.HasPrefix(url, urlPrefix) {
-		permissionsStr, ok := ctx.Input.Session(beego.AppConfig.String("permission_key")).(string)
+		permissionsStr, ok := ctx.Input.Session(beego.AppConfig.String("session_permission_key")).(string)
 
 		fmt.Println(permissionsStr, ok)
-		var permissionsData []orm.ParamsList
+		var permissionsData []string
 		err := json.Unmarshal([]byte(permissionsStr), &permissionsData)
 
 		responseData := base.ResponseMsg{}
@@ -60,14 +59,8 @@ func PermissionVerify(ctx *context.Context) {
 			ctx.Output.JSON(responseData, true, false)
 			return
 		}
-		status := false
-		for _, val := range permissionsData {
-			fmt.Println(val[1], url)
-			if url == val[1] {
-				status = true
-				break
-			}
-		}
+		status := utils.InSlice(url, permissionsData)
+
 		if ! status {
 			responseData.Status = 30200
 			responseData.Msg = "无权访问"

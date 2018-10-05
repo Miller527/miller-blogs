@@ -14,20 +14,17 @@ import (
 var logger = public.GetLogger("blog_manager")
 
 // 管理后台首页，获取数据渲染首页
-type ManagerIndexController struct {
+type IndexManagerController struct {
 	CurdController
 }
 
 // 管理后台首页
-func (indexMC *ManagerIndexController) Get() {
-	indexMC.Layout =  indexMC.GetManagerPagePath("base.html")
-	indexMC.TplName = indexMC.GetManagerPagePath("index.html")
-	indexMC.LayoutSections = make(map[string]string)
-	indexMC.LayoutSections["HeadMeta"] = indexMC.GetManagerPagePath("headmeta.html")
-	indexMC.LayoutSections["Header"] = indexMC.GetManagerPagePath("header.html")
-	indexMC.LayoutSections["LeftMenu"] = indexMC.GetManagerPagePath("leftmenu.html")
-	indexMC.Data["headerData"] = &HeaderData{"Miller"}
+func (indexMC *IndexManagerController) Get() {
+
+	indexMC.ResponseTemplate("index.html")
+
 }
+
 
 
 // 管理后台首页，获取数据渲染首页
@@ -38,17 +35,15 @@ type PermissionManagerController struct {
 // 带着cookie才可以（RBAC权限）
 func (perMC *PermissionManagerController) Get() {
 
-	//fmt.Println("1111---",indexMC.GetSession("permissions"))
-
-	perMC.Layout = "manager/base.html"
-
-	perMC.TplName = "manager/Hui-admin/index.html"
-
+	perMC.Layout =  perMC.GetManagerPagePath("base.html")
+	perMC.TplName = perMC.GetManagerPagePath("permission_list.html")
 	perMC.LayoutSections = make(map[string]string)
-	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.LayoutSections["HeadMeta"] = perMC.GetManagerPagePath("headmeta.html")
+	perMC.LayoutSections["Header"] = perMC.GetManagerPagePath("header.html")
+	perMC.LayoutSections["LeftMenu"] = perMC.GetManagerPagePath("leftmenu.html")
 	perMC.Data["headerData"] = &HeaderData{"Miller"}
+	sideMenu := perMC.GetLeftMenu()
+	perMC.Data["sideMenu"] = &sideMenu
 }
 
 
@@ -108,9 +103,7 @@ func (perMC *PermissionManagerController) Del() {
 
 
 
-type HeaderData struct {
-	Name string
-}
+
 //
 
 
@@ -143,21 +136,21 @@ func (userMC *UserManagerController) TitleInit() {
 }
 
 // 用户管理Get接口, 获取用户列表
-func (userMC *UserManagerController) Get() {
-
-	//userMC.GetUserList()
-	//userMC.Layout = "manager/base.html"
-	//userMC.TplName = "manager/Hui-admin/admin_list.html"
-	//userMC.LayoutSections = make(map[string]string)
-	//userMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-	//userMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-	//userMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
-	//userMC.Data["headerData"] = &HeaderData{"Miller"}
-	//userMC.Data["tableHeader"] = &userMC.DisplayTitle
-	//userMC.Data["tableField"] = &userMC.FieldTitle
-	//
-	//userMC.Data["tableData"] = &userMC.UserList
-}
+//func (userMC *UserManagerController) Get() {
+//
+//	userMC.GetUserList()
+//	userMC.Layout = "manager/base.html"
+//	userMC.TplName = "manager/Hui-admin/admin_list.html"
+//	userMC.LayoutSections = make(map[string]string)
+//	userMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
+//	userMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+//	userMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+//	userMC.Data["headerData"] = &HeaderData{"Miller"}
+//	userMC.Data["tableHeader"] = &userMC.DisplayTitle
+//	userMC.Data["tableField"] = &userMC.FieldTitle
+//
+//	userMC.Data["tableData"] = &userMC.UserList
+//}
 
 // 获取用户列表
 func (userMC *UserManagerController) getUserList() {

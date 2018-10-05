@@ -25,7 +25,9 @@ func init() {
 			// 登录和登出
 			beego.NSRouter("/login", &manager.LoginController{}),
 			// 管理后台的首页
-			beego.NSRouter("/index", &manager.ManagerIndexController{}),
+			beego.NSRouter("/index", &manager.IndexManagerController{}),
+			//// 管理后台的管理员标签页
+			//beego.NSRouter("/index", &manager.IndexManagerController{}),
 			// 权限管理
 			getLinkNamespace("/permission",&manager.PermissionManagerController{}),
 
