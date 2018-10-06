@@ -20,7 +20,6 @@ type IndexManagerController struct {
 
 // 管理后台首页
 func (indexMC *IndexManagerController) Get() {
-
 	indexMC.ResponseTemplate("index.html")
 
 }

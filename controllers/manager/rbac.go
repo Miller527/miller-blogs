@@ -24,7 +24,6 @@ func (loginMC *LoginController) Get() {
 	fmt.Println(ip )
 	fmt.Println(logger)
 	logger.Info("User login request IP [%s].", ip )
-	fmt.Println(	 loginMC.Ctx.Input.Cookie(beego.AppConfig.String("sessionname")))
 	if loginMC.GetSession(beego.AppConfig.String("session_permission_key")) != nil {
 		loginMC.Ctx.Redirect(302, beego.AppConfig.String("manager_router_prefix") + "/index")
 		return
@@ -55,7 +54,6 @@ func (loginMC *LoginController) Post() {
 			loginMC.WriteSession(userId)
 		}
 	}
-	fmt.Println(loginMC.ResponseData)
 	loginMC.Data["json"] = &loginMC.ResponseData
 	loginMC.ServeJSON()
 	return

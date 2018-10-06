@@ -56,6 +56,7 @@ type Permission struct {
 	Icon   string      `orm:"null;size(128)" explain:"菜单图标"`
 	IsMenu bool        `explain:"菜单状态"`                                     // 该权限是否是菜单权限
 	Parent *Permission `orm:"null;rel(fk)" explain:"父菜单"` // 必须是子菜单才能有父菜单
+	ButtonPid *Permission `orm:"null;rel(fk)" explain:"按钮对应的子菜单id"`	// 必须是子菜单的id
 	Roles  []*Role     `orm:"reverse(many);on_delete(cascade)" explain:"所属角色"`
 }
 
@@ -242,7 +243,6 @@ func Initialization() {
 			}
 		}
 	}
-	fmt.Println(menuDict)
 	fmt.Println(menuDict[1])
 	fmt.Println(menuDict[1].(leftMenuList)["children"])
 	c,err := json.Marshal(menuDict)

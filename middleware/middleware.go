@@ -11,6 +11,7 @@ import (
 	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/utils"
 	"miller-blogs/controllers/base"
+	"strconv"
 	"strings"
 )
 
@@ -49,7 +50,7 @@ func PermissionVerify(ctx *context.Context) {
 		permissionsStr, ok := ctx.Input.Session(beego.AppConfig.String("session_permission_key")).(string)
 
 		fmt.Println(permissionsStr, ok)
-		var permissionsData []string
+		var permissionsData []map[string]interface{}
 		err := json.Unmarshal([]byte(permissionsStr), &permissionsData)
 
 		responseData := base.ResponseMsg{}
@@ -59,8 +60,25 @@ func PermissionVerify(ctx *context.Context) {
 			ctx.Output.JSON(responseData, true, false)
 			return
 		}
-		status := utils.InSlice(url, permissionsData)
+		status := false
+		for _, vv := range permissionsData {
+			if vv["url"] == url {
+				status = true
 
+				if vv["parent"] == nil && vv["button_pid"] == nil{
+					ctx.Request.Header["menus-id"] = []string{}
+				}else if vv["parent"] != nil && vv["button_pid"] == nil{
+					ctx.Request.Header["menus-id"] = []string{
+						strconv.Itoa(int(vv["id"].(float64)))}
+				}else if vv["parent"] != nil && vv["button_pid"] != nil {
+					ctx.Request.Header["menus-id"] = []string{
+					strconv.Itoa(int(vv["button_pid"].(float64)))}
+
+				}
+
+				break
+			}
+		}
 		if ! status {
 			responseData.Status = 30200
 			responseData.Msg = "无权访问"
