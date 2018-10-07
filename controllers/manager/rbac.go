@@ -25,7 +25,8 @@ func (loginMC *LoginController) Get() {
 	fmt.Println(logger)
 	logger.Info("User login request IP [%s].", ip )
 	if loginMC.GetSession(beego.AppConfig.String("session_permission_key")) != nil {
-		loginMC.Ctx.Redirect(302, beego.AppConfig.String("manager_router_prefix") + "/index")
+		indexUrl := loginMC.PathGuidance[0]["url"]
+		loginMC.Ctx.Redirect(302, indexUrl)
 		return
 	}
 	loginMC.TplName = loginMC.GetManagerPagePath("login.html")
@@ -48,7 +49,8 @@ func (loginMC *LoginController) Post() {
 	} else if err == orm.ErrNoRows {
 		loginMC.UpdateResponseMsg(30100,"用户或密码错误", nil)
 	} else {
-		loginMC.UpdateResponseMsg(20100,"登录成功", nil)
+		indexUrl := loginMC.PathGuidance[0]["url"]
+		loginMC.UpdateResponseMsg(20100,"登录成功", map[string]interface{}{"url":indexUrl})
 		if permissions == nil {
 			// todo 维护登录时间, 更新session的过期时间
 			loginMC.WriteSession(userId)
