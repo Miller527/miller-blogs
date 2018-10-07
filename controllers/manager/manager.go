@@ -31,18 +31,26 @@ type PermissionManagerController struct {
 	CurdController
 }
 
+// 按照需求重写Prepare和ExtendFieldInit
+func (perMC *PermissionManagerController) Prepare() {
+	perMC.ExtendFieldInit()
+	perMC.DefaultInit()
+
+}
+
+func (perMC *PermissionManagerController) ExtendFieldInit() {
+
+	perMC.DisplayTitle = []string{"ID", "帐号", "昵称", "邮箱", "手机号", "头像", "类型", "角色id",
+		"创建时间", "更新时间"}
+	perMC.FieldTitle = []string{"id", "uid", "nick_name", "email", "phone", "mugshot", "type",
+		"role__name", "created_time", "updated_time"}
+}
+
 // 带着cookie才可以（RBAC权限）
 func (perMC *PermissionManagerController) Get() {
 
-	perMC.Layout =  perMC.GetManagerPagePath("base.html")
-	perMC.TplName = perMC.GetManagerPagePath("permission_list.html")
-	perMC.LayoutSections = make(map[string]string)
-	perMC.LayoutSections["HeadMeta"] = perMC.GetManagerPagePath("headmeta.html")
-	perMC.LayoutSections["Header"] = perMC.GetManagerPagePath("header.html")
-	perMC.LayoutSections["LeftMenu"] = perMC.GetManagerPagePath("leftmenu.html")
-	perMC.Data["headerData"] = &HeaderData{"Miller"}
-	sideMenu := perMC.GetLeftMenu()
-	perMC.Data["sideMenu"] = &sideMenu
+	perMC.ResponseTemplate("permission_list.html")
+
 }
 
 
@@ -57,7 +65,7 @@ func (perMC *PermissionManagerController) Post() {
 	perMC.LayoutSections = make(map[string]string)
 	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
 	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 	perMC.Data["headerData"] = &HeaderData{"Miller"}
 }
 
@@ -72,7 +80,7 @@ func (perMC *PermissionManagerController) Put() {
 	perMC.LayoutSections = make(map[string]string)
 	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
 	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 	perMC.Data["headerData"] = &HeaderData{"Miller"}
 }
 
@@ -87,7 +95,7 @@ func (perMC *PermissionManagerController) Del() {
 	perMC.LayoutSections = make(map[string]string)
 	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
 	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 	perMC.Data["headerData"] = &HeaderData{"Miller"}
 }
 
@@ -143,7 +151,7 @@ func (userMC *UserManagerController) TitleInit() {
 //	userMC.LayoutSections = make(map[string]string)
 //	userMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
 //	userMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-//	userMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+//	userMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 //	userMC.Data["headerData"] = &HeaderData{"Miller"}
 //	userMC.Data["tableHeader"] = &userMC.DisplayTitle
 //	userMC.Data["tableField"] = &userMC.FieldTitle
@@ -201,7 +209,7 @@ func (userMC *UserManagerController) Post() {
 //	articleMC.LayoutSections = make(map[string]string)
 //	articleMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
 //	articleMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
-//	articleMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/leftmenu.html"
+//	articleMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 //	articleMC.Data["headerData"] = &HeaderData{"Miller"}
 //	articleMC.Data["tableHeader"] = &articleMC.DisplayTitle
 //	articleMC.Data["tableField"] = &articleMC.FieldTitle

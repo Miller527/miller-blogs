@@ -22,7 +22,7 @@ type ResponseMsg struct {
 type baseController struct {
 	beego.Controller
 	// Todo 后续改成数据库或者加载到缓存
-	ManagerSite  string //管理后台站点文件路径, 暂定配置文件中配置
+	managerSite  string //管理后台站点文件路径, 暂定配置文件中配置
 	BlogSite     string //博客站点文件路径, 暂定配置文件中配置
 	OrmObj       orm.Ormer
 	ResponseData ResponseMsg
@@ -31,6 +31,10 @@ type baseController struct {
 
 // 按照需求重写该字段
 func (base *baseController) Prepare() {
+	base.DefaultInit()
+}
+
+func (base *baseController) DefaultInit() {
 	base.SiteManager()
 	base.Initialization()
 }
@@ -39,18 +43,17 @@ func (base *baseController) Prepare() {
 func (base *baseController) Initialization() {
 	base.OrmObj = orm.NewOrm()
 	base.ResponseData = ResponseMsg{}
-
 }
 
 // 站点管理
 func (base *baseController) SiteManager() {
-	base.ManagerSite = path.Join("manager", beego.AppConfig.String("manager_file_path"))
+	base.managerSite = path.Join("manager", beego.AppConfig.String("manager_file_path"))
 	base.BlogSite = "xxx"
 }
 
 // 获取返回页面文件路径
 func (base *baseController) GetManagerPagePath(filename string) string {
-	return path.Join(base.ManagerSite, filename)
+	return path.Join(base.managerSite, filename)
 }
 
 // 更新ResponseData
@@ -73,21 +76,39 @@ type menuDict map[int]menuData
 type rbacBaseController struct {
 	PermissionsData []*models.Permission
 	permissionTitle []string
+	PathGuidance    []map[string]string
 	baseController
 }
 
-// 按照需求重写该字段
+// 按照需求重写Prepare和ExtendFieldInit
 func (rbac *rbacBaseController) Prepare() {
-	rbac.SiteManager()
-	rbac.Initialization()
+	rbac.DefaultInit()
 	rbac.ExtendFieldInit()
 }
 
 // 初始化permissionTitle字段
 func (rbac *rbacBaseController) ExtendFieldInit() {
-	rbac.permissionTitle = []string{"id", "title", "url", "is_menu", "parent", "ButtonPid"}
+	rbac.permissionTitle = []string{"id", "title", "url", "icon", "is_menu", "parent", "ButtonPid"}
+
 
 }
+
+func (rbac *rbacBaseController) DefaultInit() {
+	rbac.SiteManager()
+	rbac.Initialization()
+	rbac.InitPathGuidance()
+}
+
+
+func (rbac *rbacBaseController) InitPathGuidance() {
+	rbac.PathGuidance = []map[string]string{}
+
+	indexUrl := beego.AppConfig.String("manager_router_prefix") + "/index"
+	rbac.PathGuidance = append(rbac.PathGuidance, map[string]string{"url": indexUrl, "title": "首页"})
+
+	fmt.Println("===============================================", rbac.PathGuidance)
+}
+
 
 // 获取用户的权限信息
 func (rbac *rbacBaseController) queryPermissions(userName string) bool {
@@ -133,6 +154,7 @@ func (rbac *rbacBaseController) orderMenu(menu menuData) (sideMenu []menuData) {
 			delete(menu, k)
 			continue
 		}
+
 		rbac.updateMenuStatus(menu[k].(map[string]interface{}))
 		sideMenu = append(sideMenu, menu[k].(map[string]interface{}))
 	}
@@ -144,7 +166,27 @@ func (rbac *rbacBaseController) updateMenuStatus(menu menuData) () {
 	if len(rbac.Ctx.Request.Header["menus-id"]) == 1 {
 		subMenuIdStr := rbac.Ctx.Request.Header["menus-id"][0]
 
-		if val, ok := menu["children"].(map[string]interface{})[subMenuIdStr]; ok {
+
+		val, ok := menu["children"].(map[string]interface{})[subMenuIdStr]
+		if ok {
+			menuUrl := func() string{
+				if 	val, ok := menu["url"]; ok && val != nil {
+					fmt.Println(val,ok)
+					return val.(string)
+				}else {
+					return ""
+				}
+
+			}()
+
+			rbac.PathGuidance = append(rbac.PathGuidance,
+				map[string]string{"url": menuUrl, "title": menu["title"].(string)})
+
+
+			rbac.PathGuidance = append(rbac.PathGuidance,
+				map[string]string{"url": val.(map[string]interface{})["url"].(string),
+					"title": val.(map[string]interface{})["title"].(string)})
+			fmt.Println("------------------------------", rbac.PathGuidance)
 			val.(map[string]interface{})["class"] = "current"
 			menu["class"] = "selected"
 			menu["style"] = "display: block"
@@ -165,9 +207,9 @@ func (rbac *rbacBaseController) updateMenuStatus(menu menuData) () {
 		//
 		//}
 
-
 	}
 }
+
 // 初始化session字典
 func (rbac *rbacBaseController) sessionInit(uid string) {
 	go rbac.SetSession(beego.AppConfig.String("session_uid_key"), uid)
@@ -208,6 +250,7 @@ func (rbac *rbacBaseController) sessionInit(uid string) {
 				menu[obj.Id]["children"] = menuDict{}
 			}
 			menu[obj.Id]["title"] = obj.Title
+			menu[obj.Id]["icon"] = obj.Icon
 
 		} else if obj.Url != "" && obj.Parent != nil {
 			if _, ok := menu[obj.Parent.Id]; !ok {
@@ -256,22 +299,27 @@ type curdBaseController struct {
 	rbacBaseController
 }
 
-// 按照需求重写该字段
+// 按照需求重写Prepare和ExtendFieldInit
 func (curd *curdBaseController) Prepare() {
+	curd.ExtendFieldInit()
+	curd.DefaultInit()
+
+}
+
+func (curd *curdBaseController) ExtendFieldInit() {}
+
+
+func (curd *curdBaseController) DefaultInit() {
 	curd.SiteManager()
 	curd.Initialization()
-	curd.ExtendFieldInit()
+	curd.InitPathGuidance()
+	curd.initUid()
 }
 
-// 配置信息, 修改数据库字段的话改这里
-func (curd *curdBaseController) configInit() {
 
-}
-
-func (curd *curdBaseController) ExtendFieldInit() {
-	curd.configInit()
-	curd.HeaderData = &HeaderData{"Miller"}
-
+func (curd *curdBaseController) initUid() {
+	uid := curd.GetSession(beego.AppConfig.String("session_uid_key"))
+	curd.HeaderData = &HeaderData{uid.(string)}
 }
 
 // 获取model的自定义的默认字段
@@ -286,7 +334,8 @@ func (curd *curdBaseController) ResponseTemplate(htmlName string) {
 	curd.LayoutSections = make(map[string]string)
 	curd.LayoutSections["HeadMeta"] = curd.GetManagerPagePath("headmeta.html")
 	curd.LayoutSections["Header"] = curd.GetManagerPagePath("header.html")
-	curd.LayoutSections["LeftMenu"] = curd.GetManagerPagePath("leftmenu.html")
+	curd.LayoutSections["LeftMenu"] = curd.GetManagerPagePath("menu.html")
+	curd.LayoutSections["Navigation"] = curd.GetManagerPagePath("navigation.html")
 	curd.getTemplateData()
 
 }
@@ -295,6 +344,7 @@ func (curd *curdBaseController) ResponseTemplate(htmlName string) {
 func (curd *curdBaseController) getTemplateData() {
 	sideMenu := curd.GetLeftMenu()
 	curd.Data["sideMenu"] = &sideMenu
+	curd.Data["pathGuidance"] = &curd.PathGuidance
 	curd.Data["headerData"] = curd.HeaderData
 	curd.Data["tableHeader"] = &curd.DisplayTitle
 }

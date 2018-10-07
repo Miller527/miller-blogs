@@ -19,7 +19,8 @@ $(function () {
                     dataObj =  JSON.parse(data);
                     if (dataObj["status"] === 20100){
                         alert("suc");
-                        window.location.href = "/manager/index";
+
+                        window.location.href = dataObj["data"]["url"];
                     }else{
                         alert("err")
                         window.location.href = "/index";
