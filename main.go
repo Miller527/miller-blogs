@@ -1,20 +1,36 @@
+//
+// __author__ = "Miller"
+// Date: 2018/11/15
+//
+
 package main
 
 import (
-	_ "github.com/Go-SQL-Driver/MySQL"
-	_ "github.com/astaxie/beego/session/redis"
-
-	_ "miller-blogs/middleware"
-	_ "miller-blogs/models"
-	_ "miller-blogs/public" // 注册日志
-	_ "miller-blogs/routers"
-
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
+	"fmt"
+	"miller-blogs/sugar/curd"
+	"miller-blogs/urls"
 )
 
 func main() {
-	orm.Debug = true
-	beego.Run()
+	dbc := curd.DBConfig{
+		Driver:   "mysql",
+		Username: "root",
+		Password: "woaichenni",
+		Protocol: "tcp",
+		Address:  "127.0.0.1:3306",
+		DBName:   "supervision",
+	}
+	curd.DbmInit(dbc)
+	//"root:woaichenni@tcp(127.0.0.1:3306)/supervision?charset=utf8"
+	type sss struct {
+		xx string
+		pp string
+	}
+	x := &curd.TableConf{Name:"app_list",Desc:sss{}}
 
+	curd.AccessControl("rbac")
+	curd.Register(x)
+	curd.AppInit(urls.AdApp,"",nil)
+	err := urls.AdApp.Run("0.0.0.0:9090")
+	fmt.Println(err)
 }
