@@ -7,9 +7,9 @@ package curd
 
 import (
 	"errors"
-	"fmt"
-	"github.com/astaxie/beego/orm"
 	"github.com/gin-gonic/gin"
+	"miller-blogs/sugar/utils"
+	"reflect"
 	"strings"
 )
 
@@ -37,45 +37,46 @@ type SugarTable interface {
 
 
 type TableConf struct {
-	Name    string
-	Slice   string
-	Title   map[string]string
+	//Name    string
+	Slice   []interface{}
+	Title   []string
 	Methods []string
 	Desc  interface{}
 
 }
 
+func (tc *TableConf) Name() string {
+	tmpSlice := strings.Split(reflect.TypeOf(tc.Desc).String(),".")
+	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
+}
+
+
+
+
+
 func (tc *TableConf) PrefixName(pre string) {
-	tc.Name = pre + tc.Name
-	orm.RegisterModel()
+	//tc.Name = pre + tc.Name
+	//orm.RegisterModel()
 }
 
 func (tc *TableConf) verifyName() (string, bool) {
-	if ! InSlice(tc.Name, tables) {
-		return tc.Name, false
+	if ! InSlice(tc.Name(), tables) {
+		return tc.Name(), false
 	}
-	return tc.Name, true
+	return tc.Name(), true
 }
-
-func (tc *TableConf) verifyTitle() bool {
-	sqlCmd := "select COLUMN_NAME,DATA_TYPE from information_schema.COLUMNS where table_schema=? AND table_name=?"
-	stmt, err := Dbm.Db.Prepare(sqlCmd)
-
-	res, err := Dbm.SelectSlice(stmt,Dbm.Conf.DBName,tc.Name)
-	if err != nil{
-		fmt.Println(err)
-	}
-	for res.Next(){
-		var name string
-
-		err := res.Scan(&name)
-
-		if err == nil{
-			tables = append(tables, name)
-		}
-	}
-	return false
-}
+//
+//func (tc *TableConf) verifyTitle() bool {
+//	sqlCmd := "select COLUMN_NAME,DATA_TYPE from information_schema.COLUMNS where table_schema=? AND table_name=?"
+//	stmt, err := Dbm.Db.Prepare(sqlCmd)
+//
+//	tables, err = Dbm.SelectSlice(stmt,Dbm.Conf.DBName,tc.Name)
+//	if err != nil{
+//		fmt.Println(err)
+//		return false
+//	}
+//	return true
+//}
 
 func NewTable(){
 

@@ -9,6 +9,8 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"reflect"
+	"unsafe"
 )
 
 var tables []string
@@ -41,20 +43,40 @@ func (dbm *DBModels) init() {
 	dbm.Db = db
 }
 
-func (dbm *DBModels) SelectSlice(stmt *sql.Stmt, args ...interface{}) ([]string,error){
-	rows, err := stmt.Query(args);
+func (dbm *DBModels) SelectSlice(stmt *sql.Stmt, tc *TableConf, args ...interface{}) ([]string,error){
+	rows, err := stmt.Query(args...);
 	if err != nil{
-		fmt.Println(err)
+		fmt.Println("---", err)
 		return nil, err
 	}
+
+	//value:=reflect.ValueOf(tc.Desc)
+	//if value.Kind()==reflect.Ptr {
+	//	elem := value.Elem()
+	//	name := elem.FieldByName("name")
+	//	if name.Kind() == reflect.String {
+	//		*(*string)(unsafe.Pointer(name.Addr().Pointer())) = "fangwendong"
+	//	}
+	//}
+
 	var result []string
 	for rows.Next() {
 		// todo 其他类型时候反射取值
-		var name string
-		err := rows.Scan(&name)
-		if err == nil{
-			result = append(result, name)
+		value:=reflect.ValueOf(tc.Desc)
+		if value.Kind()==reflect.Ptr {
+			elem := value.Elem()
+			name := elem.FieldByName("name")
+			//fmt.Println("name",name)
+			if name.Kind() == reflect.String {
+				*(*string)(unsafe.Pointer(name.Addr().Pointer())) = "fangwendong"
+				// todo 通过判断取值
+				err := rows.Scan(&*(*string)(unsafe.Pointer(name.Addr().Pointer())))
+				if err == nil{
+					fmt.Println("yyyyyyyyyyyyyyyyyyy",name)
+					//result = append(result, name)
 
+				}
+			}
 		}
 	}
 	return result,nil
@@ -63,7 +85,17 @@ func (dbm *DBModels) SelectSlice(stmt *sql.Stmt, args ...interface{}) ([]string,
 
 func (dbm *DBModels) showTables(){
 	stmt, _ := dbm.Db.Prepare("show tables")
-	tables, _ = dbm.SelectSlice(stmt)
+	type tb struct {
+		name string
+	}
+	x := &TableConf{
+		Slice:[]interface{}{"id","rid","name"},
+		Title:[]string{"ID","角色ID","角色名称"} ,
+		Desc: &tb{},
+	}
+
+
+	tables, _ = dbm.SelectSlice(stmt, x)
 	fmt.Println(tables)
 }
 

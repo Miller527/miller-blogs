@@ -24,7 +24,7 @@ func initGroup(rg *gin.RouterGroup) {
 		}
 		for _, v := range tc.Methods {
 			if ! InSlice(v, methods) {
-				panic(errors.New("SugarTable: table [" + tc.Name + "] method [" + v + "] is error"))
+				panic(errors.New("SugarTable: table [" + tc.Name() + "] method [" + v + "] is error"))
 			}
 		}
 		initRouter(k, rg, tc.Methods)
