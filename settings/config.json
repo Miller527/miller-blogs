@@ -15,6 +15,17 @@
       "192.168.71.64:9092"
     ]
   },
+  "dbconfig": {
+    "driver": "mysql",
+    "username": "root",
+    "password": "woaichenni",
+    "protocol": "tcp",
+    "address": "127.0.0.1:3306",
+    "dbname": "miller_blogs",
+    "Parameters": {},
+    "maxopenconns": 4,
+    "maxidleconns": 4
+  },
   "kafkatimeout": 5,
   "kafkaconnsleep": 5
 }

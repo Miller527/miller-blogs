@@ -21,6 +21,7 @@ type configuration struct {
 	AllKafkaHosts  map[string][]string `json:"kafkahosts"`
 	Kafkatimeout   time.Duration
 	Kafkaconnsleep time.Duration
+	DBConfig map[string]interface{}
 }
 
 func (conf *configuration) GetKafkaHosts() ([]string, error) {
@@ -53,5 +54,5 @@ func init() {
 		fmt.Println("Error:", err)
 	}
 
-	fmt.Println(Settings)
+	fmt.Println(Settings.DBConfig)
 }

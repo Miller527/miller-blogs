@@ -7,6 +7,7 @@ package curd
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"miller-blogs/sugar/utils"
 	"reflect"
@@ -37,8 +38,7 @@ type SugarTable interface {
 
 
 type TableConf struct {
-	//Name    string
-	Slice   []interface{}
+	Field   []string
 	Title   []string
 	Methods []string
 	Desc  interface{}
@@ -59,40 +59,43 @@ func (tc *TableConf) PrefixName(pre string) {
 	//orm.RegisterModel()
 }
 
-func (tc *TableConf) verifyName() (string, bool) {
+func verifyName(tc *TableConf) (string, bool) {
 	if ! InSlice(tc.Name(), tables) {
 		return tc.Name(), false
 	}
 	return tc.Name(), true
 }
-//
-//func (tc *TableConf) verifyTitle() bool {
-//	sqlCmd := "select COLUMN_NAME,DATA_TYPE from information_schema.COLUMNS where table_schema=? AND table_name=?"
-//	stmt, err := Dbm.Db.Prepare(sqlCmd)
-//
-//	tables, err = Dbm.SelectSlice(stmt,Dbm.Conf.DBName,tc.Name)
-//	if err != nil{
-//		fmt.Println(err)
-//		return false
-//	}
-//	return true
-//}
+
+func verifyField(tc *TableConf) bool {
+	sqlCmd := "select COLUMN_NAME as name,DATA_TYPE as dataType from information_schema.COLUMNS where table_schema=? AND table_name=?"
+	stmt, err := Dbm.Db.Prepare(sqlCmd)
+	result, err := Dbm.SelectSlice(stmt,tc,Dbm.Conf.DBName,tc.Name())
+	fmt.Println(result,err)
+
+	if err != nil{
+		//fmt.Println(err)
+		return false
+	}
+	return true
+}
 
 func NewTable(){
 
 }
 
 // 注册表配置
-func Register(st ...*TableConf) {
-	for _, tb := range st {
-		name, ok := tb.verifyName()
+func Register(tc ...*TableConf) {
+	for _, t := range tc {
+
+		verifyField(t)
+		name, ok := verifyName(t)
 		if ! ok {
 			panic(errors.New("SugarTable: database not found [" + name + "] table"))
 		}
 		if _, ok := TableConfig[name]; ok {
 			panic(errors.New("SugarTable: table [" + name + "] has already registered"))
 		}
-		TableConfig[name] = tb
+		//TableConfig[name] = tb
 	}
 }
 
