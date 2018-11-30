@@ -6,12 +6,15 @@
 package curd
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 // 列表
 func Index(c *gin.Context) {
+	fmt.Println(c.Params)
+
 	c.String(http.StatusOK, "Index")
 }
 
@@ -50,4 +53,19 @@ func MulitAdd(c *gin.Context){
 func MulitUpdate(c *gin.Context){
 	c.String(http.StatusOK, "MulitDelete")
 
+}
+
+// 登录页面
+func Login(c *gin.Context) {
+	//c.String(http.StatusOK, "Login")
+
+	c.HTML(http.StatusOK, "login.html", gin.H{
+	})
+
+}
+
+// 登录验证
+func verifyLogin(c *gin.Context) {
+	c.HTML(http.StatusOK, "verify-login.html", gin.H{
+	})
 }

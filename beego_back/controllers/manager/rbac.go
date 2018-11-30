@@ -29,7 +29,7 @@ func (loginMC *LoginController) Get() {
 		loginMC.Ctx.Redirect(302, indexUrl)
 		return
 	}
-	loginMC.TplName = loginMC.GetManagerPagePath("login.html")
+	loginMC.TplName = loginMC.GetManagerPagePath("verify-login.html")
 }
 
 // 登录请求, 将用户权限写入Session

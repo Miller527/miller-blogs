@@ -26,6 +26,5 @@ func url(app *gin.Engine) {
 
 
 func init()  {
-	AdApp = gin.Default()
-	url(AdApp)
+
 }

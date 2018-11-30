@@ -1,17 +1,1186 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/sugar/curd/sugar.go" line="68" />
+    <bookmark url="file://$PROJECT_DIR$/sugar/sugar.go" line="15" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67de789d-1d6c-4fc5-a346-1fcf466b1780" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sugar/rbac/verify-login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sugar/sugar.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sugar/utils/slices.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Mr_chai.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/miller-blogs.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/conf/app.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/conf/custom.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/controllers/manager/rbac.go" beforeDir="false" afterPath="$PROJECT_DIR$/beego_back/controllers/manager/rbac.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/main.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/models/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/beego_back/models/models.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/models/register.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/about.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/base.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/info.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/infopic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/m.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/manager/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/share.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/css/time.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/auicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/grwx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/li.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/askgreen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/errorred.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/loading1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/loadingpn.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/login_bgx.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/login_m_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/okgreen.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/site_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/200x150.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/chai.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/chufang.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/keting.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/keting2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/keting3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/keting4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/shouju.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/shufang.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/weishengjian.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/weishengjian2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/woshi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumb/youyongchi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/Thumbs.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/chai.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/chufang.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/keting.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/keting2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/keting3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/keting4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/shouju.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/shufang.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/weishengjian.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/weishengjian2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/woshi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/big/youyongchi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/brand/ambio.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/brand/dongpeng.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/brand/shengxiang.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/product/Thumb/5345.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/manager/temp/product/Thumb/6204.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/mb1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/mb2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/mb3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/mb4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/mb5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/p1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/p2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/p3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/searchbg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/top.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/weipayimg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/img/wx.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/ab.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/comm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/hc-sticky.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/modernizr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/page2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/piccontent.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/scrollReveal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/share.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/blog/time.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/css/H-ui.admin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/css/H-ui.login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/images/acrossTab/acrossTab-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/images/admin-login-bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/images/admin-loginform-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/images/cn.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/images/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/images/um.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/js/H-ui.admin.page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/js/de_DE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/blue/acrossTab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/blue/acrossTab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/blue/icon_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/blue/skin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/default/acrossTab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/default/acrossTab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/default/icon_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/default/skin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/green/acrossTab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/green/acrossTab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/green/icon_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/green/skin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/orange/acrossTab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/orange/acrossTab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/orange/icon_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/orange/skin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/red/acrossTab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/red/acrossTab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/red/icon_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/red/skin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/yellow/acrossTab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/yellow/acrossTab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/yellow/icon_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui.admin/skin/yellow/skin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/css/H-ui.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/css/H-ui.ie.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/css/H-ui.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/css/H-ui.reset.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/Hui-tags/empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/acrossTab/acrossTab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/acrossTab/acrossTab-close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/acrossTab/acrossTab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/dataTable/sort_asc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/dataTable/sort_both.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/dataTable/sort_desc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/dropDown/icon-jt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/201.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/202.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/203.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/204.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/205.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/206.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/207.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/208.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/209.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/210.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/10.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/100.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/101.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/102.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/103.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/104.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/105.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/106.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/11.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/12.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/13.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/14.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/15.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/16.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/18.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/19.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/20.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/21.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/22.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/23.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/24.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/25.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/26.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/27.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/28.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/29.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/30.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/31.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/32.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/33.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/34.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/35.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/36.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/37.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/38.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/39.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/4.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/40.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/41.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/42.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/43.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/44.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/45.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/46.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/47.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/48.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/49.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/5.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/50.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/51.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/52.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/53.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/54.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/55.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/56.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/57.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/58.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/59.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/6.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/60.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/61.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/62.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/63.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/64.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/65.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/66.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/67.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/68.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/69.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/7.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/70.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/71.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/72.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/73.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/74.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/75.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/76.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/77.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/78.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/79.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/8.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/80.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/81.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/82.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/83.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/84.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/85.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/86.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/87.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/88.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/89.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/9.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/90.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/91.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/92.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/93.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/94.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/95.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/96.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/97.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/98.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/face/QQ/99.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/aero.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/aero@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/blue@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/green.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/green@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/grey.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/grey@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/minimal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/minimal@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/orange.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/orange@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/pink.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/pink@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/purple.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/purple@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/red@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iCheck/yellow@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/iconpic-arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/jselect/iconpic-arrow-down2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/loading/loading-b.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/loading/loading-s.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/rollpic/unslider-arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/star/iconpic-star-S-default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/star/iconpic-star-S.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/steps/step_arrow-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/steps/step_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/steps/step_bg-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/steps/step_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/ucnter/avatar-default-S.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/ucnter/avatar-default.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/ucnter/avatar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/ucnter/noavatar_small.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/validform/iconpic-error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/validform/iconpic-right.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/validform/iconpic-warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/verticalTab/tabNav-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/verticalTab/tabNav-hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/verticalTab/tabNav.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/verticalTab/tabNav_right-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/verticalTab/tabNav_right-hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/verticalTab/tabNav_right.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/images/verticalTab/tab_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/js/H-ui.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/js/manager/static/h-ui/js/H-ui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/DD_belatedPNG_0.0.8a-min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/Hui-iconfont/1.0.8/demo.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/Hui-iconfont/1.0.8/iconfont.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/Hui-iconfont/1.0.8/iconfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/Hui-iconfont/1.0.8/iconfont.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/Hui-iconfont/1.0.8/iconfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/Hui-iconfont/1.0.8/iconfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/Hui-iconfont/1.0.8/iconfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/JQuery.cookie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/WdatePicker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/calendar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/lang/en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/lang/zh-cn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/lang/zh-tw.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/WdatePicker.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/datePicker.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/default/datepicker.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/default/img.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/twoer/datepicker-dev.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/twoer/datepicker.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/twoer/img.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/twoer/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/whyGreen/bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/whyGreen/datepicker.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/My97DatePicker/4.8/skin/whyGreen/img.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/datatables/1.10.0/jquery.dataTables.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/echarts/3.4.0/echarts.common.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/expressInstall.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/highcharts-3d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/highcharts-more.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/highcharts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/accessibility.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/accessibility.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/annotations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/annotations.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/boost.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/boost.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/broken-axis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/broken-axis.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/data.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/drilldown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/drilldown.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/funnel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/funnel.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/gantt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/gantt.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/grid-axis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/grid-axis.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/heatmap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/heatmap.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/no-data-to-display.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/no-data-to-display.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/offline-exporting.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/offline-exporting.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/overlapping-datalabels.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/overlapping-datalabels.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/series-label.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/series-label.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/solid-gauge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/solid-gauge.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/treemap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/treemap.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/xrange-series.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/modules/xrange-series.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/dark-blue.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/dark-green.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/dark-unica.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/gray.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/grid-light.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/grid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/sand-signika.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/js/themes/skies.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/license.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/hcharts/Highcharts/5.0.6/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/html5shiv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery.SuperSlide/2.1.1/jquery.SuperSlide.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery.contextmenu/jquery.contextmenu.r2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery.easyfader/jquery.easyfader.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery.validation/1.14.0/additional-methods.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery.validation/1.14.0/jquery.validate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery.validation/1.14.0/messages_zh.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery.validation/1.14.0/validate-methods.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery/1.9.1/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jquery/1.9.1/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/jselect-1.0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/layer/2.4/layer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/layer/2.4/skin/default/icon-ext.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/layer/2.4/skin/default/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/layer/2.4/skin/default/loading-0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/layer/2.4/skin/default/loading-1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/layer/2.4/skin/default/loading-2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/layer/2.4/skin/layer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/laypage/1.2/laypage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/laypage/1.2/skin/laypage.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/css/lightbox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/examples.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/images/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/images/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/images/next.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/images/prev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/js/lightbox-plus-jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/js/lightbox-plus-jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/js/lightbox-plus-jquery.min.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/js/lightbox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/js/lightbox.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/lightbox2/2.8.1/js/lightbox.min.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/nprogress/0.2.0/nprogress.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/nprogress/0.2.0/nprogress.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/nprogress/0.2.0/nprogress.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/nprogress/0.2.0/nprogress.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/respond.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/squid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/swfobject.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/anchor/anchor.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/attachment.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/attachment.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/attachment.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_chm.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_doc.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_exe.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_jpg.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_mp3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_mv.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_pdf.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_ppt.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_psd.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_rar.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_txt.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/fileTypeImages/icon_xls.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/alignicon.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/alignicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/file-icons.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/file-icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/icons.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/progress.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/success.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/attachment/images/success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/background/background.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/background/background.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/background/background.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/background/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/background/images/success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/chart.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/charts.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/charts.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/charts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/images/charts0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/images/charts1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/images/charts2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/images/charts3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/images/charts4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/charts/images/charts5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/emotion.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/emotion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/emotion.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/bface.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/cface.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/fface.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/jxface2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/neweditor-tab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/tface.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/wface.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/emotion/images/yface.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/gmap/gmap.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/help/help.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/help/help.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/help/help.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/image.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/image.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/image.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/alignicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/icons.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/progress.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/success.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/image/images/success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/insertframe/insertframe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/internal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/link/link.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/map/map.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/map/show.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/music/music.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/music/music.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/music/music.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/preview/preview.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/addimg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/brush.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/delimg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/delimgH.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/emptyH.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/eraser.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/redo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/redoH.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/scale.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/scaleH.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/size.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/undo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/images/undoH.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/scrawl.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/scrawl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/scrawl/scrawl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/searchreplace/searchreplace.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/searchreplace/searchreplace.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/snapscreen/snapscreen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/spechars/spechars.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/spechars/spechars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/table/dragicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/table/edittable.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/table/edittable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/table/edittable.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/table/edittd.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/table/edittip.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/images/bg.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/images/pre0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/images/pre1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/images/pre2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/images/pre3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/images/pre4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/template.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/template.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/template/template.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/center_focus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/file-icons.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/file-icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/icons.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/left_focus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/none_focus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/progress.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/right_focus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/success.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/images/success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/video.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/video.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/video/video.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/webapp/webapp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/wordimage/fClipboard_ueditor.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/wordimage/imageUploader.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/wordimage/tangram.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/wordimage/wordimage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/dialogs/wordimage/wordimage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/controller.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/lib/commons-codec-1.9.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/lib/commons-fileupload-1.3.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/lib/commons-io-2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/lib/json.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/lib/ueditor-1.1.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/ActionEnter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/ConfigManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/Encoder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/PathFormat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/ActionMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/ActionState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/AppInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/BaseState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/FileType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/MIMEType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/MultiState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/define/State.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/hunter/FileManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/hunter/ImageHunter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/upload/Base64Uploader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/upload/BinaryUploader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/upload/StorageManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/jsp/src/com/baidu/ueditor/upload/Uploader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/addimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/alldeletebtnhoverskin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/alldeletebtnupskin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/deletedisable.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/deleteenable.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/listbackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/localimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/music.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/rotateleftdisable.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/rotateleftenable.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/rotaterightdisable.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/rotaterightenable.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/en/images/upload.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/zh-cn/images/copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/zh-cn/images/localimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/zh-cn/images/music.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/zh-cn/images/upload.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/Config.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/ConfigHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/CrawlerHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/Handler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/ListFileHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/NotSupportedHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/PathFormater.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/App_Code/UploadHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/Bin/Newtonsoft.Json.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/Bin/Newtonsoft.Json.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/Bin/Newtonsoft.Json.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/Web.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/controller.ashx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/net/net.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/php/Uploader.class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/php/action_crawler.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/php/action_list.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/php/action_upload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/php/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/php/controller.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/css/ueditor.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/css/ueditor.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/dialogbase.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/anchor.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/arrow_down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/arrow_up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/button-bg.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/cancelbutton.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/charts.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/cursor_h.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/cursor_h.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/cursor_v.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/cursor_v.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/dialog-title-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/filescan.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/highlighted.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/icons-all.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/icons.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/loaderror.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/lock.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/neweditor-tab-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/pagebreak.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/scale.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/sortable.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/spacer.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/sparator_v.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/table-cell-align.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/tangram-colorpicker.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/toolbar_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/unhighlighted.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/upload.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/videologo.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/word.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/default/images/wordpaste.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/themes/iframe.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/SyntaxHighlighter/shCore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/SyntaxHighlighter/shCoreDefault.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/codemirror/codemirror.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/codemirror/codemirror.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/adapters/mootools-adapter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/adapters/mootools-adapter.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/adapters/prototype-adapter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/adapters/prototype-adapter.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/adapters/standalone-framework.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/adapters/standalone-framework.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/highcharts-more.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/highcharts-more.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/highcharts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/highcharts.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/annotations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/annotations.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/canvas-tools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/canvas-tools.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/data.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/drilldown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/drilldown.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/exporting.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/exporting.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/funnel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/funnel.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/heatmap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/heatmap.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/map.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/no-data-to-display.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/modules/no-data-to-display.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/themes/dark-blue.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/themes/dark-green.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/themes/gray.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/themes/grid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/highcharts/themes/skies.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/jquery-1.10.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/jquery-1.10.2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/jquery-1.10.2.min.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/snapscreen/UEditorSnapscreen.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/font/vjs.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/font/vjs.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/font/vjs.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/font/vjs.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/video-js.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/video-js.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/video-js.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/video.dev.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/video-js/video.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/Uploader.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.custom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.custom.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.flashonly.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.flashonly.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.html5only.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.html5only.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.withoutimage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/webuploader/webuploader.withoutimage.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/zeroclipboard/ZeroClipboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/zeroclipboard/ZeroClipboard.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/third-party/zeroclipboard/ZeroClipboard.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/ueditor.all.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/ueditor.all.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/ueditor.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/ueditor.parse.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/ueditor/1.4.3/ueditor.parse.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/Uploader.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/cropper/cropper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/cropper/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/cropper/uploader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/expressInstall.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/image-upload/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/image-upload/upload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/images/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/images/icons.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/images/image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/images/progress.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/images/progress.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/images/success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/md5-demo/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/md5-demo/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/requirejs/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/requirejs/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/requirejs/require.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/server/crossdomain.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/server/fileupload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/server/fileupload2.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/server/preview.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.custom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.custom.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.fis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.flashonly.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.flashonly.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.html5only.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.html5only.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.noimage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.noimage.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.nolog.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.nolog.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.withoutimage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/webuploader/0.1.5/webuploader.withoutimage.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/API_cn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/API_en.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/common.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/common_ie6.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/apiMenu.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/apiMenu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/background.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/chinese.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/contact-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/english.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/header-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/lightbulb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/overlay_arrow.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/overlay_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/overlay_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/overlay_close_IE6.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/zTreeStandard.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/img/zTreeStandard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/jquery-1.6.2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/jquery.ztree.core-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/apiCss/zTreeStyleForApi.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/fn.zTree._z.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/fn.zTree.destroy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/fn.zTree.getZTreeObj.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/fn.zTree.init.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.autoParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.contentType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.dataFilter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.dataType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.otherParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.type.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.async.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeAsync.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeCollapse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeDblClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeDrag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeDragOpen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeDrop.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeEditName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeMouseDown.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeMouseUp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeRemove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeRename.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.beforeRightClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onAsyncError.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onAsyncSuccess.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onCollapse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onDblClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onDrag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onDragMove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onDrop.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onMouseDown.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onMouseUp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onNodeCreated.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onRemove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onRename.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.callback.onRightClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.check.autoCheckTrigger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.check.chkDisabledInherit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.check.chkStyle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.check.chkboxType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.check.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.check.nocheckInherit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.check.radioType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.keep.leaf.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.keep.parent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.key.checked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.key.children.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.key.name.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.key.title.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.key.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.simpleData.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.simpleData.idKey.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.simpleData.pIdKey.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.data.simpleData.rootPId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.autoExpandTrigger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.autoOpenTime.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.borderMax.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.borderMin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.inner.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.isCopy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.isMove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.maxShowNodeNum.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.minMoveSize.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.next.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.drag.prev.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.editNameSelectAll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.removeTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.renameTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.showRemoveBtn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.edit.showRenameBtn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.treeId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.treeObj.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.addDiyDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.addHoverDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.autoCancelSelected.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.dblClickExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.expandSpeed.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.fontCss.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.nameIsHTML.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.removeHoverDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.selectedMulti.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.showIcon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.showLine.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.showTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/setting.view.txtSelectedEnable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.check_Child_State.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.check_Focus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.checked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.checkedOld.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.children.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.chkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.click.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.diy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.editNameFlag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.getCheckStatus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.getNextNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.getParentNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.getPreNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.halfCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.icon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.iconClose.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.iconOpen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.iconSkin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.isAjaxing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.isFirstNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.isHidden.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.isHover.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.isLastNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.isParent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.level.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.name.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.nocheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.open.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.parentTId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.tId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.target.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/treeNode.zAsync.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.addNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.cancelEditName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.cancelSelectedNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.checkAllNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.checkNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.copyNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.destroy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.editName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.expandAll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.expandNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getChangeCheckedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getCheckedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getNodeByParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getNodeByTId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getNodeIndex.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getNodesByFilter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getNodesByParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getNodesByParamFuzzy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.getSelectedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.hideNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.hideNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.moveNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.reAsyncChildNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.refresh.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.removeChildNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.removeNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.selectNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.setChkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.setEditable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.setting.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.showNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.showNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.transformToArray.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.transformTozTreeNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/cn/zTreeObj.updateNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/fn.zTree._z.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/fn.zTree.destroy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/fn.zTree.getZTreeObj.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/fn.zTree.init.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.autoParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.contentType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.dataFilter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.dataType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.otherParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.type.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.async.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeAsync.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeCollapse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeDblClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeDrag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeDragOpen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeDrop.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeEditName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeMouseDown.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeMouseUp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeRemove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeRename.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.beforeRightClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onAsyncError.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onAsyncSuccess.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onCollapse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onDblClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onDrag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onDragMove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onDrop.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onMouseDown.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onMouseUp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onNodeCreated.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onRemove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onRename.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.callback.onRightClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.check.autoCheckTrigger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.check.chkDisabledInherit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.check.chkStyle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.check.chkboxType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.check.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.check.nocheckInherit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.check.radioType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.keep.leaf.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.keep.parent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.key.checked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.key.children.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.key.name.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.key.title.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.key.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.simpleData.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.simpleData.idKey.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.simpleData.pIdKey.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.data.simpleData.rootPId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.autoExpandTrigger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.autoOpenTime.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.borderMax.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.borderMin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.inner.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.isCopy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.isMove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.maxShowNodeNum.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.minMoveSize.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.next.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.drag.prev.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.editNameSelectAll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.removeTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.renameTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.showRemoveBtn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.edit.showRenameBtn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.treeId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.treeObj.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.addDiyDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.addHoverDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.autoCancelSelected.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.dblClickExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.expandSpeed.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.fontCss.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.nameIsHTML.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.removeHoverDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.selectedMulti.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.showIcon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.showLine.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.showTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/setting.view.txtSelectedEnable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.check_Child_State.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.check_Focus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.checked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.checkedOld.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.children.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.chkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.click.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.diy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.editNameFlag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.getCheckStatus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.getNextNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.getParentNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.getPreNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.halfCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.icon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.iconClose.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.iconOpen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.iconSkin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.isAjaxing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.isFirstNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.isHidden.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.isHover.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.isLastNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.isParent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.level.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.name.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.nocheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.open.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.parentTId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.tId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.target.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/treeNode.zAsync.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.addNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.cancelEditName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.cancelSelectedNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.checkAllNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.checkNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.copyNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.destroy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.editName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.expandAll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.expandNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getChangeCheckedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getCheckedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getNodeByParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getNodeByTId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getNodeIndex.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getNodesByFilter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getNodesByParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getNodesByParamFuzzy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.getSelectedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.hideNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.hideNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.moveNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.reAsyncChildNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.refresh.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.removeChildNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.removeNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.selectNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.setChkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.setEditable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.setting.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.showNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.showNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.transformToArray.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.transformTozTreeNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/api/en/zTreeObj.updateNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/metroStyle/img/line_conn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/metroStyle/img/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/metroStyle/img/metro.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/metroStyle/img/metro.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/metroStyle/metroStyle.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/1_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/1_open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/diy/9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/line_conn.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/zTreeStandard.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/img/zTreeStandard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.all-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.all-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.core-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.excheck-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.exedit-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.exedit-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.exedit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.exhide-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beego_back/static/lib/zTree/v3/js/jquery.ztree.exhide-3.5.min.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/settings.go" beforeDir="false" afterPath="$PROJECT_DIR$/settings/settings.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sugar/curd/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/sugar/curd/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sugar/curd/sugar.go" beforeDir="false" afterPath="$PROJECT_DIR$/sugar/curd/sugar.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sugar/curd/sugar.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sugar/curd/url.go" beforeDir="false" afterPath="$PROJECT_DIR$/sugar/curd/url.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sugar/curd/utils.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sugar/curd/views.go" beforeDir="false" afterPath="$PROJECT_DIR$/sugar/curd/views.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/urls/urls.go" beforeDir="false" afterPath="$PROJECT_DIR$/urls/urls.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,71 +1207,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="151">
+              <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sugar/sugar.go">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="381">
-              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+              <caret line="200" column="3" selection-start-line="200" selection-start-column="3" selection-end-line="200" selection-end-column="3" />
               <folding>
-                <element signature="e#66#158#0" expanded="true" />
+                <element signature="e#66#171#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/urls/urls.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-              <folding>
-                <element signature="e#66#104#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sugar/curd/sugar.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="102" column="5" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/models.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="18" column="12" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/settings/settings.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-              <folding>
-                <element signature="e#72#130#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/config.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/Go/src/database/sql/sql.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62942">
-              <caret line="2873" column="28" selection-start-line="2873" selection-start-column="28" selection-end-line="2873" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -110,26 +1228,77 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sugar/curd/db.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="209" column="19" selection-start-line="209" selection-start-column="19" selection-end-line="209" selection-end-column="19" />
+            <state relative-caret-position="1281">
+              <caret line="74" column="11" selection-start-line="74" selection-start-column="11" selection-end-line="74" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/Go/src/fmt/print.go">
+        <entry file="file://C:/Go/src/runtime/extern.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5610">
-              <caret line="262" column="5" selection-start-line="262" selection-start-column="5" selection-end-line="262" selection-end-column="5" />
+            <state relative-caret-position="159">
+              <caret line="167" column="5" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/Go/src/builtin/builtin.go">
+        <entry file="file://C:/Go/src/path/path.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3080">
-              <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
+            <state relative-caret-position="151">
+              <caret line="154" column="5" selection-start-line="154" selection-start-column="5" selection-end-line="154" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sugar/curd/views.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="259">
+              <caret line="67" selection-start-line="67" selection-end-line="70" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sugar/template/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="141" column="17" selection-start-line="141" selection-start-column="17" selection-end-line="141" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/gin.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="151">
+              <caret line="149" column="5" selection-start-line="149" selection-start-column="5" selection-end-line="149" selection-end-column="5" />
+              <folding>
+                <element signature="e#181#284#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sugar/curd/url.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+              <folding>
+                <element signature="e#66#144#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -154,10 +1323,12 @@
       <find>path</find>
       <find>str</find>
       <find>ptr</find>
+      <find>\</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;/tablename&quot;</replace>
       <replace>&quot;/:tablename&quot;</replace>
+      <replace>/</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Go\src\net\http</dir>
@@ -183,24 +1354,31 @@
         <option value="$PROJECT_DIR$/router/api_url.go" />
         <option value="$PROJECT_DIR$/urls/api_url.go" />
         <option value="$PROJECT_DIR$/sugar/table.go" />
-        <option value="$PROJECT_DIR$/sugar/utils/slice.go" />
         <option value="$PROJECT_DIR$/sugar/db.go" />
         <option value="$PROJECT_DIR$/beego_back/main.go" />
         <option value="$PROJECT_DIR$/apps/api.go" />
-        <option value="$PROJECT_DIR$/urls/urls.go" />
         <option value="$PROJECT_DIR$/apps/manager.go" />
         <option value="$PROJECT_DIR$/sugar/views.go" />
-        <option value="$PROJECT_DIR$/sugar/sugar.go" />
-        <option value="$PROJECT_DIR$/sugar/curd/url.go" />
         <option value="$PROJECT_DIR$/sugar/utils/strings.go" />
         <option value="$PROJECT_DIR$/sugar/utils/strings_test.go" />
         <option value="$PROJECT_DIR$/fanshe.go" />
-        <option value="$PROJECT_DIR$/sugar/curd/sugar.go" />
-        <option value="$PROJECT_DIR$/models/models.go" />
-        <option value="$PROJECT_DIR$/main.go" />
-        <option value="$PROJECT_DIR$/sugar/curd/db.go" />
         <option value="$PROJECT_DIR$/settings/config.json" />
         <option value="$PROJECT_DIR$/settings/settings.go" />
+        <option value="$PROJECT_DIR$/beego_back/models/models.go" />
+        <option value="$PROJECT_DIR$/models/models.go" />
+        <option value="$PROJECT_DIR$/sugar/curd/db.go" />
+        <option value="$PROJECT_DIR$/sugar/curd/template/login.html" />
+        <option value="$PROJECT_DIR$/sugar/login.html" />
+        <option value="$PROJECT_DIR$/sugar/curd/views.go" />
+        <option value="$PROJECT_DIR$/urls/urls.go" />
+        <option value="$PROJECT_DIR$/sugar/curd/sugar.go" />
+        <option value="$PROJECT_DIR$/sugar/curd/url.go" />
+        <option value="$PROJECT_DIR$/sugar/curd/utils.go" />
+        <option value="$PROJECT_DIR$/sugar/utils/slice.go" />
+        <option value="$PROJECT_DIR$/sugar/utils/slices.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/sugar/sugar.go" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -215,6 +1393,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -225,38 +1404,21 @@
             <path>
               <item name="miller-blogs" type="b2602c69:ProjectViewProjectNode" />
               <item name="miller-blogs" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miller-blogs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miller-blogs" type="462c0819:PsiDirectoryNode" />
-              <item name="settings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miller-blogs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miller-blogs" type="462c0819:PsiDirectoryNode" />
-              <item name="sugar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miller-blogs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miller-blogs" type="462c0819:PsiDirectoryNode" />
-              <item name="sugar" type="462c0819:PsiDirectoryNode" />
-              <item name="curd" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miller-blogs" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miller-blogs" type="462c0819:PsiDirectoryNode" />
-              <item name="urls" type="462c0819:PsiDirectoryNode" />
+              <item name="middleware" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="miller-blogs" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
+            <path>
+              <item name="miller-blogs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="GOPATH &lt;miller-blogs&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -267,6 +1429,7 @@
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../KafkaHttpFront_Go" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -274,16 +1437,18 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\curd" />
       <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar" />
+      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\rbac" />
+      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\curd\template" />
+      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\curd" />
       <recent name="E:\GoProject\miller-blogs\src\miller-blogs" />
-      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\beego_back" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\GoProject\miller-blogs\src\miller-blogs" />
-      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\settings" />
       <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar" />
-      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\controllers\curd" />
+      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\curd\static" />
+      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\curd\static\img" />
+      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\curd\static\css" />
+      <recent name="E:\GoProject\miller-blogs\src\miller-blogs\sugar\curd\template" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -382,14 +1547,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-322" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17963752" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18123667" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4064588" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32962137" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.43986636" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39910814" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -412,267 +1576,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.md" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/binding/form_mapping.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/binding/json.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="25" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/response_writer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/context.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-          <folding>
-            <element signature="e#181#403#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/net/http/request.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/sync/atomic/value.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/golang/net/websocket/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1474">
-          <caret line="72" column="48" selection-start-line="72" selection-start-column="48" selection-end-line="72" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beego_back/conf/custom.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="24" column="17" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/astaxie/beego/context/context.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="192" column="19" selection-start-line="192" selection-start-column="19" selection-end-line="192" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/net/http/header.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/astaxie/beego/utils/slice.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/astaxie/beedb/util.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="142" column="24" lean-forward="true" selection-start-line="142" selection-start-column="24" selection-end-line="142" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beego_back/controllers/manager/rbac.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1342">
-          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beego_back/controllers/manager/manager.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-234">
-          <caret line="80" column="43" lean-forward="true" selection-start-line="80" selection-start-column="43" selection-end-line="80" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beego_back/public/log_lib.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-324">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beego_back/public/public_lib.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/astaxie/beego/namespace.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="306" column="5" selection-start-line="306" selection-start-column="5" selection-end-line="306" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beego_back/routers/router.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/runtime/panic.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="593" lean-forward="true" selection-start-line="593" selection-end-line="593" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beego_back/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/middleware/api_middle.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/api.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="32" selection-start-line="32" selection-end-line="32" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/manager.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="15" selection-start-line="21" selection-start-column="15" selection-end-line="21" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/net/http/status.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sugar/curd/utils.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/astaxie/beego/orm/models_boot.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6622">
-          <caret line="306" column="24" selection-start-line="306" selection-start-column="24" selection-end-line="306" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sugar/curd/views.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="38" column="33" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/routergroup.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/gin.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6182">
-          <caret line="290" column="33" selection-start-line="290" selection-start-column="33" selection-end-line="290" selection-end-column="33" />
-          <folding>
-            <element signature="e#181#284#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/net/http/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64746">
-          <caret line="2966" column="5" selection-start-line="2966" selection-start-column="5" selection-end-line="2966" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../KafkaHttpFront_Go/src/kafka-http-front/models/models.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/strings/strings.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="297" column="5" selection-start-line="297" selection-start-column="5" selection-end-line="297" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sugar/utils/strings_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="25" column="1" lean-forward="true" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-          <folding>
-            <element signature="e#65#93#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sugar/utils/strings.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="27" column="16" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sugar/curd/url.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="26" column="65" selection-start-line="26" selection-start-column="65" selection-end-line="26" selection-end-column="65" />
-          <folding>
-            <element signature="e#66#114#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fanshe.go" />
     <entry file="file://C:/Go/src/reflect/type.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="434">
@@ -701,16 +1604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/urls/urls.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-          <folding>
-            <element signature="e#66#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Go/src/database/sql/sql.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="62942">
@@ -732,37 +1625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/models.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="18" column="12" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sugar/curd/db.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="209" column="19" selection-start-line="209" selection-start-column="19" selection-end-line="209" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding>
-            <element signature="e#66#158#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sugar/curd/sugar.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="102" column="5" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
@@ -772,11 +1634,277 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings/settings.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="381">
+          <caret line="27" column="44" lean-forward="true" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
           <folding>
             <element signature="e#72#130#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beego_back/middleware/middleware.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1409">
+          <caret line="20" column="22" lean-forward="true" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beego_back/models/register.go" />
+    <entry file="file://$PROJECT_DIR$/beego_back/models/models.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beego_back/conf/app.conf" />
+    <entry file="file://$PROJECT_DIR$/beego_back/conf/custom.conf" />
+    <entry file="file://$PROJECT_DIR$/beego_back/controllers/blog/blog.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beego_back/routers/router.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="40" column="77" lean-forward="true" selection-start-line="40" selection-start-column="77" selection-end-line="40" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beego_back/controllers/candy/candy_test.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beego_back/controllers/candy/candy.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="59" column="1" lean-forward="true" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/recovery.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/mode.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/logger.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/models.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="276" column="12" selection-start-line="276" selection-start-column="12" selection-end-line="276" selection-end-column="12" />
+          <folding>
+            <element signature="e#66#141#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/net/url/url.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="333" column="21" selection-start-line="333" selection-start-column="21" selection-end-line="333" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/strings/strings.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="444" column="5" selection-start-line="444" selection-start-column="5" selection-end-line="444" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/curd/static/css/login.css" />
+    <entry file="file://$PROJECT_DIR$/sugar/curd/template/admin_list.html" />
+    <entry file="file://$PROJECT_DIR$/sugar/curd/static/blank.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/context.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="458">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/routergroup.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2134">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/net/http/request.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1672">
+          <caret line="97" column="5" selection-start-line="97" selection-start-column="5" selection-end-line="97" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/response_writer_1.8.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/tree.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/auth.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/rbac/verify-login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="142" column="19" selection-start-line="142" selection-start-column="19" selection-end-line="142" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/utils/strings.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="23" column="43" lean-forward="true" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/utils/strings_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="25" column="1" lean-forward="true" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+          <folding>
+            <element signature="e#65#93#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/urls/urls.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="28" selection-start-line="28" selection-end-line="29" />
+          <folding>
+            <element signature="e#66#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/html/template/template.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="369" column="5" selection-start-line="369" selection-start-column="5" selection-end-line="369" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/render/html.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="26" column="28" lean-forward="true" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/utils/slices.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="1" lean-forward="true" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/template/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="141" column="17" selection-start-line="141" selection-start-column="17" selection-end-line="141" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/path/path.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="154" column="5" selection-start-line="154" selection-start-column="5" selection-end-line="154" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/curd/utils.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/curd/views.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="67" selection-start-line="67" selection-end-line="70" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/GoPath/src/github.com/gin-gonic/gin/gin.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="149" column="5" selection-start-line="149" selection-start-column="5" selection-end-line="149" selection-end-column="5" />
+          <folding>
+            <element signature="e#181#284#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/runtime/extern.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="167" column="5" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/curd/db.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1281">
+          <caret line="74" column="11" selection-start-line="74" selection-start-column="11" selection-end-line="74" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/sugar.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="200" column="3" selection-start-line="200" selection-start-column="3" selection-end-line="200" selection-end-column="3" />
+          <folding>
+            <element signature="e#66#171#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sugar/curd/url.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+          <folding>
+            <element signature="e#66#144#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
