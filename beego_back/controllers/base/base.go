@@ -333,9 +333,9 @@ func (curd *curdBaseController) ResponseTemplate(htmlName string) {
 	curd.TplName = curd.GetManagerPagePath(htmlName)
 	curd.LayoutSections = make(map[string]string)
 	curd.LayoutSections["HeadMeta"] = curd.GetManagerPagePath("headmeta.html")
-	curd.LayoutSections["Header"] = curd.GetManagerPagePath("header.html")
+	curd.LayoutSections["Header"] = curd.GetManagerPagePath("head.html")
 	curd.LayoutSections["LeftMenu"] = curd.GetManagerPagePath("menu.html")
-	curd.LayoutSections["Navigation"] = curd.GetManagerPagePath("navigation.html")
+	curd.LayoutSections["Navigation"] = curd.GetManagerPagePath("topbar.html")
 	curd.getTemplateData()
 
 }

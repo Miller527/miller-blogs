@@ -64,7 +64,7 @@ func (perMC *PermissionManagerController) Post() {
 
 	perMC.LayoutSections = make(map[string]string)
 	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	perMC.LayoutSections["Header"] = "manager/Hui-admin/head.html"
 	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 	perMC.Data["headerData"] = &HeaderData{"Miller"}
 }
@@ -79,7 +79,7 @@ func (perMC *PermissionManagerController) Put() {
 
 	perMC.LayoutSections = make(map[string]string)
 	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	perMC.LayoutSections["Header"] = "manager/Hui-admin/head.html"
 	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 	perMC.Data["headerData"] = &HeaderData{"Miller"}
 }
@@ -94,7 +94,7 @@ func (perMC *PermissionManagerController) Del() {
 
 	perMC.LayoutSections = make(map[string]string)
 	perMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-	perMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+	perMC.LayoutSections["Header"] = "manager/Hui-admin/head.html"
 	perMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 	perMC.Data["headerData"] = &HeaderData{"Miller"}
 }
@@ -150,7 +150,7 @@ func (userMC *UserManagerController) TitleInit() {
 //	userMC.TplName = "manager/Hui-admin/admin_list.html"
 //	userMC.LayoutSections = make(map[string]string)
 //	userMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-//	userMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+//	userMC.LayoutSections["Header"] = "manager/Hui-admin/head.html"
 //	userMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 //	userMC.Data["headerData"] = &HeaderData{"Miller"}
 //	userMC.Data["tableHeader"] = &userMC.DisplayTitle
@@ -208,7 +208,7 @@ func (userMC *UserManagerController) Post() {
 //
 //	articleMC.LayoutSections = make(map[string]string)
 //	articleMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
-//	articleMC.LayoutSections["Header"] = "manager/Hui-admin/header.html"
+//	articleMC.LayoutSections["Header"] = "manager/Hui-admin/head.html"
 //	articleMC.LayoutSections["LeftMenu"] = "manager/Hui-admin/menu.html"
 //	articleMC.Data["headerData"] = &HeaderData{"Miller"}
 //	articleMC.Data["tableHeader"] = &articleMC.DisplayTitle

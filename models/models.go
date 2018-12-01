@@ -5,7 +5,7 @@
 package models
 
 import (
-	"miller-blogs/sugar/curd"
+	"miller-blogs/sugar"
 )
 
 import (
@@ -266,14 +266,14 @@ func Initialization() {
 
 func init() {
 
-	curd.DbmInit()
+	sugar.DbmInit()
 
-	role := &curd.TableConf{
+	role := &sugar.TableConf{
 		Field: []string{"id", "rid", "name"},
 		Title: []string{"ID", "角色ID", "角色名称"},
 		Desc:  &Role{},
 	}
 
-	curd.Register(role)
+	sugar.Register(role)
 
 }

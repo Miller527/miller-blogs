@@ -6,16 +6,24 @@
 package curd
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-// 列表
+// 首页
 func Index(c *gin.Context) {
-	fmt.Println(c.Params)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+	})
+}
 
-	c.String(http.StatusOK, "Index")
+//列表
+func List(c *gin.Context) {
+	c.HTML(http.StatusOK, "table.html", gin.H{
+	})
+}
+func Curd(c *gin.Context) {
+	c.HTML(http.StatusOK, "table.html", gin.H{
+	})
 }
 
 // 详情的一条
@@ -60,12 +68,15 @@ func Login(c *gin.Context) {
 	//c.String(http.StatusOK, "Login")
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
+		"path": "/sugar/static",
+
 	})
 
 }
 
 // 登录验证
-func verifyLogin(c *gin.Context) {
+func VerifyLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "verify-login.html", gin.H{
+		"path": "/sugar/static",
 	})
 }
