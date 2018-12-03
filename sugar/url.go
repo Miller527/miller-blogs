@@ -88,7 +88,7 @@ func (sr *SugarRouter) Router(rg *gin.RouterGroup) {
 
 func (sr *SugarRouter) addRouter(rg *gin.RouterGroup) {
 	rg.GET("/login", curd.Login)
-	rg.GET("/curd", curd.Curd)
+	rg.GET("/tables", curd.Curd)
 	rg.POST("/login", curd.VerifyLogin)
 	rg.GET("/index", curd.Index)
 	rg.GET("/index.html", curd.Index)

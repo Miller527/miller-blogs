@@ -372,10 +372,10 @@ ul.ajax-loaders {
     list-style: none;
 }
 
-#for-is-ajax {
-    padding-left: 12px;
-    cursor: pointer;
-}
+/*#for-is-ajax {*/
+    /*padding-left: 12px;*/
+    /*cursor: pointer;*/
+/*}*/
 
 #loading {
     margin-top: 20px;
@@ -585,10 +585,10 @@ ul.github-buttons li {
         color: white;
     }
 
-    #for-is-ajax {
-        color: white;
-        margin-top: 15px;
-    }
+    /*#for-is-ajax {*/
+        /*color: white;*/
+        /*margin-top: 15px;*/
+    /*}*/
 
     .main-menu .nav-header {
         color: white;

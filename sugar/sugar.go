@@ -22,7 +22,7 @@ type SugarAdmin struct {
 	Prefix        string
 	Extend        string
 	Relative      string
-	Static        string
+	//Static        string
 	Sugar         *gin.Engine
 	whiteUrls     []string
 	blackUrls     []string
@@ -53,7 +53,7 @@ func (sa *SugarAdmin) checkParams() {
 	sa.checkPrefix()
 	sa.checkRelative()
 	sa.checkExtend()
-	sa.checkStatic()
+	//sa.checkStatic()
 }
 
 func (sa *SugarAdmin) checkRelative() {
@@ -98,18 +98,19 @@ func (sa *SugarAdmin) checkExtend() {
 	}
 }
 
-func (sa *SugarAdmin) checkStatic() {
-	if sa.Static == "" {
-		sa.Static = "static"
-		return
-	}
-	if strings.HasPrefix(sa.Static, "/") {
-		sa.Static = sa.Static[1:]
-	}
-	if ! strings.HasSuffix(sa.Static, "/") {
-		sa.Static = sa.Static[:len(sa.Static)-1]
-	}
-}
+// todo 前端代码里怎么改动（预加载选择主题时候的路径问题）
+//func (sa *SugarAdmin) checkStatic() {
+//	if sa.Static == "" {
+//		sa.Static = "static"
+//		return
+//	}
+//	if strings.HasPrefix(sa.Static, "/") {
+//		sa.Static = sa.Static[1:]
+//	}
+//	if ! strings.HasSuffix(sa.Static, "/") {
+//		sa.Static = sa.Static[:len(sa.Static)-1]
+//	}
+//}
 
 func (sa *SugarAdmin) new(middleware ...gin.HandlerFunc) {
 	sa.Sugar = gin.New()
@@ -121,7 +122,7 @@ func (sa *SugarAdmin) htmlGlob() {
 	if ! ok {
 		panic(errors.New("SugarAdminError: get template path error"))
 	}
-	tplPath := path.Join(path.Dir(file), "template","**","*")
+	tplPath := path.Join(path.Dir(file), "template", "**", "*")
 	sa.Sugar.LoadHTMLGlob(tplPath)
 
 }
@@ -132,7 +133,8 @@ func (sa *SugarAdmin) static() {
 		panic(errors.New("SugarAdminError: get template path error"))
 	}
 	tplPath := path.Join(path.Dir(file), "static")
-	sa.Sugar.Static(sa.Prefix+sa.Static, tplPath)
+	sa.Sugar.Static(sa.Prefix+"static", tplPath)
+	//sa.Sugar.Static(sa.Prefix+sa.Static, tplPath)
 
 }
 func (sa *SugarAdmin) InitApp(middleware ...gin.HandlerFunc) {
@@ -205,19 +207,29 @@ var Registry = make(map[string]*TableConf)
 
 // 配置表接口
 type SugarTable interface {
-	Name() (string, bool)
+	Name() string
+	DisplayName() string
 }
 
 type TableConf struct {
-	Field   []string
-	Title   []string
-	Methods []int
-	Desc    interface{}
+	Display     string
+	DisplayJoin bool
+	Field       []string
+	Title       []string
+	Methods     []int
+	Desc        interface{}
 }
 
 func (tc *TableConf) Name() string {
 	tmpSlice := strings.Split(reflect.TypeOf(tc.Desc).String(), ".")
 	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
+}
+
+func (tc *TableConf) DisplayName() string {
+	if tc.Display == "" {
+		return tc.Name()
+	}
+	return tc.Display + " ( " + tc.Name() + " )"
 }
 
 func verifyName(name string) bool {

@@ -54,16 +54,16 @@ $(document).ready(function () {
         $('#themes a[data-value=' + themeName + ']').find('i').removeClass('whitespace').addClass('glyphicon glyphicon-ok');
     }
 
-    //ajax menu checkbox
-    $('#is-ajax').click(function (e) {
-        $.cookie('is-ajax', $(this).prop('checked'), {expires: 365});
-    });
-    $('#is-ajax').prop('checked', $.cookie('is-ajax') === 'true' ? true : false);
+    // //ajax menu checkbox
+    // $('#is-ajax').click(function (e) {
+    //     $.cookie('is-ajax', $(this).prop('checked'), {expires: 365});
+    // });
+    // $('#is-ajax').prop('checked', $.cookie('is-ajax') === 'true' ? true : false);
 
     //disbaling some functions for Internet Explorer
     if (msie) {
-        $('#is-ajax').prop('checked', false);
-        $('#for-is-ajax').hide();
+        // $('#is-ajax').prop('checked', false);
+        // $('#for-is-ajax').hide();
         $('#toggle-fullscreen').hide();
         $('.login-box').find('.input-large').removeClass('span10');
 
@@ -99,19 +99,19 @@ $(document).ready(function () {
     });
 
     //ajaxify menus
-    $('a.ajax-link').click(function (e) {
-        if (msie) e.which = 1;
-        if (e.which != 1 || !$('#is-ajax').prop('checked') || $(this).parent().hasClass('active')) return;
-        e.preventDefault();
-        $('.sidebar-nav').removeClass('active');
-        $('.navbar-toggle').removeClass('active');
-        $('#loading').remove();
-        $('#content').fadeOut().parent().append('<div id="loading" class="center">Loading...<div class="center"></div></div>');
-        var $clink = $(this);
-        History.pushState(null, null, $clink.attr('href'));
-        $('ul.main-menu li.active').removeClass('active');
-        $clink.parent('li').addClass('active');
-    });
+    // $('a.ajax-link').click(function (e) {
+    //     if (msie) e.which = 1;
+    //     if (e.which != 1 || !$('#is-ajax').prop('checked') || $(this).parent().hasClass('active')) return;
+    //     e.preventDefault();
+    //     $('.sidebar-nav').removeClass('active');
+    //     $('.navbar-toggle').removeClass('active');
+    //     $('#loading').remove();
+    //     $('#content').fadeOut().parent().append('<div id="loading" class="center">Loading...<div class="center"></div></div>');
+    //     var $clink = $(this);
+    //     History.pushState(null, null, $clink.attr('href'));
+    //     $('ul.main-menu li.active').removeClass('active');
+    //     $clink.parent('li').addClass('active');
+    // });
 
     $('.accordion > a').click(function (e) {
         e.preventDefault();
@@ -258,11 +258,11 @@ function docReady() {
             title: "Dashboard",
             content: "This is your dashboard from here you will find highlights."
         });
-        tour.addStep({
-            element: "#for-is-ajax",
-            title: "Ajax",
-            content: "You can change if pages load with Ajax or not."
-        });
+        // tour.addStep({
+        //     element: "#for-is-ajax",
+        //     title: "Ajax",
+        //     content: "You can change if pages load with Ajax or not."
+        // });
         tour.addStep({
             element: ".top-nav a:first",
             placement: "bottom",

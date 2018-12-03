@@ -18,12 +18,10 @@ func Index(c *gin.Context) {
 
 //列表
 func List(c *gin.Context) {
-	c.HTML(http.StatusOK, "table.html", gin.H{
-	})
+	c.HTML(http.StatusOK, "table.html", gin.H{})
 }
 func Curd(c *gin.Context) {
-	c.HTML(http.StatusOK, "table.html", gin.H{
-	})
+	c.HTML(http.StatusOK, "table.html", gin.H{})
 }
 
 // 详情的一条
