@@ -43,7 +43,7 @@ type UserInfo struct {
 
 // 用户角色, 访客角色, 只能评论
 type Role struct {
-	id          int
+	id          []uint
 	rid         string
 	name        string
 	//Users       []*UserInfo   `orm:"reverse(many)" explain:"关联用户"`

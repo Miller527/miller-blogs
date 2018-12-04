@@ -9,7 +9,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"miller-blogs/sugar/curd"
 	"miller-blogs/sugar/utils"
 	"net/http"
 	"strings"
@@ -87,11 +86,11 @@ func (sr *SugarRouter) Router(rg *gin.RouterGroup) {
 }
 
 func (sr *SugarRouter) addRouter(rg *gin.RouterGroup) {
-	rg.GET("/login", curd.Login)
-	rg.GET("/tables", curd.Curd)
-	rg.POST("/login", curd.VerifyLogin)
-	rg.GET("/index", curd.Index)
-	rg.GET("/index.html", curd.Index)
+	rg.GET("/login", HandlerLogin)
+	rg.GET("/tables", HandlerCurd)
+	rg.POST("/login", HandlerVerifyLogin)
+	rg.GET("/index", HandlerIndex)
+	rg.GET("/index.html", HandlerIndex)
 }
 
 // 通过配置限制限制访问权限, 不分用户
@@ -99,23 +98,23 @@ func (sr *SugarRouter) groupRouter(relative string, rg *gin.RouterGroup, methodL
 	for _, method := range methodList {
 		switch method {
 		case List:
-			rg.GET(sr.Extend+relative+"/list", curd.List)
+			rg.GET(sr.Extend+relative+"/list", HandlerList)
 		case Get:
-			rg.GET(sr.Extend+relative+"/get/:id", curd.Get)
+			rg.GET(sr.Extend+relative+"/get/:id", HandlerGet)
 
 		case Add:
-			rg.POST(sr.Extend+relative+"/add", curd.Add)
+			rg.POST(sr.Extend+relative+"/add", HandlerAdd)
 		case Update:
-			rg.PUT(sr.Extend+relative+"/update", curd.Update)
+			rg.PUT(sr.Extend+relative+"/update", HandlerUpdate)
 		case Delete:
-			rg.DELETE(sr.Extend+relative+"/update", curd.Delete)
+			rg.DELETE(sr.Extend+relative+"/update", HandlerDelete)
 
 		case MulitAdd:
-			rg.DELETE(sr.Extend+relative+"/delete/:id", curd.MulitDelete)
+			rg.DELETE(sr.Extend+relative+"/delete/:id", HandlerMulitDelete)
 		case MulitUpdate:
-			rg.PUT(sr.Extend+relative+"/mulit-delete", curd.MulitUpdate)
+			rg.PUT(sr.Extend+relative+"/mulit-delete", HandlerMulitUpdate)
 		case MulitDelete:
-			rg.PUT(sr.Extend+relative+"/mulit-update", curd.MulitUpdate)
+			rg.PUT(sr.Extend+relative+"/mulit-update", HandlerMulitUpdate)
 		default:
 			panic(errors.New("SugarTable: table [" + relative + "] method error"))
 		}

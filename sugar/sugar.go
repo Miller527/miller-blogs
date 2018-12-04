@@ -56,10 +56,12 @@ func (sa *SugarAdmin) checkParams() {
 	//sa.checkStatic()
 }
 
+var RelativePath string
 func (sa *SugarAdmin) checkRelative() {
 	if sa.Relative == "" {
 		if sa.AccessControl == "rbac" {
 			sa.Relative = ":tablename/"
+			RelativePath = "tablename"
 		} else {
 			sa.Relative = "tablename/"
 
@@ -70,8 +72,11 @@ func (sa *SugarAdmin) checkRelative() {
 				panic(errors.New("SugarAdminError: Relative only be case letters"))
 			}
 		}
+		RelativePath = sa.Relative
+
 		sa.Relative += "/"
 	}
+
 }
 func (sa *SugarAdmin) checkPrefix() {
 	if sa.Prefix == "" {
@@ -192,9 +197,9 @@ func Register(tcList ...*TableConf) {
 		if ! verifyField(tc) {
 			panic(errors.New("SugarTable: Table [" + name + "] Field error"))
 		}
-		if ! verifyName(name) {
-			panic(errors.New("SugarTable: database not found [" + name + "] table"))
-		}
+		//if ! verifyName(name) {
+		//	panic(errors.New("SugarTable: database not found [" + name + "] table"))
+		//}
 		if _, ok := Registry[name]; ok {
 			panic(errors.New("SugarTable: table [" + name + "] has already registered"))
 		}
@@ -261,7 +266,7 @@ func verifyField(tc *TableConf) bool {
 	}
 
 	for _, line := range result {
-		if ! utils.InStringSlice(line[0].(string), tc.Field) {
+		if ! utils.InStringSlice(line[0], tc.Field) {
 			return false
 		}
 	}
