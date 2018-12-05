@@ -36,14 +36,16 @@ func HandlerList(c *gin.Context) {
 	result,err := Dbm.SelectSlice(stmt, tb)
 	fmt.Println(result,err)
 	if err != nil  {
-		fmt.Println("500error")
 		c.HTML(http.StatusInternalServerError, "error.html", gin.H{})
 		return
 	}
-	s ,_ := json.Marshal(map[string][][]string{"data":result})
-	c.JSON(http.StatusOK, s)
-	//c.String(http.StatusOK, "List")
-
+	fmt.Println(result)
+	res,err := json.Marshal(map[string][][]string{"data":result})
+	if err == nil{
+		c.String(http.StatusOK, string(res))
+		return
+	}
+	c.String(http.StatusInternalServerError, "")
 }
 
 func HandlerCurd(c *gin.Context) {

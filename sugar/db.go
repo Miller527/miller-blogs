@@ -8,12 +8,9 @@ package sugar
 import (
 	"database/sql"
 	"encoding/json"
-	"errors"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"miller-blogs/settings"
-	"reflect"
-	"unsafe"
 )
 
 // database table list
@@ -87,47 +84,47 @@ func (dbm *DBManager) showTables() {
 	fmt.Println(tables)
 }
 
-// todo 优化其他字段类型
-func (dbm *DBManager) dest(tc *TableConf) ([]interface{}, error) {
-	// todo 其他类型时候反射取值
-	value := reflect.ValueOf(tc.Desc)
-	if value.Kind() != reflect.Ptr {
-		return nil, errors.New("KindError: TableConf.Desc error")
-	}
-	elem := value.Elem()
-
-	var dest []interface{}
-	for _, field := range tc.Field {
-		elemField := elem.FieldByName(field)
-		var err error
-		switch elemField.Kind() {
-		case reflect.String:
-			// todo 通过判断取值
-			dest = append(dest, &*(*string)(unsafe.Pointer(elemField.Addr().Pointer())))
-		case reflect.Int:
-			dest = append(dest, &*(*int)(unsafe.Pointer(elemField.Addr().Pointer())))
-		case reflect.Bool:
-			dest = append(dest, &*(*bool)(unsafe.Pointer(elemField.Addr().Pointer())))
-		case reflect.Uint:
-			dest = append(dest, &*(*uint)(unsafe.Pointer(elemField.Addr().Pointer())))
-		case reflect.Float64:
-			dest = append(dest, &*(*float64)(unsafe.Pointer(elemField.Addr().Pointer())))
-		case reflect.Float32:
-			dest = append(dest, &*(*float32)(unsafe.Pointer(elemField.Addr().Pointer())))
-			//todo 这里取值
-			//case reflect.Slice:
-			//dest = append(dest, &*(*)(unsafe.Pointer(elemField.Addr().Pointer())))
-		default:
-			err = errors.New("ValueError: filed kind error")
-			fmt.Println(elemField.Kind())
-		}
-		fmt.Println("xxxxxxxxxxxxxxxx")
-		if err != nil {
-			return nil, err
-		}
-	}
-	return dest, nil
-}
+//// todo 优化其他字段类型
+//func (dbm *DBManager) dest(tc *TableConf) ([]interface{}, error) {
+//	// todo 其他类型时候反射取值
+//	value := reflect.ValueOf(tc.Desc)
+//	if value.Kind() != reflect.Ptr {
+//		return nil, errors.New("KindError: TableConf.Desc error")
+//	}
+//	elem := value.Elem()
+//
+//	var dest []interface{}
+//	for _, field := range tc.Field {
+//		elemField := elem.FieldByName(field)
+//		var err error
+//		switch elemField.Kind() {
+//		case reflect.String:
+//			// todo 通过判断取值
+//			dest = append(dest, &*(*string)(unsafe.Pointer(elemField.Addr().Pointer())))
+//		case reflect.Int:
+//			dest = append(dest, &*(*int)(unsafe.Pointer(elemField.Addr().Pointer())))
+//		case reflect.Bool:
+//			dest = append(dest, &*(*bool)(unsafe.Pointer(elemField.Addr().Pointer())))
+//		case reflect.Uint:
+//			dest = append(dest, &*(*uint)(unsafe.Pointer(elemField.Addr().Pointer())))
+//		case reflect.Float64:
+//			dest = append(dest, &*(*float64)(unsafe.Pointer(elemField.Addr().Pointer())))
+//		case reflect.Float32:
+//			dest = append(dest, &*(*float32)(unsafe.Pointer(elemField.Addr().Pointer())))
+//			//todo 这里取值
+//			//case reflect.Slice:
+//			//dest = append(dest, &*(*)(unsafe.Pointer(elemField.Addr().Pointer())))
+//		default:
+//			err = errors.New("ValueError: filed kind error")
+//			fmt.Println(elemField.Kind())
+//		}
+//		fmt.Println("xxxxxxxxxxxxxxxx")
+//		if err != nil {
+//			return nil, err
+//		}
+//	}
+//	return dest, nil
+//}
 
 // todo 优化其他字段类型
 //func (dbm *DBManager) line(tc *TableConf) ([]interface{}, error) {
@@ -178,55 +175,72 @@ func (dbc *DBManager) line(vals []sql.RawBytes) []string{
 	return resLine
 }
 
-func (dbm *DBManager) SelectSlice(stmt *sql.Stmt, tc *TableConf, args ...interface{}) ([][]string, error) {
-	fmt.Println(args)
-	rows, err := stmt.Query(args...);
-	fmt.Println(rows,  err)
+func (dbm *DBManager) SelectValues(stmt *sql.Stmt, tc *TableConf, args ...interface{})([]string, error){
+	rows, err := dbm.selectQuery(stmt, args...)
 	if err != nil {
-		fmt.Println("---", err)
 		return nil, err
 	}
+	values, scanArgs, err := dbm.valuesScan(rows)
+	if err != nil{
+		return nil,err
+	}
+	var result []string
+	for rows.Next() {
+		err = rows.Scan(scanArgs...)
+		if err != nil {
+			return nil, err
+		}
+		line := dbm.line(values)
+		result = append(result, line...)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return result, nil
 
-	//value:=reflect.ValueOf(tc.Desc)
-	//if value.Kind()==reflect.Ptr {
-	//	elem := value.Elem()
-	//	name := elem.FieldByName("name")
-	//	if name.Kind() == reflect.String {
-	//		*(*string)(unsafe.Pointer(name.Addr().Pointer())) = "fangwendong"
-	//	}
-	//}
-	var result [][]string
+}
+
+func (dbm *DBManager) selectQuery(stmt *sql.Stmt,  args ...interface{})(*sql.Rows, error){
+	return  stmt.Query(args...)
+}
+
+
+func (dbm *DBManager) valuesScan(rows *sql.Rows)([]sql.RawBytes, []interface{}, error){
 
 	columns, err := rows.Columns()
 	if err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+		return nil,nil, err
 	}
-
-	// Make a slice for the values
 	values := make([]sql.RawBytes, len(columns))
 
-	// rows.Scan wants '[]interface{}' as an argument, so we must copy the
-	// references into such a slice
-	// See http://code.google.com/p/go-wiki/wiki/InterfaceSlice for details
 	scanArgs := make([]interface{}, len(values))
 	for i := range values {
 		scanArgs[i] = &values[i]
 	}
-	// Fetch rows
+	return values, scanArgs, nil
+
+}
+
+func (dbm *DBManager) SelectSlice(stmt *sql.Stmt, tc *TableConf, args ...interface{}) ([][]string, error) {
+	rows, err := dbm.selectQuery(stmt, args...)
+	if err != nil {
+		return nil, err
+	}
+	values, scanArgs, err := dbm.valuesScan(rows)
+	if err != nil{
+		return nil,err
+	}
+	var result [][]string
 	for rows.Next() {
-		// get RawBytes from data
 		err = rows.Scan(scanArgs...)
 		if err != nil {
-			panic(err.Error()) // proper error handling instead of panic in your app
+			return nil,err
 		}
-		fmt.Println(scanArgs)
-		// Now do something with the data.
-		// Here we just print each column as a string.
 		line := dbm.line(values)
 		result = append(result, line)
 	}
 	if err = rows.Err(); err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+		return nil,err
 	}
 
 

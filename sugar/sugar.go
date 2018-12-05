@@ -194,12 +194,14 @@ func Register(tcList ...*TableConf) {
 			panic(errors.New("SugarTable: Table field length unequal to title length"))
 		}
 		name := tc.Name()
+		if ! verifyName(name) {
+			panic(errors.New("SugarTable: database not found [" + name + "] table"))
+		}
+
 		if ! verifyField(tc) {
 			panic(errors.New("SugarTable: Table [" + name + "] Field error"))
 		}
-		//if ! verifyName(name) {
-		//	panic(errors.New("SugarTable: database not found [" + name + "] table"))
-		//}
+
 		if _, ok := Registry[name]; ok {
 			panic(errors.New("SugarTable: table [" + name + "] has already registered"))
 		}
@@ -249,7 +251,6 @@ func verifyField(tc *TableConf) bool {
 			   from information_schema.COLUMNS
 			   where table_schema=? AND table_name=?`
 	stmt, err := Dbm.Db.Prepare(sqlCmd)
-
 	type desc struct {
 		name     string
 		dataType string
@@ -258,20 +259,22 @@ func verifyField(tc *TableConf) bool {
 		Field: []string{"name", "dataType"},
 		Desc:  &desc{},
 	}
-
-	result, err := Dbm.SelectSlice(stmt, column, Dbm.Conf.DBName, tc.Name())
+	result, err := Dbm.SelectValues(stmt, column, Dbm.Conf.DBName, tc.Name())
 	if err != nil {
 		fmt.Println("verifyField", result, err)
 		return false
 	}
 
-	for _, line := range result {
-		if ! utils.InStringSlice(line[0], tc.Field) {
+	for _, f := range tc.Field{
+		if ! utils.InStringSlice(f, result) {
 			return false
 		}
 	}
 	return true
 }
+
+
+
 
 //
 //func NewTable() {
