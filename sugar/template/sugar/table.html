@@ -23,8 +23,13 @@
             <div>
                 {{range $k, $v :=  .tables}}
 
-                    <div class="row">
+                <div class="row">
+                    {{ $lenTitle := len $v.Title}}
+                        {{if  le $lenTitle  5}}
+                        <div class="box col-md-6">
+                        {{else}}
                         <div class="box col-md-12">
+                        {{end}}
                             <div class="box-inner">
                                 <div class="box-header well" data-original-title="">
                                     <h2>{{$v.DisplayName}}</h2>
@@ -41,7 +46,7 @@
                                 <div class="box-content">
 
 
-                                    <table id="example" class="display" style="width:100%">
+                                    <table id="role" class="display" style="width:100%">
                                         <thead>
                                         <tr>
                                             {{range $i, $name :=  $v.Title}}
@@ -66,30 +71,35 @@
                         </div>
                     </div><!--/span-->
 
-                {{end}}
+                    {{end}}
 
-            </div>
-            <!-- content ends -->
-        </div><!--/#content.col-md-0-->
+                </div>
+                <!-- content ends -->
+            </div><!--/#content.col-md-0-->
 
-    </div><!--/fluid-row-->
+        </div><!--/fluid-row-->
 
-    <hr>
+        <hr>
+        {{if eq 1 1}}
+            {{template "modal_box"}}
+        {{end}}
+        {{template "footer"}}
 
-    {{template "modal_box"}}
-    {{template "footer"}}
+    </div><!--/.fluid-container-->
 
-</div><!--/.fluid-container-->
+    {{template "external"}}
 
-{{template "external"}}
-
-<script>
-    $(document).ready(function () {
-        console.log($('#example').DataTable({
-            "ajax": 'curd/role/list'
-        }));
-    })
-</script>
+    <script>
+        // todo 遍历获取表数据
+        $(document).ready(function () {
+            var selector = '#role';
+            var ajaxUrl =  'curd/role/list';
+            console.log($(selector).DataTable({
+                //todo 返回的数据加上其他字段是不是可以修改配置
+                "ajax": ajaxUrl
+            }));
+        })
+    </script>
 </body>
 </html>
 

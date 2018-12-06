@@ -23,7 +23,6 @@ func HandlerIndex(c *gin.Context) {
 //列表
 func HandlerList(c *gin.Context) {
 	tb, ok := Registry[	c.Param(RelativePath)]
-	fmt.Println(tb)
 	if !ok{
 		c.HTML(http.StatusNotFound, "error.html", gin.H{})
 		return
@@ -31,15 +30,11 @@ func HandlerList(c *gin.Context) {
 	queryCmd := fmt.Sprintf("SELECT %s FROM %s",strings.Join(tb.Field, ","), tb.Name())
 
 	stmt, err := Dbm.Db.Prepare(queryCmd)
-	fmt.Println(stmt,err)
-	fmt.Println(strings.Join(tb.Field,","))
 	result,err := Dbm.SelectSlice(stmt, tb)
-	fmt.Println(result,err)
 	if err != nil  {
 		c.HTML(http.StatusInternalServerError, "error.html", gin.H{})
 		return
 	}
-	fmt.Println(result)
 	res,err := json.Marshal(map[string][][]string{"data":result})
 	if err == nil{
 		c.String(http.StatusOK, string(res))
@@ -52,12 +47,18 @@ func HandlerCurd(c *gin.Context) {
 fmt.Println(	Registry)
 
 	var tn []string
-	for name, _ := range Registry{
-		tn = append(tn, name)
-		fmt.Println(tn)
+	var tables map[string][]*TableConf
+	for key, val  := range Registry{
+		tn = append(tn, key)
+
+		if len(val.Field) > 5{
+
+		}
 	}
+
+
 	c.HTML(http.StatusOK, "table.html", gin.H{
-		"tables":Registry,
+		"tables":tables,
 	})
 }
 

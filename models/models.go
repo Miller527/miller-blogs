@@ -270,8 +270,8 @@ func init() {
 	// todo 添加主键校验（第一个字段为主键，或者其他字段
 	//  为主键，只有一个就行了、用来填充前端的id），不能没主键
 	role := &sugar.TableConf{
-		Field: []string{"id", "rid"},
-		Title: []string{"ID", "角色ID"},
+		Field: []string{"id", "rid","name"},
+		Title: []string{"ID", "角色ID","名字"},
 		Desc:  &Role{},
 	}
 

@@ -213,7 +213,7 @@ func Register(tcList ...*TableConf) {
 var Registry = make(map[string]*TableConf)
 
 // 配置表接口
-type SugarTable interface {
+type Tables interface {
 	Name() string
 	DisplayName() string
 }
@@ -239,6 +239,7 @@ func (tc *TableConf) DisplayName() string {
 	return tc.Display + " ( " + tc.Name() + " )"
 }
 
+// 验证表名字
 func verifyName(name string) bool {
 	if ! utils.InStringSlice(name, tables) {
 		return false
@@ -265,7 +266,9 @@ func verifyField(tc *TableConf) bool {
 		return false
 	}
 
-	for _, f := range tc.Field{
+	for i, f := range tc.Field{
+		f = utils.SnakeString(f)
+		tc.Field[i] = f
 		if ! utils.InStringSlice(f, result) {
 			return false
 		}
@@ -276,16 +279,6 @@ func verifyField(tc *TableConf) bool {
 
 
 
-//
-//func NewTable() {
-//
-//}
-//
-// 根据注册表增加路由数据
-//func AppInit(app *gin.Engine, prefix string, relativeKey string, middlewares ...gin.HandlerFunc) {
-//
-
-//}
 
 //func (tc *TableConf) PrefixName(pre string) {
 //	//tc.Name = pre + tc.Name
