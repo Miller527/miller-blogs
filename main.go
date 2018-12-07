@@ -12,10 +12,9 @@ import (
 
 
 func main() {
-	 sugarApp := sugar.SugarAdmin{AccessControl:"rbac", Address:"0.0.0.0:9090",Prefix:"sugar",Extend:""}
-	 sugarApp.Start(false)
+	sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
+	 sugar.App.Start(false)
 
-	//sugar.AccessControl("static")
 
 	//urls.AdApp.LoadHTMLGlob("sugar/rbac/*")
 

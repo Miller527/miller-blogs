@@ -37,33 +37,30 @@ var methods = []int{
 	MulitUpdate,
 }
 
-type SugarRouter struct {
-	AccessControl string
-	Prefix        string
-	Extend        string
-	Relative      string
-	WhiteUrls     []string
-	BlackUrls     []string
+type groupRouter struct {
+	conf Config
+	group *gin.RouterGroup
+	login gin.HandlerFunc
 }
 
-func (sr *SugarRouter) initMiddle() gin.HandlerFunc {
+func (gr *groupRouter) initMiddle() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		urlTmp := c.Request.URL.String()
 
-		if sr.AccessControl == "static" {
+		if gr.conf.AccessControl == "static" {
 
-			if strings.HasPrefix(urlTmp, sr.Prefix) {
-				urlTmp := strings.Split(urlTmp, sr.Prefix)[1]
+			if strings.HasPrefix(urlTmp, gr.conf.Prefix) {
+				urlTmp := strings.Split(urlTmp, gr.conf.Prefix)[1]
 				urlTmp = strings.Split(urlTmp, "/")[0]
-				c.Params = append(c.Params, gin.Param{sr.Prefix, urlTmp})
+				c.Params = append(c.Params, gin.Param{gr.conf.Prefix, urlTmp})
 			}
-			if utils.InStringSlice(urlTmp, sr.WhiteUrls) {
+			if utils.InStringSlice(urlTmp, gr.conf.whiteUrls) {
 				fmt.Println("xxxxxxxxxxxxx")
 				c.Next()
 				return
 			}
-			if utils.InStringSlice(urlTmp, sr.BlackUrls) {
+			if utils.InStringSlice(urlTmp, gr.conf.blackUrls) {
 				// todo 404页面报错
 				c.String(http.StatusNotFound, "404")
 				c.Abort()
@@ -71,7 +68,7 @@ func (sr *SugarRouter) initMiddle() gin.HandlerFunc {
 			}
 		}
 
-		if sr.AccessControl == "rbac" && ! utils.InStringSlice(c.Param(sr.Prefix), tables) {
+		if gr.conf.AccessControl == "rbac" && ! utils.InStringSlice(c.Param(gr.conf.Prefix), tables) {
 			// todo 404页面报错
 			c.String(http.StatusNotFound, "404")
 			c.Abort()
@@ -80,56 +77,73 @@ func (sr *SugarRouter) initMiddle() gin.HandlerFunc {
 	}
 }
 
-func (sr *SugarRouter) Router(rg *gin.RouterGroup) {
-	sr.addRouter(rg)
-	sr.initUrl(rg)
+func (gr *groupRouter) init() {
+	gr.addRouter()
+	gr.initUrl()
 }
 
-func (sr *SugarRouter) addRouter(rg *gin.RouterGroup) {
-	rg.GET("/login", HandlerLogin)
-	rg.GET("/tables", HandlerCurd)
-	rg.POST("/login", HandlerVerifyLogin)
-	rg.GET("/index", HandlerIndex)
-	rg.GET("/index.html", HandlerIndex)
+func (gr *groupRouter) addRouter() {
+	gr.group.Use(gr.conf.groupMiddlewares...)
+	if gr.conf.loginFunc != nil{
+		gr.group.POST("/login", gr.conf.loginFunc )
+
+	}else {
+		gr.group.POST("/login", HandlerVerifyLogin)
+
+	}
+	gr.group.GET("/login", HandlerLogin)
+	gr.group.GET("/tables", HandlerCurd)
+	gr.group.GET("/index", HandlerIndex)
+	gr.group.GET("/index.html", HandlerIndex)
+
 }
+
 
 // 通过配置限制限制访问权限, 不分用户
-func (sr *SugarRouter) groupRouter(relative string, rg *gin.RouterGroup, methodList []int) {
+func (gr *groupRouter) groupRouter(relative string , methodList []int) {
+	extend := gr.conf.Extend
 	for _, method := range methodList {
 		switch method {
 		case List:
-			rg.GET(sr.Extend+relative+"/list", HandlerList)
+			// 单表查询
+			gr.group.GET(extend+relative+"/list", HandlerList)
 		case Get:
-			rg.GET(sr.Extend+relative+"/get/:id", HandlerGet)
+			// 单行查询详情
+			gr.group.GET(extend+relative+"/get/:id", HandlerGet)
 
 		case Add:
-			rg.POST(sr.Extend+relative+"/add", HandlerAdd)
+			// 添加一行或多行
+			gr.group.POST(extend+relative+"/add", HandlerAdd)
 		case Update:
-			rg.PUT(sr.Extend+relative+"/update", HandlerUpdate)
+			//更新一行或多行
+			gr.group.PUT(extend+relative+"/update", HandlerUpdate)
 		case Delete:
-			rg.DELETE(sr.Extend+relative+"/update", HandlerDelete)
+			//删除一行或多行
+			gr.group.DELETE(extend+relative+"/delete", HandlerDelete)
 
 		case MulitAdd:
-			rg.DELETE(sr.Extend+relative+"/delete/:id", HandlerMulitDelete)
+			gr.group.DELETE(extend+relative+"/delete/:id", HandlerMulitDelete)
 		case MulitUpdate:
-			rg.PUT(sr.Extend+relative+"/mulit-delete", HandlerMulitUpdate)
+			gr.group.PUT(extend+relative+"/delete", HandlerMulitUpdate)
 		case MulitDelete:
-			rg.PUT(sr.Extend+relative+"/mulit-update", HandlerMulitUpdate)
+			gr.group.PUT(extend+relative+"/mulit-update", HandlerMulitUpdate)
 		default:
 			panic(errors.New("SugarTable: table [" + relative + "] method error"))
 		}
 	}
 }
-func (sr *SugarRouter) initUrl(rg *gin.RouterGroup) {
+func (gr *groupRouter) initUrl() {
 	// 通过rbac控制访问权限
-	if sr.AccessControl == "rbac" {
-		sr.groupRouter(sr.Relative, rg, methods)
+	fmt.Println("conf.AccessControl",gr.conf.AccessControl)
+
+	if gr.conf.AccessControl == "rbac" {
+		gr.groupRouter(gr.conf.Relative,  methods)
 		return
 	}
 	// 通过配置控制访问权限, 路由信息会很多
-	for k, tc := range Registry {
-		if sr.AccessControl == "rbac" || tc.Methods == nil {
-			sr.groupRouter(k, rg, methods)
+	for k, tc := range App.registry {
+		if gr.conf.AccessControl == "static" || tc.Methods == nil {
+			gr.groupRouter(k, methods)
 			continue
 		}
 		for _, v := range tc.Methods {
@@ -137,6 +151,6 @@ func (sr *SugarRouter) initUrl(rg *gin.RouterGroup) {
 				panic(errors.New("SugarTable: table [" + tc.Name() + "] method error"))
 			}
 		}
-		sr.groupRouter(k, rg, tc.Methods)
+		gr.groupRouter(k, tc.Methods)
 	}
 }

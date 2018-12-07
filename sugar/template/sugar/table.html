@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     {{template "head"}}
-
-
 </head>
 
 <body>
 {{template "topbar"}}
 
-<div class="ch-container">
-    <div class="row">
+<div class="ch-container"> <!-- container start -->
+
+    <div class="row"><!-- row start -->
 
         {{template "menu"}}
         {{template "noscript"}}
@@ -19,87 +17,88 @@
         <div id="content" class="col-lg-10 col-sm-10">
             <!-- content starts -->
             {{template "path"}}
-
             <div>
-                {{range $k, $v :=  .tables}}
+                {{range $k, $line :=  .tables}}
 
-                <div class="row">
-                    {{ $lenTitle := len $v.Title}}
-                        {{if  le $lenTitle  5}}
-                        <div class="box col-md-6">
-                        {{else}}
-                        <div class="box col-md-12">
+                    <div class="row">
+                       {{range $k,$v := $line }}
+                           {{ $lenTitle := len $v.Title}}
+                           {{if  le $lenTitle  5}}
+                               <div class="box col-md-6">
+                           {{else}}
+                               <div class="box col-md-12">
+                           {{end}}
+                           <div class="box-inner">
+                               <div class="box-header well" data-original-title="">
+                                   <h2>{{$v.DisplayName}}</h2>
+
+                                   <div class="box-icon">
+                                       <a href="#" class="btn btn-setting btn-round btn-default"><i
+                                                   class="glyphicon glyphicon-cog"></i></a>
+                                       <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                                                   class="glyphicon glyphicon-chevron-up"></i></a>
+                                       <a href="#" class="btn btn-close btn-round btn-default"><i
+                                                   class="glyphicon glyphicon-remove"></i></a>
+                                   </div>
+                               </div>
+                               <div class="box-content">
+
+
+                                   <table id="role" class="display" style="width:100%">
+                                       <thead>
+                                       <tr>
+                                           {{range $i, $name :=  $v.Title}}
+                                               <th value="{{index $v.Field $i}}">{{$name}}</th>
+                                           {{end}}
+                                       </tr>
+                                       </thead>
+                                       <tfoot>
+                                       <tr>
+                                           {{range $i, $name :=  $v.Title}}
+                                               {{/*{{ index .tables.Field 1}}*/}}
+                                               <th value="{{index $v.Field $i}}">{{$name}}</th>
+
+                                           {{end}}
+                                       </tr>
+                                       </tfoot>
+                                   </table>
+
+
+                               </div>
+                           </div>
+                           </div>
                         {{end}}
-                            <div class="box-inner">
-                                <div class="box-header well" data-original-title="">
-                                    <h2>{{$v.DisplayName}}</h2>
-
-                                    <div class="box-icon">
-                                        <a href="#" class="btn btn-setting btn-round btn-default"><i
-                                                    class="glyphicon glyphicon-cog"></i></a>
-                                        <a href="#" class="btn btn-minimize btn-round btn-default"><i
-                                                    class="glyphicon glyphicon-chevron-up"></i></a>
-                                        <a href="#" class="btn btn-close btn-round btn-default"><i
-                                                    class="glyphicon glyphicon-remove"></i></a>
-                                    </div>
-                                </div>
-                                <div class="box-content">
-
-
-                                    <table id="role" class="display" style="width:100%">
-                                        <thead>
-                                        <tr>
-                                            {{range $i, $name :=  $v.Title}}
-                                                <th value="{{index $v.Field $i}}">{{$name}}</th>
-                                            {{end}}
-                                        </tr>
-                                        </thead>
-                                        <tfoot>
-                                        <tr>
-                                            {{range $i, $name :=  $v.Title}}
-                                                {{/*{{ index .tables.Field 1}}*/}}
-                                                <th value="{{index $v.Field $i}}">{{$name}}</th>
-
-                                            {{end}}
-                                        </tr>
-                                        </tfoot>
-                                    </table>
-
-
-                                </div>
-                            </div>
-                        </div>
                     </div><!--/span-->
 
-                    {{end}}
+                {{end}}
 
-                </div>
-                <!-- content ends -->
-            </div><!--/#content.col-md-0-->
+            </div>
+            <!-- content ends -->
+        </div><!--/#content.col-md-0-->
 
-        </div><!--/fluid-row-->
+    </div><!-- row end -->
 
-        <hr>
-        {{if eq 1 1}}
-            {{template "modal_box"}}
-        {{end}}
-        {{template "footer"}}
+    <hr>
+    {{if eq 1 1}}
+        {{template "modal_box"}}
+    {{end}}
+    {{template "footer"}}
 
-    </div><!--/.fluid-container-->
+</div><!-- container end -->
 
-    {{template "external"}}
+{{template "external"}}
 
-    <script>
-        // todo 遍历获取表数据
-        $(document).ready(function () {
-            var selector = '#role';
-            var ajaxUrl =  'curd/role/list';
-            console.log($(selector).DataTable({
-                //todo 返回的数据加上其他字段是不是可以修改配置
-                "ajax": ajaxUrl
-            }));
-        })
-    </script>
+<script>
+    // todo 遍历获取表数据
+    $(document).ready(function () {
+        var selector = '#role';
+        var ajaxUrl = 'curd/role/list';
+        console.log($(selector).DataTable({
+            //todo 返回的数据加上其他字段是不是可以修改配置
+            "ajax": ajaxUrl
+        }));
+    })
+</script>
 </body>
 </html>
 

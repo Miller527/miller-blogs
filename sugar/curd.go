@@ -22,7 +22,7 @@ func HandlerIndex(c *gin.Context) {
 
 //列表
 func HandlerList(c *gin.Context) {
-	tb, ok := Registry[	c.Param(RelativePath)]
+	tb, ok := App.registry[c.Param(App.conf.relativeKey)]
 	if !ok{
 		c.HTML(http.StatusNotFound, "error.html", gin.H{})
 		return
@@ -44,19 +44,24 @@ func HandlerList(c *gin.Context) {
 }
 
 func HandlerCurd(c *gin.Context) {
-fmt.Println(	Registry)
-
-	var tn []string
-	var tables map[string][]*TableConf
-	for key, val  := range Registry{
-		tn = append(tn, key)
-
-		if len(val.Field) > 5{
-
+	var line []*TableConf
+	var tables [][]*TableConf
+	count := 0
+	for _, val  := range App.registry{
+		if len(val.Field) >= 5{
+			tables = append(tables, []*TableConf{val})
+		}else {
+			line = append(line, val)
+			if len(line) == 2{
+				tables = append(tables, line)
+				line = []*TableConf{}
+				continue
+			}
+		}
+		if count == len(App.registry) -1 {
+			tables = append(tables, line)
 		}
 	}
-
-
 	c.HTML(http.StatusOK, "table.html", gin.H{
 		"tables":tables,
 	})
