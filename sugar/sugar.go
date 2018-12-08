@@ -16,17 +16,17 @@ import (
 	"strings"
 )
 
-
 type Config struct {
-	AccessControl string
-	Address       string
-	Prefix        string
-	Extend        string
-	Relative      string
-	relativeKey      string
+	AccessControl     string
+	Address           string
+	Prefix            string
+	Extend            string
+	Relative          string
+	relativeKey       string
+	buttons       []string
 	globalMiddlewares []gin.HandlerFunc
-	groupMiddlewares []gin.HandlerFunc
-	loginFunc gin.HandlerFunc
+	groupMiddlewares  []gin.HandlerFunc
+	loginFunc         gin.HandlerFunc
 	//Static        string
 	whiteUrls []string
 	blackUrls []string
@@ -46,7 +46,7 @@ func (conf *Config) AddBlack(urlSlice ...string) {
 
 func (conf *Config) CheckParams() {
 	if conf.AccessControl == "" {
-		conf.AccessControl = "rbac"
+		conf.AccessControl = "static"
 	} else if conf.AccessControl != "rbac" && conf.AccessControl != "static" {
 		panic(errors.New("SugarAdminError: Access control type must 'rbac' or 'static'"))
 	}
@@ -77,11 +77,11 @@ func (conf *Config) checkRelative() {
 	if conf.Relative == "" {
 		if conf.AccessControl == "rbac" {
 			conf.Relative = ":tablename/"
-			conf.relativeKey = "tablename"
 		} else {
 			conf.Relative = "tablename/"
-
 		}
+		conf.relativeKey = "tablename"
+
 	} else {
 		for _, b := range conf.Relative {
 			if b < 'a' || b > 'Z' || b != '_' {
@@ -91,8 +91,10 @@ func (conf *Config) checkRelative() {
 		conf.relativeKey = conf.Relative
 
 		conf.Relative += "/"
+		if conf.AccessControl == "rbac" {
+			conf.Relative = ":" + conf.Relative
+		}
 	}
-
 }
 
 func (conf *Config) checkExtend() {
@@ -122,18 +124,12 @@ func (conf *Config) checkExtend() {
 //	}
 //}
 
-
-
-
 type appAdmin struct {
 	conf  Config
 	Sugar *gin.Engine
 	groupRouter
 	registry map[string]*TableConf
 }
-
-
-
 
 func (app *appAdmin) new(middleware ...gin.HandlerFunc) {
 	app.Sugar = gin.New()
@@ -176,7 +172,6 @@ func (app *appAdmin) InitGroup(middles ...gin.HandlerFunc) *gin.RouterGroup {
 
 }
 
-
 func (app *appAdmin) Start(back bool) {
 
 	if back {
@@ -213,7 +208,7 @@ func Register(tcList ...*TableConf) {
 
 func init() {
 	c := Config{}
-	App = appAdmin{conf:c}
+	App = appAdmin{conf: c}
 }
 
 var App appAdmin
@@ -222,42 +217,19 @@ func SetAdmin(conf Config) {
 	App.conf = conf
 	App.InitApp(gin.Logger(), gin.Recovery())
 	rg := App.InitGroup()
-	App.groupRouter = groupRouter{group:rg, conf:App.conf}
+	App.groupRouter = groupRouter{group: rg, conf: App.conf}
 	App.groupRouter.init()
 }
-// 全局的中间件
-func AddGlobalMiddles(middles ...gin.HandlerFunc){
-	App.conf.globalMiddlewares= append(App.conf.globalMiddlewares, middles...)
-}
 
+// 全局的中间件
+func AddGlobalMiddles(middles ...gin.HandlerFunc) {
+	App.conf.globalMiddlewares = append(App.conf.globalMiddlewares, middles...)
+}
 
 // 单纯的Group中间件
-func AddGroupMiddles(middles ...gin.HandlerFunc){
+func AddGroupMiddles(middles ...gin.HandlerFunc) {
 	App.conf.groupMiddlewares = append(App.conf.groupMiddlewares, middles...)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // 配置表接口
 type Tables interface {
@@ -320,6 +292,7 @@ func verifyField(tc *TableConf) bool {
 			return false
 		}
 	}
+	tc.Title = append(tc.Title, "操作")
+
 	return true
 }
-

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     {{template "head"}}
+    <link id="bs-css" href="{{.site}}" rel="stylesheet">
+
 </head>
 
 <body>
@@ -29,6 +32,7 @@
                                <div class="box col-md-12">
                            {{end}}
                            <div class="box-inner">
+
                                <div class="box-header well" data-original-title="">
                                    <h2>{{$v.DisplayName}}</h2>
 
@@ -41,6 +45,14 @@
                                                    class="glyphicon glyphicon-remove"></i></a>
                                    </div>
                                </div>
+                               <div class="table-button-box">
+                                   <span class="table-button">
+                                       <button id="addRow" class="btn btn-success btn-sm sugar-btn">Add </button>
+                                       <button id="deleteRow" class="btn btn-danger btn-sm sugar-btn">Delete</button>
+                                       <button id="updateRow" class="btn btn-info btn-sm sugar-btn">Update</button>
+                                   </span>
+                               </div>
+
                                <div class="box-content">
 
 
@@ -48,7 +60,7 @@
                                        <thead>
                                        <tr>
                                            {{range $i, $name :=  $v.Title}}
-                                               <th value="{{index $v.Field $i}}">{{$name}}</th>
+                                               <th>{{$name}}</th>
                                            {{end}}
                                        </tr>
                                        </thead>
@@ -56,7 +68,7 @@
                                        <tr>
                                            {{range $i, $name :=  $v.Title}}
                                                {{/*{{ index .tables.Field 1}}*/}}
-                                               <th value="{{index $v.Field $i}}">{{$name}}</th>
+                                               <th>{{$name}}</th>
 
                                            {{end}}
                                        </tr>
@@ -79,9 +91,7 @@
     </div><!-- row end -->
 
     <hr>
-    {{if eq 1 1}}
-        {{template "modal_box"}}
-    {{end}}
+    {{template "modal_box"}}
     {{template "footer"}}
 
 </div><!-- container end -->
@@ -90,13 +100,31 @@
 
 <script>
     // todo 遍历获取表数据
+
+
     $(document).ready(function () {
+        //todo 可以拿到配置进行表相关配置
+        var v = {{.config}};
         var selector = '#role';
         var ajaxUrl = 'curd/role/list';
-        console.log($(selector).DataTable({
-            //todo 返回的数据加上其他字段是不是可以修改配置
-            "ajax": ajaxUrl
-        }));
+        var t = $(selector).DataTable({
+            "ajax": ajaxUrl,
+        });
+
+        var counter = 1;
+        $('#addRow').on( 'click', function () {
+            t.row.add( [
+                counter +'.1',
+                counter +'.2',
+                counter +'.3',
+                v,
+            ] ).draw( false );
+
+            counter++;
+        } );
+
+        // Automatically add a first row of data
+        // $('#addRow').click();
     })
 </script>
 </body>

@@ -1,14 +1,21 @@
 $(document).ready(function () {
     //themes, change CSS with JS
     //default theme(CSS) is cerulean, change it if needed
-    var defaultTheme = 'cerulean';
+    // console.log("xxxxxx", defaultTheme)
+    //
+    if (defaultTheme === undefined) {
+        var defaultTheme = 'cerulean';
+    }
+    // console.log("bbbbbbbb", defaultTheme)
 
     var currentTheme = $.cookie('currentTheme') == null ? defaultTheme : $.cookie('currentTheme');
-    console.log("current theme" , currentTheme)
+    console.log("current theme", currentTheme);
     var msie = navigator.userAgent.match(/msie/i);
     $.browser = {};
     $.browser.msie = {};
-
+    if (currentTheme === null) {
+        currentTheme = 'cerulean';
+    }
     switchTheme(currentTheme);
 
     $('.navbar-toggle').click(function (e) {
@@ -27,7 +34,7 @@ $(document).ready(function () {
             && !$('.navbar-toggle').is(e.target)
             && $('.navbar-toggle').has(e.target).length === 0
             && $sidebarNav.hasClass('active')
-            )// ... nor a descendant of the container
+        )// ... nor a descendant of the container
         {
             e.stopPropagation();
             $('.navbar-toggle').click();
@@ -44,6 +51,7 @@ $(document).ready(function () {
 
 
     function switchTheme(themeName) {
+        console.log("themeName", themeName)
         if (themeName == 'classic') {
             $('#bs-css').attr('href', 'static/bower_components/bootstrap/dist/css/bootstrap.min.css');
         } else {
@@ -118,7 +126,7 @@ $(document).ready(function () {
         var $ul = $(this).siblings('ul');
         var $li = $(this).parent();
         if ($ul.is(':visible')) $li.removeClass('active');
-        else                    $li.addClass('active');
+        else $li.addClass('active');
         $ul.slideToggle();
     });
 
@@ -239,7 +247,7 @@ function docReady() {
     });
 
     //tour
-    if ($('.tour').length && typeof(tour) == 'undefined') {
+    if ($('.tour').length && typeof (tour) == 'undefined') {
         var tour = new Tour();
         tour.addStep({
             element: "#content", /* html element next to which the step popover should be shown */
@@ -274,14 +282,14 @@ function docReady() {
     }
 
     // datatable
-    $('.datatable').dataTable({
-        "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-12'i><'col-md-12 center-block'p>>",
-        "sPaginationType": "bootstrap",
-        "ajax": 'curd/role/list',
-        "oLanguage": {
-            "sLengthMenu": "_MENU_ records per page"
-        }
-    });
+    // $('.datatable').dataTable({
+    //     "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-12'i><'col-md-12 center-block'p>>",
+    //     "sPaginationType": "bootstrap",
+    //     "ajax": 'curd/role/list',
+    //     "oLanguage": {
+    //         "sLengthMenu": "_MENU_ records per page"
+    //     }
+    // });
     $('.btn-close').click(function (e) {
         e.preventDefault();
         $(this).parent().parent().parent().fadeOut();
@@ -290,7 +298,7 @@ function docReady() {
         e.preventDefault();
         var $target = $(this).parent().parent().next('.box-content');
         if ($target.is(':visible')) $('i', $(this)).removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-        else                       $('i', $(this)).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+        else $('i', $(this)).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
         $target.slideToggle();
     });
     $('.btn-setting').click(function (e) {
@@ -375,13 +383,13 @@ $.extend($.fn.dataTableExt.oPagination, {
 
             $(nPaging).addClass('pagination').append(
                 '<ul class="pagination">' +
-                    '<li class="prev disabled"><a href="#">&larr; ' + oLang.sPrevious + '</a></li>' +
-                    '<li class="next disabled"><a href="#">' + oLang.sNext + ' &rarr; </a></li>' +
-                    '</ul>'
+                '<li class="prev disabled"><a href="#">&larr; ' + oLang.sPrevious + '</a></li>' +
+                '<li class="next disabled"><a href="#">' + oLang.sNext + ' &rarr; </a></li>' +
+                '</ul>'
             );
             var els = $('a', nPaging);
-            $(els[0]).bind('click.DT', { action: "previous" }, fnClickHandler);
-            $(els[1]).bind('click.DT', { action: "next" }, fnClickHandler);
+            $(els[0]).bind('click.DT', {action: "previous"}, fnClickHandler);
+            $(els[1]).bind('click.DT', {action: "next"}, fnClickHandler);
         },
 
         "fnUpdate": function (oSettings, fnDraw) {
@@ -393,8 +401,7 @@ $.extend($.fn.dataTableExt.oPagination, {
             if (oPaging.iTotalPages < iListLength) {
                 iStart = 1;
                 iEnd = oPaging.iTotalPages;
-            }
-            else if (oPaging.iPage <= iHalf) {
+            } else if (oPaging.iPage <= iHalf) {
                 iStart = 1;
                 iEnd = iListLength;
             } else if (oPaging.iPage >= (oPaging.iTotalPages - iHalf)) {

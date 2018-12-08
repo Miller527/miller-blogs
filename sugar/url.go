@@ -21,9 +21,9 @@ const (
 	Add
 	Update
 	Delete
-	MulitDelete
-	MulitAdd
-	MulitUpdate
+	//MulitDelete
+	//MulitAdd
+	//MulitUpdate
 )
 
 var methods = []int{
@@ -32,9 +32,9 @@ var methods = []int{
 	Add,
 	Update,
 	Delete,
-	MulitDelete,
-	MulitAdd,
-	MulitUpdate,
+	//MulitDelete,
+	//MulitAdd,
+	//MulitUpdate,
 }
 
 type groupRouter struct {
@@ -43,20 +43,29 @@ type groupRouter struct {
 	login gin.HandlerFunc
 }
 
-func (gr *groupRouter) initMiddle() gin.HandlerFunc {
+// if gr.conf.AccessControl == "rbac" {
+//			if ! utils.InStringSlice(c.Param(gr.conf.Prefix), tables) && strings.IndexAny(urlTmp, gr.conf.Extend)==-1{
+//				// todo 404页面报错
+//				fmt.Println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+//				c.String(http.StatusNotFound, "404")
+//				c.Abort()
+//			}
+//			}
 
-	return func(c *gin.Context) {
-		urlTmp := c.Request.URL.String()
-
-		if gr.conf.AccessControl == "static" {
-
-			if strings.HasPrefix(urlTmp, gr.conf.Prefix) {
-				urlTmp := strings.Split(urlTmp, gr.conf.Prefix)[1]
+func (gr *groupRouter) staticMiddle() gin.HandlerFunc {
+	return 	func(c *gin.Context){
+			urlTmp := c.Request.URL.String()
+			fmt.Println(urlTmp)
+			fmt.Println(gr.conf.Prefix + gr.conf.Extend)
+			prifix := gr.conf.Prefix + gr.conf.Extend
+			if strings.HasPrefix(urlTmp, prifix) {
+				urlTmp := strings.Split(urlTmp, prifix)[1]
 				urlTmp = strings.Split(urlTmp, "/")[0]
-				c.Params = append(c.Params, gin.Param{gr.conf.Prefix, urlTmp})
+				fmt.Println(urlTmp,"xxxxxxxxx")
+
+				c.Params = append(c.Params, gin.Param{gr.conf.relativeKey, urlTmp})
 			}
 			if utils.InStringSlice(urlTmp, gr.conf.whiteUrls) {
-				fmt.Println("xxxxxxxxxxxxx")
 				c.Next()
 				return
 			}
@@ -64,39 +73,37 @@ func (gr *groupRouter) initMiddle() gin.HandlerFunc {
 				// todo 404页面报错
 				c.String(http.StatusNotFound, "404")
 				c.Abort()
-
-			}
 		}
-
-		if gr.conf.AccessControl == "rbac" && ! utils.InStringSlice(c.Param(gr.conf.Prefix), tables) {
-			// todo 404页面报错
-			c.String(http.StatusNotFound, "404")
-			c.Abort()
-		}
-
 	}
+}
+func (gr *groupRouter) initMiddle(){
+	if gr.conf.AccessControl == "static" {
+		gr.conf.groupMiddlewares = append(gr.conf.groupMiddlewares, gr.staticMiddle())
+	}
+	gr.group.Use(gr.conf.groupMiddlewares...)
+
 }
 
 func (gr *groupRouter) init() {
-	gr.addRouter()
-	gr.initUrl()
+	gr.initMiddle()
+	gr.staticRouter()
+	gr.dynamicRouter()
 }
 
-func (gr *groupRouter) addRouter() {
-	gr.group.Use(gr.conf.groupMiddlewares...)
+func (gr *groupRouter) staticRouter() {
+
 	if gr.conf.loginFunc != nil{
 		gr.group.POST("/login", gr.conf.loginFunc )
 
 	}else {
 		gr.group.POST("/login", HandlerVerifyLogin)
-
 	}
 	gr.group.GET("/login", HandlerLogin)
 	gr.group.GET("/tables", HandlerCurd)
 	gr.group.GET("/index", HandlerIndex)
 	gr.group.GET("/index.html", HandlerIndex)
-
 }
+
 
 
 // 通过配置限制限制访问权限, 不分用户
@@ -120,19 +127,19 @@ func (gr *groupRouter) groupRouter(relative string , methodList []int) {
 		case Delete:
 			//删除一行或多行
 			gr.group.DELETE(extend+relative+"/delete", HandlerDelete)
-
-		case MulitAdd:
-			gr.group.DELETE(extend+relative+"/delete/:id", HandlerMulitDelete)
-		case MulitUpdate:
-			gr.group.PUT(extend+relative+"/delete", HandlerMulitUpdate)
-		case MulitDelete:
-			gr.group.PUT(extend+relative+"/mulit-update", HandlerMulitUpdate)
+		//
+		//case MulitAdd:
+		//	gr.group.DELETE(extend+relative+"/delete/:id", HandlerMulitDelete)
+		//case MulitUpdate:
+		//	gr.group.PUT(extend+relative+"/delete", HandlerMulitUpdate)
+		//case MulitDelete:
+		//	gr.group.PUT(extend+relative+"/mulit-update", HandlerMulitUpdate)
 		default:
 			panic(errors.New("SugarTable: table [" + relative + "] method error"))
 		}
 	}
 }
-func (gr *groupRouter) initUrl() {
+func (gr *groupRouter) dynamicRouter() {
 	// 通过rbac控制访问权限
 	fmt.Println("conf.AccessControl",gr.conf.AccessControl)
 

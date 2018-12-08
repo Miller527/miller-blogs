@@ -160,7 +160,7 @@ func (dbm *DBManager) showTables() {
 //	return line, nil
 //}
 
-func (dbc *DBManager) line(vals []sql.RawBytes) []string{
+func (dbm *DBManager) line(vals []sql.RawBytes) []string{
 	var val string
 	var resLine []string
 	for _, col := range vals {
@@ -237,6 +237,7 @@ func (dbm *DBManager) SelectSlice(stmt *sql.Stmt, tc *TableConf, args ...interfa
 			return nil,err
 		}
 		line := dbm.line(values)
+
 		result = append(result, line)
 	}
 	if err = rows.Err(); err != nil {
