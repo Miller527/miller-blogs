@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"reflect"
 	"strings"
 )
 
@@ -118,6 +119,19 @@ func HandlerGet(c *gin.Context) {
 
 // 添加
 func HandlerAdd(c *gin.Context) {
+fmt.Println("Params", c.Params)
+
+fmt.Println("c.Request.PostForm",c.Request.PostForm)
+fmt.Println("c.Request.ParseForm()",c.Request.ParseForm())
+	fmt.Println("c.Request.PostForm",c.Request.PostForm)
+fmt.Println("c.Request.Body",c.Request.Body)
+fmt.Println( c.GetQuery("name"))
+fmt.Println("c.Query",c.Query("name"))
+x, _ :=c.GetQueryArray("name")
+fmt.Println("type",reflect.TypeOf(x),x)
+
+fmt.Println(c.Query("name"))
+fmt.Println("drc",c.Query("sex"))
 	c.String(http.StatusOK, "Add")
 }
 
