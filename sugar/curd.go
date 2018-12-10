@@ -99,9 +99,9 @@ func HandlerCurd(c *gin.Context) {
 			tables = append(tables, line)
 		}
 	}
-	v := `<i class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
-              <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
-              <i class="glyphicon glyphicon-trash icon-white"></i>`
+	v := `<i id="detailBtn" class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
+              <i id="updateBtn" class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
+              <i id="deleteBtn"class="glyphicon glyphicon-trash icon-white"></i>`
 	c.HTML(http.StatusOK, "table.html", gin.H{
 		"tables": tables,
 		"config": v,

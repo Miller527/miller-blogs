@@ -23,7 +23,7 @@ type TimeModel struct {
 // 登陆管理后台使用
 type UserInfo struct {
 	Id       int     `explain:"id"`
-	Uid  string  `orm:"size(32)" explain:"帐号"`
+	Uid      string  `orm:"size(32)" explain:"帐号"`
 	Password string  `orm:"size(128)" explain:"密码"`
 	Nickname string  `orm:"size(64)" explain:"昵称"`
 	Email    string  `orm:"size(64)" explain:"邮箱"`
@@ -41,25 +41,16 @@ type UserInfo struct {
 //
 //}
 
-// 用户角色, 访客角色, 只能评论
-type Role struct {
-	id          []uint
-	rid         string
-	name        string
-	//Users       []*UserInfo   `orm:"reverse(many)" explain:"关联用户"`
-	//Permissions []*Permission `orm:"rel(m2m)" explain:"权限列表"`
-}
-
 //manager开头, 用户权限, 即菜单, 一级菜单主要是些详细报表, 二级菜单主要是基本功能菜单, 权限不是菜单
 type Permission struct {
-	Id     int         `orm:"on_delete(cascade)" explain:"id"`
-	Title  string      `orm:"size(128)"  explain:"权限"`
-	Url    string      `orm:"size(256)" explain:"链接地址"`
-	Icon   string      `orm:"null;size(128)" explain:"菜单图标"`
-	IsMenu bool        `explain:"菜单状态"`                                     // 该权限是否是菜单权限
-	Parent *Permission `orm:"null;rel(fk)" explain:"父菜单"` // 必须是子菜单才能有父菜单
-	ButtonPid *Permission `orm:"null;rel(fk)" explain:"按钮对应的子菜单id"`	// 必须是子菜单的id
-	Roles  []*Role     `orm:"reverse(many);on_delete(cascade)" explain:"所属角色"`
+	Id        int         `orm:"on_delete(cascade)" explain:"id"`
+	Title     string      `orm:"size(128)"  explain:"权限"`
+	Url       string      `orm:"size(256)" explain:"链接地址"`
+	Icon      string      `orm:"null;size(128)" explain:"菜单图标"`
+	IsMenu    bool        `explain:"菜单状态"`                          // 该权限是否是菜单权限
+	Parent    *Permission `orm:"null;rel(fk)" explain:"父菜单"`        // 必须是子菜单才能有父菜单
+	ButtonPid *Permission `orm:"null;rel(fk)" explain:"按钮对应的子菜单id"` // 必须是子菜单的id
+	Roles     []*Role     `orm:"reverse(many);on_delete(cascade)" explain:"所属角色"`
 }
 
 // TODO 公共参数
@@ -214,16 +205,13 @@ type leftMenuList map[string]interface{}
 // 初始化数据表
 func Initialization() {
 
-
 	aaa := UserInfo{}
-
-
 
 	tp := reflect.TypeOf(aaa)
 	vl := reflect.ValueOf(aaa)
 	fmt.Println(tp)
 	fmt.Println(vl)
-	fmt.Println(	reflect.Indirect(vl))
+	fmt.Println(reflect.Indirect(vl))
 	//z := []*Permission{}
 	//obj := orm.NewOrm()
 	//a, b := obj.QueryTable("permission").
@@ -261,8 +249,14 @@ func Initialization() {
 	//fmt.Println(err,string(c))
 }
 
-
-
+// 用户角色, 访客角色, 只能评论
+type Role struct {
+	Id   []uint `display:"ID" primary:"true" `
+	Rid  string `display:"角色ID"`
+	Name string
+	//Users       []*UserInfo   `orm:"reverse(many)" explain:"关联用户"`
+	//Permissions []*Permission `orm:"rel(m2m)" explain:"权限列表"`
+}
 
 func init() {
 
@@ -270,11 +264,11 @@ func init() {
 	// todo 添加主键校验（第一个字段为主键，或者其他字段
 	//  为主键，只有一个就行了、用来填充前端的id），不能没主键
 	role := &sugar.TableConf{
-		Field: []string{"id", "rid","name"},
-		Title: []string{"ID", "角色ID","名字"},
+		Field: []string{"id", "rid", "name"},
+		Title: []string{"ID", "角色ID", "名字"},
 		Desc:  &Role{},
 	}
 
-	sugar.Register(role)
+	sugar.Register(&Role{}, []int{},nil)
 
 }

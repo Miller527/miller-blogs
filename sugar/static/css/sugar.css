@@ -1,10 +1,11 @@
-.table-button{
-    margin-left: 10px;
+.table-button {
+    margin-right: 5px;
 }
-.table-button-box{
-     padding-bottom: 10px;
- }
 
-.sugar-btn{
+.table-button-box {
+    padding-bottom: 10px;
+}
+
+.sugar-btn {
     width: 60px;
 }

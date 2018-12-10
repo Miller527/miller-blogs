@@ -181,9 +181,13 @@ func (app *appAdmin) Start(back bool) {
 	}
 }
 
+
+
 //// 注册表配置
-func Register(tcList ...*TableConf) {
-	App.registry = make(map[string]*TableConf)
+func Register(desc interface{}, method []int, table Table) {
+	if table == nil{
+		tabl := &TableConf{Desc:desc, Methods:method}
+	}
 	for _, tc := range tcList {
 
 		if len(tc.Field) != len(tc.Title) {
@@ -208,7 +212,9 @@ func Register(tcList ...*TableConf) {
 
 func init() {
 	c := Config{}
-	App = appAdmin{conf: c}
+	x := make(map[*TableConf]interface{})
+	App = appAdmin{conf: c,registry:}
+
 }
 
 var App appAdmin
@@ -232,20 +238,21 @@ func AddGroupMiddles(middles ...gin.HandlerFunc) {
 }
 
 // 配置表接口
-type Tables interface {
+type Table interface {
 	Name() string
 	DisplayName() string
 }
-
+//
 type TableConf struct {
 	Display     string
 	DisplayJoin bool
 	Field       []string
 	Title       []string
 	Methods     []int
-	Desc        interface{}
-}
+	Desc interface{}
 
+}
+//
 func (tc *TableConf) Name() string {
 	tmpSlice := strings.Split(reflect.TypeOf(tc.Desc).String(), ".")
 	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
@@ -257,42 +264,42 @@ func (tc *TableConf) DisplayName() string {
 	}
 	return tc.Display + " ( " + tc.Name() + " )"
 }
-
-// 验证表名字
-func verifyName(name string) bool {
-	if ! utils.InStringSlice(name, tables) {
-		return false
-	}
-	return true
-}
-
-func verifyField(tc *TableConf) bool {
-	sqlCmd := `select COLUMN_NAME as name,DATA_TYPE as dataType
-			   from information_schema.COLUMNS
-			   where table_schema=? AND table_name=?`
-	stmt, err := Dbm.Db.Prepare(sqlCmd)
-	type desc struct {
-		name     string
-		dataType string
-	}
-	column := &TableConf{
-		Field: []string{"name", "dataType"},
-		Desc:  &desc{},
-	}
-	result, err := Dbm.SelectValues(stmt, column, Dbm.Conf.DBName, tc.Name())
-	if err != nil {
-		fmt.Println("verifyField", result, err)
-		return false
-	}
-
-	for i, f := range tc.Field {
-		f = utils.SnakeString(f)
-		tc.Field[i] = f
-		if ! utils.InStringSlice(f, result) {
-			return false
-		}
-	}
-	tc.Title = append(tc.Title, "操作")
-
-	return true
-}
+//
+//// 验证表名字
+//func verifyName(name string) bool {
+//	if ! utils.InStringSlice(name, tables) {
+//		return false
+//	}
+//	return true
+//}
+//
+//func verifyField(tc *TableConf) bool {
+//	sqlCmd := `select COLUMN_NAME as name,DATA_TYPE as dataType
+//			   from information_schema.COLUMNS
+//			   where table_schema=? AND table_name=?`
+//	stmt, err := Dbm.Db.Prepare(sqlCmd)
+//	type desc struct {
+//		name     string
+//		dataType string
+//	}
+//	column := &TableConf{
+//		Field: []string{"name", "dataType"},
+//		Desc:  &desc{},
+//	}
+//	result, err := Dbm.SelectValues(stmt, column, Dbm.Conf.DBName, tc.Name())
+//	if err != nil {
+//		fmt.Println("verifyField", result, err)
+//		return false
+//	}
+//
+//	for i, f := range tc.Field {
+//		f = utils.SnakeString(f)
+//		tc.Field[i] = f
+//		if ! utils.InStringSlice(f, result) {
+//			return false
+//		}
+//	}
+//	tc.Title = append(tc.Title, "操作")
+//
+//	return true
+//}
