@@ -15,7 +15,6 @@ func main() {
 	sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
 	sugar.App.Start(false)
 
-
 	//urls.AdApp.LoadHTMLGlob("sugar/rbac/*")
 
 	//sugar.AppInit(urls.AdApp,"","")

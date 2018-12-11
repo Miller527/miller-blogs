@@ -182,12 +182,15 @@ func (app *appAdmin) Start(back bool) {
 }
 
 
-
 //// 注册表配置
-func Register(desc interface{}, method []int, table Table) {
+func Register(desc interface{}, method []int, table TableHandle) {
+	var handle TableHandle
 	if table == nil{
-		tabl := &TableConf{Desc:desc, Methods:method}
+		handle = &TableConf{}
+	}else {
+		handle = table{}
 	}
+	fmt.Println(handle)
 	for _, tc := range tcList {
 
 		if len(tc.Field) != len(tc.Title) {
@@ -238,12 +241,13 @@ func AddGroupMiddles(middles ...gin.HandlerFunc) {
 }
 
 // 配置表接口
-type Table interface {
+type TableHandle interface {
 	Name() string
 	DisplayName() string
 }
 //
 type TableConf struct {
+	srv TableHandle
 	Display     string
 	DisplayJoin bool
 	Field       []string
