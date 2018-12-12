@@ -258,16 +258,20 @@ type Role struct {
 	//Permissions []*Permission `orm:"rel(m2m)" explain:"权限列表"`
 }
 
+func (role Role) DisplayName ()string{
+	return "权限表"
+}
+
 func init() {
 
 	sugar.DbmInit()
 	// todo 添加主键校验（第一个字段为主键，或者其他字段
 	//  为主键，只有一个就行了、用来填充前端的id），不能没主键
-	role := &sugar.TableConf{
-		Field: []string{"id", "rid", "name"},
-		Title: []string{"ID", "角色ID", "名字"},
-		Desc:  &Role{},
-	}
+	//role := &sugar.TableConf{
+	//	Field: []string{"id", "rid", "name"},
+	//	Title: []string{"ID", "角色ID", "名字"},
+	//	Desc:  &Role{},
+	//}
 
 	sugar.Register(&Role{}, []int{},nil)
 

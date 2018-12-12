@@ -7,7 +7,6 @@ package sugar
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"miller-blogs/sugar/utils"
 	"path"
@@ -23,7 +22,7 @@ type Config struct {
 	Extend            string
 	Relative          string
 	relativeKey       string
-	buttons       []string
+	buttons           []string
 	globalMiddlewares []gin.HandlerFunc
 	groupMiddlewares  []gin.HandlerFunc
 	loginFunc         gin.HandlerFunc
@@ -38,6 +37,7 @@ func (conf *Config) AddWhite(urlSlice ...string) {
 	}
 
 }
+
 func (conf *Config) AddBlack(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
 		conf.blackUrls = append(conf.blackUrls, urlTmp)
@@ -60,6 +60,7 @@ func (conf *Config) CheckParams() {
 	conf.checkExtend()
 	//conf.checkStatic()
 }
+
 func (conf *Config) checkPrefix() {
 	if conf.Prefix == "" {
 		conf.Prefix = "/"
@@ -181,42 +182,42 @@ func (app *appAdmin) Start(back bool) {
 	}
 }
 
+var defaultTableHandle = &DescAnalyzer{}
+
+type tableDesc interface {
+	Methods() []int
+	DisplayName() string
+}
 
 //// 注册表配置
-func Register(desc interface{}, method []int, table TableHandle) {
-	var handle TableHandle
-	if table == nil{
-		handle = &TableConf{}
-	}else {
-		handle = table{}
+func Register(desc tableDesc, tc TableHandle) {
+	handle := tc
+	if handle == nil {
+		handle = defaultTableHandle
 	}
-	fmt.Println(handle)
-	for _, tc := range tcList {
-
-		if len(tc.Field) != len(tc.Title) {
-			panic(errors.New("SugarTable: Table field length unequal to title length"))
-		}
-		name := tc.Name()
-		if ! verifyName(name) {
-			panic(errors.New("SugarTable: database not found [" + name + "] table"))
-		}
-
-		if ! verifyField(tc) {
-			panic(errors.New("SugarTable: Table [" + name + "] Field error"))
-		}
-
-		if _, ok := App.registry[name]; ok {
-			panic(errors.New("SugarTable: table [" + name + "] has already registered"))
-		}
-
-		App.registry[name] = tc
+	handle.Name(desc)
+	if len(tc.Field) != len(tc.Title) {
+		panic(errors.New("SugarTable: Table field length unequal to title length"))
 	}
+	name := tc.Name()
+	if ! verifyName(name) {
+		panic(errors.New("SugarTable: database not found [" + name + "] table"))
+	}
+
+	if ! verifyField(tc) {
+		panic(errors.New("SugarTable: Table [" + name + "] Field error"))
+	}
+
+	if _, ok := App.registry[name]; ok {
+		panic(errors.New("SugarTable: table [" + name + "] has already registered"))
+	}
+
+	App.registry[name] = tc
 }
 
 func init() {
 	c := Config{}
-	x := make(map[*TableConf]interface{})
-	App = appAdmin{conf: c,registry:}
+	App = appAdmin{conf: c, registry: map[string]*TableConf{}}
 
 }
 
@@ -240,34 +241,55 @@ func AddGroupMiddles(middles ...gin.HandlerFunc) {
 	App.conf.groupMiddlewares = append(App.conf.groupMiddlewares, middles...)
 }
 
+type descConf struct {
+	Name    string
+	Display string
+	Field   []string
+	Title   []string
+	Methods []int
+}
+
 // 配置表接口
 type TableHandle interface {
-	Name() string
-	DisplayName() string
+	//Name(desc tableDesc) string
+	//DisplayName(desc tableDesc) string
+	ParseDesc(desc tableDesc) descConf
 }
-//
-type TableConf struct {
-	srv TableHandle
-	Display     string
-	DisplayJoin bool
-	Field       []string
-	Title       []string
-	Methods     []int
-	Desc interface{}
+
+func (da *DescAnalyzer) ParseDesc(desc tableDesc) *descConf {
+
+	return &descConf{Name:da.getName(desc),Display:da.getDisplay(desc)}
 
 }
-//
-func (tc *TableConf) Name() string {
-	tmpSlice := strings.Split(reflect.TypeOf(tc.Desc).String(), ".")
+
+func (da *DescAnalyzer)getName(desc tableDesc) string{
+	tmpSlice := strings.Split(reflect.TypeOf(desc).String(), ".")
 	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
 }
 
-func (tc *TableConf) DisplayName() string {
-	if tc.Display == "" {
-		return tc.Name()
-	}
-	return tc.Display + " ( " + tc.Name() + " )"
+func (da *DescAnalyzer)getDisplay(desc tableDesc) string{
+	return desc.DisplayName() + " ( " + da.getName(desc) + " )"
 }
+func (da *DescAnalyzer)getDisplay(desc tableDesc) string{
+	return desc.DisplayName() + " ( " + da.getName(desc) + " )"
+}
+//
+type DescAnalyzer struct {
+	Display     string
+	DisplayJoin bool
+
+	//Desc interface{}
+}
+
+//
+func (tc *DescAnalyzer) Name(desc interface{}) string {
+
+}
+
+func (tc *DescAnalyzer) DisplayName(desc interface{}) string {
+
+}
+
 //
 //// 验证表名字
 //func verifyName(name string) bool {

@@ -155,7 +155,7 @@ func (gr *groupRouter) dynamicRouter() {
 		}
 		for _, v := range tc.Methods {
 			if ! utils.InIntSlice(v, methods) {
-				panic(errors.New("SugarTable: table [" + tc.Name() + "] method error"))
+				panic(errors.New("SugarTable: table [" + tc.Name(nil) + "] method error"))
 			}
 		}
 		gr.groupRouter(k, tc.Methods)

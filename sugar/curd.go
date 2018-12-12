@@ -49,7 +49,7 @@ func HandlerList(c *gin.Context) {
 		c.HTML(http.StatusNotFound, "error.html", gin.H{})
 		return
 	}
-	queryCmd := fmt.Sprintf("SELECT %s FROM %s", strings.Join(tb.Field, ","), tb.Name())
+	queryCmd := fmt.Sprintf("SELECT %s FROM %s", strings.Join(tb.Field, ","), tb.Name(nil))
 
 	stmt, err := Dbm.Db.Prepare(queryCmd)
 	result, err := Dbm.SelectSlice(stmt, tb)

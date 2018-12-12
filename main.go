@@ -12,11 +12,13 @@ import (
 
 
 func main() {
+
+
 	sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
 	sugar.App.Start(false)
 
 	//urls.AdApp.LoadHTMLGlob("sugar/rbac/*")
-
+	//
 	//sugar.AppInit(urls.AdApp,"","")
 	//go urls.AdApp.Run("0.0.0.0:9090")
 }

@@ -72,7 +72,7 @@ func (dbm *DBManager) showTables() {
 	tc := &TableConf{
 		Field: []string{"name"},
 		Title: []string{"数据表"},
-		Desc:  &showTables{},
+		//Desc:  &showTables{},
 	}
 	result, err := dbm.SelectSlice(stmt, tc)
 	if err != nil {
