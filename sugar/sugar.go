@@ -7,7 +7,9 @@ package sugar
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"miller-blogs/sugar/utils"
 	"path"
 	"reflect"
@@ -15,7 +17,7 @@ import (
 	"strings"
 )
 
-type Config struct {
+type AdminConfig struct {
 	AccessControl     string
 	Address           string
 	Prefix            string
@@ -31,20 +33,20 @@ type Config struct {
 	blackUrls []string
 }
 
-func (conf *Config) AddWhite(urlSlice ...string) {
+func (conf *AdminConfig) AddWhite(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
 		conf.whiteUrls = append(conf.whiteUrls, urlTmp)
 	}
 
 }
 
-func (conf *Config) AddBlack(urlSlice ...string) {
+func (conf *AdminConfig) AddBlack(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
 		conf.blackUrls = append(conf.blackUrls, urlTmp)
 	}
 }
 
-func (conf *Config) CheckParams() {
+func (conf *AdminConfig) CheckParams() {
 	if conf.AccessControl == "" {
 		conf.AccessControl = "static"
 	} else if conf.AccessControl != "rbac" && conf.AccessControl != "static" {
@@ -61,7 +63,7 @@ func (conf *Config) CheckParams() {
 	//conf.checkStatic()
 }
 
-func (conf *Config) checkPrefix() {
+func (conf *AdminConfig) checkPrefix() {
 	if conf.Prefix == "" {
 		conf.Prefix = "/"
 		return
@@ -74,7 +76,7 @@ func (conf *Config) checkPrefix() {
 	}
 }
 
-func (conf *Config) checkRelative() {
+func (conf *AdminConfig) checkRelative() {
 	if conf.Relative == "" {
 		if conf.AccessControl == "rbac" {
 			conf.Relative = ":tablename/"
@@ -98,7 +100,7 @@ func (conf *Config) checkRelative() {
 	}
 }
 
-func (conf *Config) checkExtend() {
+func (conf *AdminConfig) checkExtend() {
 	if conf.Extend == "" {
 		conf.Extend = "curd/"
 		return
@@ -126,10 +128,10 @@ func (conf *Config) checkExtend() {
 //}
 
 type appAdmin struct {
-	conf  Config
+	conf  AdminConfig
 	Sugar *gin.Engine
-	groupRouter
-	registry map[string]*TableConf
+	//groupRouter
+	//registry map[string]*TableConf
 }
 
 func (app *appAdmin) new(middleware ...gin.HandlerFunc) {
@@ -182,53 +184,84 @@ func (app *appAdmin) Start(back bool) {
 	}
 }
 
-var defaultTableHandle = &DescAnalyzer{}
+var defaultTableHandle = &defaultDescAnalyzer{}
 
 type tableDesc interface {
-	Methods() []int
 	DisplayName() string
 }
 
-//// 注册表配置
-func Register(desc tableDesc, tc TableHandle) {
-	handle := tc
-	if handle == nil {
-		handle = defaultTableHandle
+// 遍历目录获取所有的配置文件
+func readDir(dirPath string, fileList []string) []string {
+	flist, e := ioutil.ReadDir(dirPath)
+	if e != nil {
+		return nil
 	}
-	handle.Name(desc)
-	if len(tc.Field) != len(tc.Title) {
-		panic(errors.New("SugarTable: Table field length unequal to title length"))
+	for _, f := range flist {
+		if f.IsDir() {
+			fileList = readDir(dirPath+"/"+f.Name(), fileList)
+		} else {
+			fileList = append(fileList, dirPath+"/"+f.Name())
+		}
+
 	}
-	name := tc.Name()
-	if ! verifyName(name) {
-		panic(errors.New("SugarTable: database not found [" + name + "] table"))
+	return fileList
+}
+
+var TableConfDirError = errors.New("TableConfDir: Register dir is none.")
+
+// 注册表配置, 遍历一个目录
+func Register(confType string, confPath string) {
+	if ! utils.InStringSlice(confType, confTypeList) {
+
 	}
 
-	if ! verifyField(tc) {
-		panic(errors.New("SugarTable: Table [" + name + "] Field error"))
+	var fileList []string
+	fileList = readDir(confPath, fileList)
+	if fileList == nil {
+		panic(TableConfDirError)
 	}
-
-	if _, ok := App.registry[name]; ok {
-		panic(errors.New("SugarTable: table [" + name + "] has already registered"))
-	}
-
-	App.registry[name] = tc
+	fmt.Println(fileList)
+	//handle := tc
+	//if handle == nil {
+	//	handle = defaultTableHandle
+	//}
+	//tableConfig := handle.ParseDesc(desc)
+	//fmt.Println(tableConfig.Display, tableConfig.Name, tableConfig.Methods, tableConfig.Field)
+	//
+	//if len(tc.Field) != len(tc.Title) {
+	//	panic(errors.New("SugarTable: Table field length unequal to title length"))
+	//}
+	//name := tc.Name()
+	//if ! verifyName(name) {
+	//	panic(errors.New("SugarTable: database not found [" + name + "] table"))
+	//}
+	//
+	//if ! verifyField(tc) {
+	//	panic(errors.New("SugarTable: Table [" + name + "] Field error"))
+	//}
+	//
+	//if _, ok := App.registry[name]; ok {
+	//	panic(errors.New("SugarTable: table [" + name + "] has already registered"))
+	//}
+	//
+	//App.registry[name] = tc
 }
 
 func init() {
-	c := Config{}
-	App = appAdmin{conf: c, registry: map[string]*TableConf{}}
+	//c := Config{}
+	//App = appAdmin{conf: c, registry: map[string]*TableConf{}}
 
 }
 
 var App appAdmin
 
-func SetAdmin(conf Config) {
+func SetAdmin(conf AdminConfig) {
 	App.conf = conf
 	App.InitApp(gin.Logger(), gin.Recovery())
 	rg := App.InitGroup()
-	App.groupRouter = groupRouter{group: rg, conf: App.conf}
-	App.groupRouter.init()
+	print(rg)
+	//App.groupRouter = groupRouter{group: rg, conf: App.conf}
+	//App.groupRouter.init()
 }
 
 // 全局的中间件
@@ -246,6 +279,10 @@ type descConf struct {
 	Display string
 	Field   []string
 	Title   []string
+	Filter 	[]string
+	Desc    map[string]string
+	Left    bool
+	Right   bool
 	Methods []int
 }
 
@@ -253,40 +290,95 @@ type descConf struct {
 type TableHandle interface {
 	//Name(desc tableDesc) string
 	//DisplayName(desc tableDesc) string
-	ParseDesc(desc tableDesc) descConf
+	ParseDesc(desc tableDesc) *descConf
 }
 
-func (da *DescAnalyzer) ParseDesc(desc tableDesc) *descConf {
-
-	return &descConf{Name:da.getName(desc),Display:da.getDisplay(desc)}
-
-}
-
-func (da *DescAnalyzer)getName(desc tableDesc) string{
-	tmpSlice := strings.Split(reflect.TypeOf(desc).String(), ".")
-	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
-}
-
-func (da *DescAnalyzer)getDisplay(desc tableDesc) string{
-	return desc.DisplayName() + " ( " + da.getName(desc) + " )"
-}
-func (da *DescAnalyzer)getDisplay(desc tableDesc) string{
-	return desc.DisplayName() + " ( " + da.getName(desc) + " )"
-}
 //
-type DescAnalyzer struct {
+type TableConf struct {
+	Left    bool
+	Right   bool
+	Methods []int
+}
+type defaultDescAnalyzer struct {
 	Display     string
 	DisplayJoin bool
 
 	//Desc interface{}
 }
 
-//
-func (tc *DescAnalyzer) Name(desc interface{}) string {
+func (da *defaultDescAnalyzer) ParseDesc(desc tableDesc) *descConf {
+	//field, title, primary = da.getField()
+	return &descConf{
+		Name:    da.getName(desc),
+		Display: da.getDisplay(desc),
+		Field:   da.getField(desc),
+		Title:   da.getTitle(desc),
+	}
 
 }
 
-func (tc *DescAnalyzer) DisplayName(desc interface{}) string {
+func (da *defaultDescAnalyzer) getName(desc tableDesc) string {
+	tmpSlice := strings.Split(reflect.TypeOf(desc).String(), ".")
+	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
+}
+
+func (da *defaultDescAnalyzer) getDisplay(desc tableDesc) string {
+	return desc.DisplayName() + "(" + da.getName(desc) + ")"
+}
+func (da *defaultDescAnalyzer) getField(desc tableDesc) []string {
+	//var fields []string
+	//var titles []string
+	//var primary string
+	value := reflect.ValueOf(desc)
+	//fmt.Println(value.CanSet())
+	//te := value.Type()
+	//n := value.Type().NumField()
+	//if value.Kind() != reflect.Ptr {
+	//	fmt.Println("xxxxxxxxxxxxxx")
+	//}
+	fmt.Println(value.Kind())
+	//elem := value.Elem()
+	//for i:=0;i< 3 ;i++{
+	//	elemField := elem.Field(i)
+	//	switch elemField.Kind() {
+	//	case 	reflect.Struct:
+	//		fmt.Println("xxxxxxxxxxxxxxxxxxxxxx")
+	//	}
+	//	//fmt.Println(te.Field(i), )
+	//	//
+	//	//fields = append(fields, utils.SnakeString(te.Field(i).Name))
+	//	//
+	//	//tit := te.Field(i).Tag.Get("title")
+	//	//if tit != ""{
+	//	//	titles = append(titles, tit)
+	//	//}
+	//	//
+	//	//if primary == ""{
+	//	//	primary = te.Field(i).Tag.Get("primary")
+	//	//
+	//	//}
+	//	//fmt.Println(tit,te.Field(i).Tag.Get("title"),primary)
+	//
+	//}
+	//fmt.Println(fields, titles, primary)
+	//for t.Elem().
+	//field := t.Elem().Field(0)
+	//fmt.Println(field.Tag)
+	return nil
+}
+func (da *defaultDescAnalyzer) getTitle(desc tableDesc) []string {
+	var titles []string
+
+	return titles
+}
+
+//
+func (tc *defaultDescAnalyzer) Name(desc interface{}) string {
+	return ""
+}
+
+func (tc *defaultDescAnalyzer) DisplayName(desc interface{}) string {
+	return ""
 
 }
 

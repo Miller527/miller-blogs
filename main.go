@@ -6,16 +6,16 @@
 package main
 
 import (
-	_ "miller-blogs/models"
 	"miller-blogs/sugar"
 )
 
 
 func main() {
 
+	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/sugar")
 
-	sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
-	sugar.App.Start(false)
+	//sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
+	//sugar.App.Start(false)
 
 	//urls.AdApp.LoadHTMLGlob("sugar/rbac/*")
 	//
