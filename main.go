@@ -5,14 +5,11 @@
 
 package main
 
-import (
-	"miller-blogs/sugar"
-)
-
+import "miller-blogs/sugar"
 
 func main() {
-
-	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/sugar")
+	sugar.Config("settings/config.json")
+	sugar.Register("json","E:/GoProject/miller-blogs/src/miller-blogs/models", nil)
 
 	//sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
 	//sugar.App.Start(false)

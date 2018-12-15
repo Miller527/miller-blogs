@@ -9,10 +9,10 @@ import (
 //	_ "github.com/Go-SQL-Driver/MySQL"
 //	_ "github.com/astaxie/beego/session/redis"
 //
-//	_ "miller-blogs/middleware"
-//	_ "miller-blogs/models"
-//	_ "miller-blogs/public" // 注册日志
-//	_ "miller-blogs/routers"
+//	_ "miller_blogs/middleware"
+//	_ "miller_blogs/models"
+//	_ "miller_blogs/public" // 注册日志
+//	_ "miller_blogs/routers"
 //
 //	"github.com/astaxie/beego"
 //	"github.com/astaxie/beego/orm"

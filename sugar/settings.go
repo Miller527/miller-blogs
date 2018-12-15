@@ -3,14 +3,13 @@
 // Date: 2018/11/15
 //
 
-package settings
-
-
+package sugar
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"miller-blogs/sugar/utils"
 	"os"
 	"time"
 )
@@ -21,7 +20,7 @@ type configuration struct {
 	AllKafkaHosts  map[string][]string `json:"kafkahosts"`
 	Kafkatimeout   time.Duration
 	Kafkaconnsleep time.Duration
-	DBConfig map[string]interface{}
+	DBConfig       map[string]interface{}
 }
 
 func (conf *configuration) GetKafkaHosts() ([]string, error) {
@@ -33,26 +32,26 @@ func (conf *configuration) GetKafkaHosts() ([]string, error) {
 	return nil, errors.New("SettingsError: Not found kafka hosts")
 }
 
-var Settings configuration
+var settings configuration
 
-func init() {
-	//path.Join(dir, "settings",config.json)
-	file, err := os.Open("settings/config.json")
-	if err != nil {
-		panic(err)
-	}
-	//关闭文件
+func Config(conf string) {
+	file, err := os.Open(conf)
+
 	defer file.Close()
 
-	//NewDecoder创建一个从file读取并解码json对象的*Decoder，解码器有自己的缓冲，并可能超前读取部分json数据。
+	utils.PanicCheck(err)
+
 	decoder := json.NewDecoder(file)
 
-	Settings = configuration{}
-	//Decode从输入流读取下一个json编码值并保存在v指向的值里
-	err = decoder.Decode(&Settings)
-	if err != nil {
-		fmt.Println("Error:", err)
-	}
+	settings = configuration{}
 
-	fmt.Println(Settings.DBConfig)
+	err = decoder.Decode(&settings)
+	utils.PanicCheck(err)
+	fmt.Println(settings.DBConfig)
+	pluginInit()
+}
+
+func pluginInit() {
+	// 数据库连接池初始化
+	DbmInit()
 }

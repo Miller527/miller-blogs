@@ -12,16 +12,18 @@ import (
 	"io/ioutil"
 	"miller-blogs/sugar/utils"
 	"path"
-	"reflect"
+	"path/filepath"
 	"runtime"
 	"strings"
 )
 
-type AdminConfig struct {
-	AccessControl     string
-	Address           string
-	Prefix            string
-	Extend            string
+type AdminConf struct {
+	AccessControl string
+	Address       string // 0.0.0.0:9090
+	Prefix        string
+	Extend        string //
+
+	BackupSuffix      string // 扩展名
 	Relative          string
 	relativeKey       string
 	buttons           []string
@@ -33,20 +35,20 @@ type AdminConfig struct {
 	blackUrls []string
 }
 
-func (conf *AdminConfig) AddWhite(urlSlice ...string) {
+func (conf *AdminConf) AddWhite(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
 		conf.whiteUrls = append(conf.whiteUrls, urlTmp)
 	}
 
 }
 
-func (conf *AdminConfig) AddBlack(urlSlice ...string) {
+func (conf *AdminConf) AddBlack(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
 		conf.blackUrls = append(conf.blackUrls, urlTmp)
 	}
 }
 
-func (conf *AdminConfig) CheckParams() {
+func (conf *AdminConf) CheckParams() {
 	if conf.AccessControl == "" {
 		conf.AccessControl = "static"
 	} else if conf.AccessControl != "rbac" && conf.AccessControl != "static" {
@@ -58,12 +60,25 @@ func (conf *AdminConfig) CheckParams() {
 	}
 
 	conf.checkPrefix()
+	conf.checkBackupSuffix()
 	conf.checkRelative()
 	conf.checkExtend()
 	//conf.checkStatic()
 }
 
-func (conf *AdminConfig) checkPrefix() {
+func (conf *AdminConf) checkBackupSuffix() {
+	if conf.BackupSuffix == "" {
+		conf.BackupSuffix = "backup"
+		return
+	}
+	for _, b := range conf.BackupSuffix {
+		if b < 'a' || b > 'Z' {
+			panic(errors.New("SugarAdminError: BackupSuffix only be case letters"))
+		}
+	}
+}
+
+func (conf *AdminConf) checkPrefix() {
 	if conf.Prefix == "" {
 		conf.Prefix = "/"
 		return
@@ -76,7 +91,7 @@ func (conf *AdminConfig) checkPrefix() {
 	}
 }
 
-func (conf *AdminConfig) checkRelative() {
+func (conf *AdminConf) checkRelative() {
 	if conf.Relative == "" {
 		if conf.AccessControl == "rbac" {
 			conf.Relative = ":tablename/"
@@ -100,7 +115,7 @@ func (conf *AdminConfig) checkRelative() {
 	}
 }
 
-func (conf *AdminConfig) checkExtend() {
+func (conf *AdminConf) checkExtend() {
 	if conf.Extend == "" {
 		conf.Extend = "curd/"
 		return
@@ -128,8 +143,9 @@ func (conf *AdminConfig) checkExtend() {
 //}
 
 type appAdmin struct {
-	conf  AdminConfig
-	Sugar *gin.Engine
+	conf   AdminConf
+	Sugar  *gin.Engine
+	tables map[string]map[string]*TableConf // database table list
 	//groupRouter
 	//registry map[string]*TableConf
 }
@@ -190,37 +206,100 @@ type tableDesc interface {
 	DisplayName() string
 }
 
+var TableConfDirError = errors.New("TableConfDirError: Register dir is none.")
+var TableConfTypeError = errors.New("TableConfTypeError: Register type is not supported.")
+var TableConfPathError = errors.New("TableConfPathError: Register configuration file path error.")
+var TableConfFileNameError = errors.New("TableConfFileNameError: Register configuration file name error.")
+
 // 遍历目录获取所有的配置文件
 func readDir(dirPath string, fileList []string) []string {
 	flist, e := ioutil.ReadDir(dirPath)
 	if e != nil {
-		return nil
+		panic(TableConfPathError)
 	}
 	for _, f := range flist {
 		if f.IsDir() {
+
 			fileList = readDir(dirPath+"/"+f.Name(), fileList)
 		} else {
+
 			fileList = append(fileList, dirPath+"/"+f.Name())
 		}
-
 	}
 	return fileList
 }
 
-var TableConfDirError = errors.New("TableConfDir: Register dir is none.")
 
-// 注册表配置, 遍历一个目录
-func Register(confType string, confPath string) {
-	if ! utils.InStringSlice(confType, confTypeList) {
+func checkConfFileList(confType string, fileList []string) {
 
+	tmpTables := map[string][]string{}
+
+	for _, file := range fileList {
+		fileNameFields := strings.Split(filepath.Base(file), ".")
+
+		lenField := len(fileNameFields)
+		if lenField == 4 {
+			// 以backup后缀的为备份文件，不需要解析
+			if fileNameFields[len(fileNameFields)-1] != App.conf.BackupSuffix {
+				panic(TableConfFileNameError)
+			}
+			continue
+		} else if lenField != 3 {
+			panic(TableConfFileNameError)
+		}
+		// 过滤配置文件设置
+		if strings.ToLower(fileNameFields[2]) != confType {
+			continue
+		}
+
+		dbName, tbName, extName := fileNameFields[0], fileNameFields[1], fileNameFields[2]
+
+		// 更新一个表的pool
+		Dbm.UpdateDBPool(dbName)
+		if _, ok := tmpTables[dbName]; ! ok {
+			tmpTables[dbName] = Dbm.showTables(dbName)
+		}
+		tbList := tmpTables[dbName]
+
+		fmt.Println(fileNameFields, utils.CamelString(filepath.Base(file)))
+		fmt.Println(dbName, tbName, extName, tbList)
+		if ! utils.InStringSlice(tbName, tbList) {
+			errStr := fmt.Sprintf("RegisterTableNotFound: Register table name '%s' not found.", tbName)
+			utils.PanicCheck(errors.New(errStr))
+		}
+		if _, ok := App.tables[dbName]; ! ok {
+			App.tables[dbName] = make(map[string]*TableConf)
+		}
+		App.tables[dbName][tbName] = &TableConf{}
+
+		fmt.Println(tbList, tmpTables)
+		fmt.Println(tbList,  App.tables)
 	}
 
+}
+
+// 注册表配置, 遍历一个目录, 数据表文件命名规则: database.table.json/yml/xml
+func Register(confType string, confPath string,  analy analyzer) {
+	confType = strings.ToLower(confType)
+	if ! utils.InStringSlice(confType, confTypeList) {
+		panic(TableConfTypeError)
+	}
+	changeAnalyzer(analy, confType)
+
+	// 库名和表文件名, 用于支持跨库的表注册操作, 就要有多个数据库连接池
 	var fileList []string
 	fileList = readDir(confPath, fileList)
-	if fileList == nil {
-		panic(TableConfDirError)
-	}
-	fmt.Println(fileList)
+	fmt.Println("x", confType, fileList)
+
+	checkConfFileList(confType, fileList)
+	//if fileDic == nil {
+	//	panic(TableConfDirError)
+	//}
+	//b, _ := json.Marshal(fileDic)
+
+	//fmt.Println(string(b))
+
+	//fmt.Println(fileList)
 	//handle := tc
 	//if handle == nil {
 	//	handle = defaultTableHandle
@@ -248,14 +327,15 @@ func Register(confType string, confPath string) {
 }
 
 func init() {
-	//c := Config{}
-	//App = appAdmin{conf: c, registry: map[string]*TableConf{}}
+	c := AdminConf{}
+	c.CheckParams()
+	App = appAdmin{conf: c, tables: map[string]map[string]*TableConf{}}
 
 }
 
 var App appAdmin
 
-func SetAdmin(conf AdminConfig) {
+func SetAdmin(conf AdminConf) {
 	App.conf = conf
 	App.InitApp(gin.Logger(), gin.Recovery())
 	rg := App.InitGroup()
@@ -273,151 +353,3 @@ func AddGlobalMiddles(middles ...gin.HandlerFunc) {
 func AddGroupMiddles(middles ...gin.HandlerFunc) {
 	App.conf.groupMiddlewares = append(App.conf.groupMiddlewares, middles...)
 }
-
-type descConf struct {
-	Name    string
-	Display string
-	Field   []string
-	Title   []string
-	Filter 	[]string
-	Desc    map[string]string
-	Left    bool
-	Right   bool
-	Methods []int
-}
-
-// 配置表接口
-type TableHandle interface {
-	//Name(desc tableDesc) string
-	//DisplayName(desc tableDesc) string
-	ParseDesc(desc tableDesc) *descConf
-}
-
-//
-type TableConf struct {
-	Left    bool
-	Right   bool
-	Methods []int
-}
-type defaultDescAnalyzer struct {
-	Display     string
-	DisplayJoin bool
-
-	//Desc interface{}
-}
-
-func (da *defaultDescAnalyzer) ParseDesc(desc tableDesc) *descConf {
-	//field, title, primary = da.getField()
-	return &descConf{
-		Name:    da.getName(desc),
-		Display: da.getDisplay(desc),
-		Field:   da.getField(desc),
-		Title:   da.getTitle(desc),
-	}
-
-}
-
-func (da *defaultDescAnalyzer) getName(desc tableDesc) string {
-	tmpSlice := strings.Split(reflect.TypeOf(desc).String(), ".")
-	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
-}
-
-func (da *defaultDescAnalyzer) getDisplay(desc tableDesc) string {
-	return desc.DisplayName() + "(" + da.getName(desc) + ")"
-}
-func (da *defaultDescAnalyzer) getField(desc tableDesc) []string {
-	//var fields []string
-	//var titles []string
-	//var primary string
-	value := reflect.ValueOf(desc)
-	//fmt.Println(value.CanSet())
-	//te := value.Type()
-	//n := value.Type().NumField()
-	//if value.Kind() != reflect.Ptr {
-	//	fmt.Println("xxxxxxxxxxxxxx")
-	//}
-	fmt.Println(value.Kind())
-	//elem := value.Elem()
-	//for i:=0;i< 3 ;i++{
-	//	elemField := elem.Field(i)
-	//	switch elemField.Kind() {
-	//	case 	reflect.Struct:
-	//		fmt.Println("xxxxxxxxxxxxxxxxxxxxxx")
-	//	}
-	//	//fmt.Println(te.Field(i), )
-	//	//
-	//	//fields = append(fields, utils.SnakeString(te.Field(i).Name))
-	//	//
-	//	//tit := te.Field(i).Tag.Get("title")
-	//	//if tit != ""{
-	//	//	titles = append(titles, tit)
-	//	//}
-	//	//
-	//	//if primary == ""{
-	//	//	primary = te.Field(i).Tag.Get("primary")
-	//	//
-	//	//}
-	//	//fmt.Println(tit,te.Field(i).Tag.Get("title"),primary)
-	//
-	//}
-	//fmt.Println(fields, titles, primary)
-	//for t.Elem().
-	//field := t.Elem().Field(0)
-	//fmt.Println(field.Tag)
-	return nil
-}
-func (da *defaultDescAnalyzer) getTitle(desc tableDesc) []string {
-	var titles []string
-
-	return titles
-}
-
-//
-func (tc *defaultDescAnalyzer) Name(desc interface{}) string {
-	return ""
-}
-
-func (tc *defaultDescAnalyzer) DisplayName(desc interface{}) string {
-	return ""
-
-}
-
-//
-//// 验证表名字
-//func verifyName(name string) bool {
-//	if ! utils.InStringSlice(name, tables) {
-//		return false
-//	}
-//	return true
-//}
-//
-//func verifyField(tc *TableConf) bool {
-//	sqlCmd := `select COLUMN_NAME as name,DATA_TYPE as dataType
-//			   from information_schema.COLUMNS
-//			   where table_schema=? AND table_name=?`
-//	stmt, err := Dbm.Db.Prepare(sqlCmd)
-//	type desc struct {
-//		name     string
-//		dataType string
-//	}
-//	column := &TableConf{
-//		Field: []string{"name", "dataType"},
-//		Desc:  &desc{},
-//	}
-//	result, err := Dbm.SelectValues(stmt, column, Dbm.Conf.DBName, tc.Name())
-//	if err != nil {
-//		fmt.Println("verifyField", result, err)
-//		return false
-//	}
-//
-//	for i, f := range tc.Field {
-//		f = utils.SnakeString(f)
-//		tc.Field[i] = f
-//		if ! utils.InStringSlice(f, result) {
-//			return false
-//		}
-//	}
-//	tc.Title = append(tc.Title, "操作")
-//
-//	return true
-//}
