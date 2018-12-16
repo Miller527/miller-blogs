@@ -15,27 +15,27 @@ package sugar
 //)
 //
 //
-//const (
-//	List = iota
-//	Get
-//	Add
-//	Update
-//	Delete
-//	//MulitDelete
-//	//MulitAdd
-//	//MulitUpdate
-//)
-//
-//var methods = []int{
-//	List,
-//	Get,
-//	Add,
-//	Update,
-//	Delete,
-//	//MulitDelete,
-//	//MulitAdd,
-//	//MulitUpdate,
-//}
+const (
+	List = iota
+	Get
+	Add
+	Update
+	Delete
+	//MulitDelete
+	//MulitAdd
+	//MulitUpdate
+)
+
+var methods = []int{
+	List,
+	Get,
+	Add,
+	Update,
+	Delete,
+	//MulitDelete,
+	//MulitAdd,
+	//MulitUpdate,
+}
 //
 //type groupRouter struct {
 //	conf Config

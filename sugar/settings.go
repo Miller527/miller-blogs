@@ -34,9 +34,12 @@ func (conf *configuration) GetKafkaHosts() ([]string, error) {
 
 var settings configuration
 
-func Config(conf string) {
-	file, err := os.Open(conf)
+func Config(confPath string) {
 
+	if confPath == ""{
+		confPath = "./settings/config.json"
+	}
+	file, err := os.Open(confPath)
 	defer file.Close()
 
 	utils.PanicCheck(err)

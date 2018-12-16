@@ -12,21 +12,25 @@ import (
 	"io/ioutil"
 	"miller-blogs/sugar/utils"
 	"path"
-	"path/filepath"
 	"runtime"
 	"strings"
 )
 
+// url路径规则: /Prifix/Extend/tbName/...
 type AdminConf struct {
 	AccessControl string
-	Address       string // 0.0.0.0:9090
-	Prefix        string
-	Extend        string //
+	Address       string            // 0.0.0.0:9090
+	Prefix        string            // 标注
+	Extend        string            // 匹配数据库名字 默认 :dbname/
+	extendKey     string            // 默认 dbname
+	DatabaseAlias map[string]string //数据库别名, 用于修改url路径
 
-	BackupSuffix      string // 扩展名
-	Relative          string
-	relativeKey       string
-	buttons           []string
+	Relative    string // 默认 :tablename/
+	relativeKey string // 默认 tablename
+
+	BackupSuffix string // 注册表配置文件的扩展名
+
+	//buttons           []string
 	globalMiddlewares []gin.HandlerFunc
 	groupMiddlewares  []gin.HandlerFunc
 	loginFunc         gin.HandlerFunc
@@ -37,15 +41,30 @@ type AdminConf struct {
 
 func (conf *AdminConf) AddWhite(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
+		if utils.InStringSlice(urlTmp, conf.whiteUrls) {
+			fmt.Printf("Warning: URL '%s' already in whiteUrls.", urlTmp)
+			continue
+		}
 		conf.whiteUrls = append(conf.whiteUrls, urlTmp)
 	}
+}
 
+func (conf *AdminConf) DelWhite(urlSlice ...string) {
+	conf.whiteUrls = utils.DelStringSliceEles(conf.whiteUrls, urlSlice...)
 }
 
 func (conf *AdminConf) AddBlack(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
+		if utils.InStringSlice(urlTmp, conf.blackUrls) {
+			fmt.Printf("Warning: URL '%s' already in blackUrls.", urlTmp)
+			continue
+		}
 		conf.blackUrls = append(conf.blackUrls, urlTmp)
 	}
+}
+
+func (conf *AdminConf) DelBlack(urlSlice ...string) {
+	conf.blackUrls = utils.DelStringSliceEles(conf.blackUrls, urlSlice...)
 }
 
 func (conf *AdminConf) CheckParams() {
@@ -143,9 +162,9 @@ func (conf *AdminConf) checkExtend() {
 //}
 
 type appAdmin struct {
-	conf   AdminConf
+	Config AdminConf
 	Sugar  *gin.Engine
-	tables map[string]map[string]*TableConf // database table list
+	tables map[string]map[string]*descConf // database table list
 	//groupRouter
 	//registry map[string]*TableConf
 }
@@ -171,12 +190,12 @@ func (app *appAdmin) static() {
 		panic(errors.New("SugarAdminError: get template path error"))
 	}
 	tplPath := path.Join(path.Dir(file), "static")
-	app.Sugar.Static(app.conf.Prefix+"static", tplPath)
+	app.Sugar.Static(app.Config.Prefix+"static", tplPath)
 	//app.Sugar.Static(app.Prefix+app.Static, tplPath)
 
 }
 func (app *appAdmin) InitApp(middleware ...gin.HandlerFunc) {
-	app.conf.CheckParams()
+	app.Config.CheckParams()
 	app.new(middleware...)
 	app.htmlGlob()
 	app.static()
@@ -185,7 +204,7 @@ func (app *appAdmin) InitApp(middleware ...gin.HandlerFunc) {
 
 func (app *appAdmin) InitGroup(middles ...gin.HandlerFunc) *gin.RouterGroup {
 
-	sugarGroup := app.Sugar.Group(app.conf.Prefix)
+	sugarGroup := app.Sugar.Group(app.Config.Prefix)
 	sugarGroup.Use(middles...)
 	return sugarGroup
 
@@ -194,9 +213,9 @@ func (app *appAdmin) InitGroup(middles ...gin.HandlerFunc) *gin.RouterGroup {
 func (app *appAdmin) Start(back bool) {
 
 	if back {
-		go app.Sugar.Run(app.conf.Address)
+		go app.Sugar.Run(app.Config.Address)
 	} else {
-		app.Sugar.Run(app.conf.Address)
+		app.Sugar.Run(app.Config.Address)
 	}
 }
 
@@ -229,31 +248,11 @@ func readDir(dirPath string, fileList []string) []string {
 	return fileList
 }
 
-
-func checkConfFileList(confType string, fileList []string) {
-
+func checkConfFileList(fileList []string) {
 	tmpTables := map[string][]string{}
-
 	for _, file := range fileList {
-		fileNameFields := strings.Split(filepath.Base(file), ".")
-
-		lenField := len(fileNameFields)
-		if lenField == 4 {
-			// 以backup后缀的为备份文件，不需要解析
-			if fileNameFields[len(fileNameFields)-1] != App.conf.BackupSuffix {
-				panic(TableConfFileNameError)
-			}
-			continue
-		} else if lenField != 3 {
-			panic(TableConfFileNameError)
-		}
-		// 过滤配置文件设置
-		if strings.ToLower(fileNameFields[2]) != confType {
-			continue
-		}
-
-		dbName, tbName, extName := fileNameFields[0], fileNameFields[1], fileNameFields[2]
-
+		dbName, tbName, err := defaultAnalyzer.verifyPath(file)
+		utils.PanicCheck(err)
 		// 更新一个表的pool
 		Dbm.UpdateDBPool(dbName)
 		if _, ok := tmpTables[dbName]; ! ok {
@@ -261,37 +260,51 @@ func checkConfFileList(confType string, fileList []string) {
 		}
 		tbList := tmpTables[dbName]
 
-		fmt.Println(fileNameFields, utils.CamelString(filepath.Base(file)))
-		fmt.Println(dbName, tbName, extName, tbList)
 		if ! utils.InStringSlice(tbName, tbList) {
 			errStr := fmt.Sprintf("RegisterTableNotFound: Register table name '%s' not found.", tbName)
 			utils.PanicCheck(errors.New(errStr))
 		}
 		if _, ok := App.tables[dbName]; ! ok {
-			App.tables[dbName] = make(map[string]*TableConf)
+			App.tables[dbName] = make(map[string]*descConf)
 		}
-		App.tables[dbName][tbName] = &TableConf{}
+		dc, err := defaultAnalyzer.dump()
+		checkDescConf(dc, tbName)
+		fmt.Println("xxxxxxxxxxxxxx", dc)
+		utils.PanicCheck(err)
+		App.tables[dbName][tbName] = dc
+	}
+}
 
-		fmt.Println(tbList, tmpTables)
-		fmt.Println(tbList,  App.tables)
+func checkDescConf(dc *descConf, tbName string) {
+	if dc.Name == "" {
+		dc.Name = tbName
+	}
+	if dc.Methods == nil {
+		dc.Methods = append(dc.Methods, methods...)
 	}
 
 }
 
 // 注册表配置, 遍历一个目录, 数据表文件命名规则: database.table.json/yml/xml
-func Register(confType string, confPath string,  analy analyzer) {
+func Register(confPath string, confType string, analy analyzer) {
 	confType = strings.ToLower(confType)
-	if ! utils.InStringSlice(confType, confTypeList) {
-		panic(TableConfTypeError)
-	}
-	changeAnalyzer(analy, confType)
+
+	changeAnalyzer(confType, analy)
 
 	// 库名和表文件名, 用于支持跨库的表注册操作, 就要有多个数据库连接池
 	var fileList []string
 	fileList = readDir(confPath, fileList)
-	fmt.Println("x", confType, fileList)
 
-	checkConfFileList(confType, fileList)
+	checkConfFileList(fileList)
+
+	if App.tables == nil {
+		fmt.Println("Warning: No form to register was found.")
+		return
+	}
+
+	for dbName, tbInfo := range App.tables {
+		fmt.Println(dbName, tbInfo)
+	}
 	//if fileDic == nil {
 	//	panic(TableConfDirError)
 	//}
@@ -326,17 +339,20 @@ func Register(confType string, confPath string,  analy analyzer) {
 	//App.registry[name] = tc
 }
 
+var App appAdmin
+
 func init() {
-	c := AdminConf{}
+	// 基本的配置文件
+	Config("")
+	c := AdminConf{DatabaseAlias: map[string]string{}}
 	c.CheckParams()
-	App = appAdmin{conf: c, tables: map[string]map[string]*TableConf{}}
+	App = appAdmin{Config: c, tables: map[string]map[string]*descConf{}}
 
 }
 
-var App appAdmin
 
 func SetAdmin(conf AdminConf) {
-	App.conf = conf
+	App.Config = conf
 	App.InitApp(gin.Logger(), gin.Recovery())
 	rg := App.InitGroup()
 	print(rg)
@@ -346,10 +362,10 @@ func SetAdmin(conf AdminConf) {
 
 // 全局的中间件
 func AddGlobalMiddles(middles ...gin.HandlerFunc) {
-	App.conf.globalMiddlewares = append(App.conf.globalMiddlewares, middles...)
+	App.Config.globalMiddlewares = append(App.Config.globalMiddlewares, middles...)
 }
 
 // 单纯的Group中间件
 func AddGroupMiddles(middles ...gin.HandlerFunc) {
-	App.conf.groupMiddlewares = append(App.conf.groupMiddlewares, middles...)
+	App.Config.groupMiddlewares = append(App.Config.groupMiddlewares, middles...)
 }

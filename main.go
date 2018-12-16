@@ -9,7 +9,8 @@ import "miller-blogs/sugar"
 
 func main() {
 	sugar.Config("settings/config.json")
-	sugar.Register("json","E:/GoProject/miller-blogs/src/miller-blogs/models", nil)
+	sugar.App.Config.DatabaseAlias["miller_blogs"] = "blog"
+	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/models", "json",nil)
 
 	//sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
 	//sugar.App.Start(false)
