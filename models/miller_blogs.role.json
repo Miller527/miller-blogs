@@ -1,31 +1,12 @@
 {
-  "mode": "test",
-  "version": "v1",
-  "kafkahosts": {
-    "test": [
-      "192.168.71.61:9092",
-      "192.168.71.62:9092",
-      "192.168.71.63:9092",
-      "192.168.71.64:9092"
-    ],
-    "prod": [
-      "192.168.71.61:9092",
-      "192.168.71.62:9092",
-      "192.168.71.63:9092",
-      "192.168.71.64:9092"
-    ]
+  "display": "角色表",
+  "field": ["id","rid", "name"],
+  "title": ["ID","角色ID", "角色名称"],
+  "filter": {
+    "id": "int",
+    "rid": "string",
+    "name": "string"
   },
-  "dbconfig": {
-    "driver": "mysql",
-    "username": "root",
-    "password": "woaichenni",
-    "protocol": "tcp",
-    "address": "127.0.0.1:3306",
-    "dbname": "miller_blogs",
-    "Parameters": {},
-    "maxopenconns": 4,
-    "maxidleconns": 4
-  },
-  "kafkatimeout": 5,
-  "kafkaconnsleep": 5
+  "left": true,
+  "right": true
 }

@@ -26,6 +26,7 @@ var confTypeList = []string{
 type descConf struct {
 	Name    string
 	Display string
+	Primary  string
 	Field   []string
 	Title   []string
 	Filter  map[string]string	// todo 字段和对应的类型
@@ -134,34 +135,7 @@ func (da *defaultDescAnalyzer) DisplayName(desc interface{}) string {
 //	}
 //	return true
 //}
-//func verifyField(tc *TableConf) bool {
-//	sqlCmd := `select COLUMN_NAME as name,DATA_TYPE as dataType
-//			   from information_schema.COLUMNS
-//			   where table_schema=? AND table_name=?`
-//	stmt, err := Dbm.Db.Prepare(sqlCmd)
-//	type desc struct {
-//		name     string
-//		dataType string
-//	}
-//	column := &TableConf{
-//		Field: []string{"name", "dataType"},
-//		Desc:  &desc{},
-//	}
-//	result, err := Dbm.SelectValues(stmt, column, Dbm.Conf.DBName, tc.Name())
-//	if err != nil {
-//		fmt.Println("verifyField", result, err)
-//		return false
-//	}
-//	for i, f := range tc.Field {
-//		f = utils.SnakeString(f)
-//		tc.Field[i] = f
-//		if ! utils.InStringSlice(f, result) {
-//			return false
-//		}
-//	}
-//	tc.Title = append(tc.Title, "操作")
-//	return true
-//}
+
 
 type analyzer interface {
 	dump() (*descConf, error)
@@ -185,18 +159,18 @@ func (jana *jsonAnalyzer) verifyPath(fp string) (string, string, error) {
 		// 以backup后缀的为备份文件，不需要解析
 		if nameFields[len(nameFields)-1] != App.Config.BackupSuffix {
 			return "", "", TableConfFileNameError
+		}else {
+			return "","",TableConfBackupWarning
 		}
 	} else if lenField != 3 || strings.ToLower(nameFields[2]) != jana.FileSuffix { // 过滤配置文件设置
 		return "", "", TableConfFileNameError
 	}
 	jana.confPath = fp
-	fmt.Println("confPath1", jana.confPath)
 
 	return nameFields[0], nameFields[1], nil
 }
 
 func (jana *jsonAnalyzer) dump() (*descConf, error) {
-	fmt.Println("confPath2", jana.confPath)
 	file, err := os.Open(jana.confPath)
 	defer file.Close()
 	if err != nil {

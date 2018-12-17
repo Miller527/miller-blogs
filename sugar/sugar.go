@@ -229,6 +229,7 @@ var TableConfDirError = errors.New("TableConfDirError: Register dir is none.")
 var TableConfTypeError = errors.New("TableConfTypeError: Register type is not supported.")
 var TableConfPathError = errors.New("TableConfPathError: Register configuration file path error.")
 var TableConfFileNameError = errors.New("TableConfFileNameError: Register configuration file name error.")
+var TableConfBackupWarning = errors.New("TableConfBackupWarning: Register configuration file is buckup.")
 
 // 遍历目录获取所有的配置文件
 func readDir(dirPath string, fileList []string) []string {
@@ -249,40 +250,83 @@ func readDir(dirPath string, fileList []string) []string {
 }
 
 func checkConfFileList(fileList []string) {
+	dbList := Dbm.showDatabase()
 	tmpTables := map[string][]string{}
 	for _, file := range fileList {
 		dbName, tbName, err := defaultAnalyzer.verifyPath(file)
-		utils.PanicCheck(err)
+		if err == TableConfBackupWarning{
+			continue
+		}else {
+			utils.PanicCheck(err)
+		}
+		// 验证数据库
+		if !utils.InStringSlice(dbName, dbList){
+			errStr := fmt.Sprintf("RegisterDatabaseNotFound: Register database name '%s' not found.", dbName)
+			utils.PanicCheck(errors.New(errStr))
+		}
 		// 更新一个表的pool
 		Dbm.UpdateDBPool(dbName)
 		if _, ok := tmpTables[dbName]; ! ok {
 			tmpTables[dbName] = Dbm.showTables(dbName)
 		}
-		tbList := tmpTables[dbName]
 
+		// 验证数据表
+		tbList := tmpTables[dbName]
 		if ! utils.InStringSlice(tbName, tbList) {
 			errStr := fmt.Sprintf("RegisterTableNotFound: Register table name '%s' not found.", tbName)
-			utils.PanicCheck(errors.New(errStr))
+			panic(errors.New(errStr))
 		}
+
 		if _, ok := App.tables[dbName]; ! ok {
 			App.tables[dbName] = make(map[string]*descConf)
 		}
+
 		dc, err := defaultAnalyzer.dump()
-		checkDescConf(dc, tbName)
-		fmt.Println("xxxxxxxxxxxxxx", dc)
+		checkDescConf(tbName,dbName,dc)
 		utils.PanicCheck(err)
 		App.tables[dbName][tbName] = dc
 	}
 }
 
-func checkDescConf(dc *descConf, tbName string) {
-	if dc.Name == "" {
-		dc.Name = tbName
-	}
-	if dc.Methods == nil {
+func checkDescConf( tbName, dbName string, dc *descConf) {
+	// 以文件名的表明为准
+	dc.Name = tbName
+	if len(dc.Methods) == 0 && App.Config.AccessControl != "rbac"{
 		dc.Methods = append(dc.Methods, methods...)
 	}
 
+	if dc.Filter == nil{
+		dc.Filter = map[string]string{}
+	}
+	if dc.Desc == nil{
+		dc.Desc = map[string]string{}
+	}
+	updateDesc(dbName, dc)
+	if len(dc.Field) != len(dc.Title) {
+		errStr := fmt.Sprintf("RegisterTableFieldError: Register table name '%s' field lendth error.", tbName)
+		panic(errors.New(errStr))
+	}
+	// todo 这里的长度问题和表结构的顺序问题
+	if len(dc.Field) == 0{
+
+	}
+
+}
+
+// 更新相关字段, 主键、和表结构
+func updateDesc(dbName string, dc *descConf)  {
+	sqlCmd := `select COLUMN_NAME,COLUMN_TYPE, COLUMN_KEY
+			   from information_schema.COLUMNS
+			   where table_schema=? AND table_name=?`
+	stmt, err := Dbm.DefaultDB.Prepare(sqlCmd)
+	result, err := Dbm.SelectSlice(stmt, dbName, dc.Name)
+	utils.PanicCheck(err)
+	for _,line :=range result{
+		if line[2] == "PRI"{
+			dc.Primary = line[0]
+		}
+		dc.Desc[line[0]] = line[1]
+	}
 }
 
 // 注册表配置, 遍历一个目录, 数据表文件命名规则: database.table.json/yml/xml
@@ -303,20 +347,11 @@ func Register(confPath string, confType string, analy analyzer) {
 	}
 
 	for dbName, tbInfo := range App.tables {
-		fmt.Println(dbName, tbInfo)
+		for _, tb := range tbInfo{
+			fmt.Println(dbName, tb)
+		}
 	}
-	//if fileDic == nil {
-	//	panic(TableConfDirError)
-	//}
-	//b, _ := json.Marshal(fileDic)
-
-	//fmt.Println(string(b))
-
-	//fmt.Println(fileList)
-	//handle := tc
-	//if handle == nil {
-	//	handle = defaultTableHandle
-	//}
+	//
 	//tableConfig := handle.ParseDesc(desc)
 	//fmt.Println(tableConfig.Display, tableConfig.Name, tableConfig.Methods, tableConfig.Field)
 	//
@@ -339,6 +374,7 @@ func Register(confPath string, confType string, analy analyzer) {
 	//App.registry[name] = tc
 }
 
+
 var App appAdmin
 
 func init() {
@@ -346,6 +382,7 @@ func init() {
 	Config("")
 	c := AdminConf{DatabaseAlias: map[string]string{}}
 	c.CheckParams()
+	fmt.Println(c)
 	App = appAdmin{Config: c, tables: map[string]map[string]*descConf{}}
 
 }

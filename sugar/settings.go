@@ -50,7 +50,6 @@ func Config(confPath string) {
 
 	err = decoder.Decode(&settings)
 	utils.PanicCheck(err)
-	fmt.Println(settings.DBConfig)
 	pluginInit()
 }
 
