@@ -16,14 +16,21 @@ import (
 	"strings"
 )
 
+var TableConfDirError = errors.New("TableConfDirError: Register dir is none.")
+var DBAliasSetError = errors.New("DBAliasSetError: database alias is None.")
+var TBAliasSetError = errors.New("TBAliasSetError: table alias is None.")
+var TableConfTypeError = errors.New("TableConfTypeError: Register type is not supported.")
+var TableConfPathError = errors.New("TableConfPathError: Register configuration file path error.")
+var TableConfFileNameError = errors.New("TableConfFileNameError: Register configuration file name error.")
+var TableConfBackupWarning = errors.New("TableConfBackupWarning: Register configuration file is buckup.")
+
 // url路径规则: /Prifix/Extend/tbName/...
 type AdminConf struct {
 	AccessControl string
-	Address       string            // 0.0.0.0:9090
-	Prefix        string            // 标注
-	Extend        string            // 匹配数据库名字 默认 :dbname/
-	extendKey     string            // 默认 dbname
-	DatabaseAlias map[string]string //数据库别名, 用于修改url路径
+	Address       string // 0.0.0.0:9090
+	Prefix        string // 标注
+	Extend        string // 匹配数据库名字 默认 :dbname/
+	extendKey     string // 默认 dbname
 
 	Relative    string // 默认 :tablename/
 	relativeKey string // 默认 tablename
@@ -160,13 +167,68 @@ func (conf *AdminConf) checkExtend() {
 //		conf.Static = conf.Static[:len(conf.Static)-1]
 //	}
 //}
+var App appAdmin
 
 type appAdmin struct {
 	Config AdminConf
 	Sugar  *gin.Engine
-	tables map[string]map[string]*descConf // database table list
+	Registry map[string]map[string]*descConf // database table list
 	//groupRouter
 	//registry map[string]*TableConf
+	// 先从别名中找, 然后从原名中找
+	databaseAlias map[string]string            //数据库名对应别名, 用于修改url路径
+	aliasDatabase map[string]string            //数据库别名对应的数据库名
+	tableAlias    map[string]map[string]string // 数据库下的表名和别名
+	aliasTable    map[string]map[string]string // 数据库下的别名和表名
+}
+
+// 数据库别名设置
+func (app *appAdmin) DBAlias(dbName, dbAlias string) {
+	if dbAlias == "" {
+		panic(DBAliasSetError)
+	}
+	if _, ok := app.Registry[dbName]; ok {
+		app.databaseAlias[dbName] = dbAlias
+		app.aliasDatabase[dbAlias] = dbName
+	} else {
+		fmt.Println("DBAliasSetWarning: Not found database name in registry.")
+	}
+}
+
+// 表别名设置, 需要指定库
+func (app *appAdmin) TBAlias(dbName, tbName, tbAlias string) {
+	if tbAlias == "" {
+		panic(TBAliasSetError)
+	}
+	tbInfo, ok := app.Registry[dbName]
+	if !ok {
+		fmt.Println("DBAliasSetWarning: Not found database name in registry.")
+		return
+	}
+	_, ok = tbInfo[tbName]
+	if !ok {
+		fmt.Println("TBAliasSetWarning: Not found table name in registry.")
+		return
+	}
+	if app.tableAlias[dbName] == nil{
+		app.tableAlias[dbName] = map[string]string{}
+	}
+	app.tableAlias[dbName][tbName] = tbAlias
+	if app.aliasTable[dbName] == nil{
+		app.aliasTable[dbName] = map[string]string{}
+	}
+
+	app.aliasTable[dbName][tbAlias] = tbName
+}
+
+// 全局的中间件
+func (app *appAdmin) AddGlobalMiddles(middles ...gin.HandlerFunc) {
+	app.Config.globalMiddlewares = append(app.Config.globalMiddlewares, middles...)
+}
+
+// 单纯的Group中间件
+func (app *appAdmin) AddGroupMiddles(middles ...gin.HandlerFunc) {
+	app.Config.groupMiddlewares = append(app.Config.groupMiddlewares, middles...)
 }
 
 func (app *appAdmin) new(middleware ...gin.HandlerFunc) {
@@ -219,17 +281,29 @@ func (app *appAdmin) Start(back bool) {
 	}
 }
 
-var defaultTableHandle = &defaultDescAnalyzer{}
+// 注册表配置, 遍历一个目录, 数据表文件命名规则: database.table.json/yml/xml
+func Register(confPath string, confType string, analy analyzer) {
+	confType = strings.ToLower(confType)
 
-type tableDesc interface {
-	DisplayName() string
+	changeAnalyzer(confType, analy)
+
+	// 库名和表文件名, 用于支持跨库的表注册操作, 就要有多个数据库连接池
+	var fileList []string
+	fileList = readDir(confPath, fileList)
+
+	checkDescFileList(fileList)
+
+	if App.Registry == nil {
+		fmt.Println("Warning: No form to register was found.")
+		return
+	}
+
+	for dbName, tbInfo := range App.Registry {
+		for _, tb := range tbInfo {
+			fmt.Println(dbName, tb)
+		}
+	}
 }
-
-var TableConfDirError = errors.New("TableConfDirError: Register dir is none.")
-var TableConfTypeError = errors.New("TableConfTypeError: Register type is not supported.")
-var TableConfPathError = errors.New("TableConfPathError: Register configuration file path error.")
-var TableConfFileNameError = errors.New("TableConfFileNameError: Register configuration file name error.")
-var TableConfBackupWarning = errors.New("TableConfBackupWarning: Register configuration file is buckup.")
 
 // 遍历目录获取所有的配置文件
 func readDir(dirPath string, fileList []string) []string {
@@ -249,18 +323,19 @@ func readDir(dirPath string, fileList []string) []string {
 	return fileList
 }
 
-func checkConfFileList(fileList []string) {
+// 对注册表json做解析
+func checkDescFileList(fileList []string) {
 	dbList := Dbm.showDatabase()
 	tmpTables := map[string][]string{}
 	for _, file := range fileList {
 		dbName, tbName, err := defaultAnalyzer.verifyPath(file)
-		if err == TableConfBackupWarning{
+		if err == TableConfBackupWarning {
 			continue
-		}else {
+		} else {
 			utils.PanicCheck(err)
 		}
 		// 验证数据库
-		if !utils.InStringSlice(dbName, dbList){
+		if !utils.InStringSlice(dbName, dbList) {
 			errStr := fmt.Sprintf("RegisterDatabaseNotFound: Register database name '%s' not found.", dbName)
 			utils.PanicCheck(errors.New(errStr))
 		}
@@ -277,114 +352,64 @@ func checkConfFileList(fileList []string) {
 			panic(errors.New(errStr))
 		}
 
-		if _, ok := App.tables[dbName]; ! ok {
-			App.tables[dbName] = make(map[string]*descConf)
+		if _, ok := App.Registry[dbName]; ! ok {
+			App.Registry[dbName] = make(map[string]*descConf)
 		}
 
 		dc, err := defaultAnalyzer.dump()
-		checkDescConf(tbName,dbName,dc)
+		checkDesc(tbName, dbName, dc)
 		utils.PanicCheck(err)
-		App.tables[dbName][tbName] = dc
+		App.Registry[dbName][tbName] = dc
 	}
 }
 
-func checkDescConf( tbName, dbName string, dc *descConf) {
+// 对解析后的注册表做基本数据校验修改
+func checkDesc(tbName, dbName string, dc *descConf) {
 	// 以文件名的表明为准
 	dc.Name = tbName
-	if len(dc.Methods) == 0 && App.Config.AccessControl != "rbac"{
+	if len(dc.Methods) == 0 && App.Config.AccessControl != "rbac" {
 		dc.Methods = append(dc.Methods, methods...)
 	}
 
-	if dc.Filter == nil{
+	if dc.Filter == nil {
 		dc.Filter = map[string]string{}
 	}
-	if dc.Desc == nil{
-		dc.Desc = map[string]string{}
+	if dc.DescType == nil {
+		dc.DescType = map[string]string{}
+
 	}
+	if dc.Foreign == nil {
+		dc.Foreign = map[string]string{}
+
+	}
+
 	updateDesc(dbName, dc)
 	if len(dc.Field) != len(dc.Title) {
 		errStr := fmt.Sprintf("RegisterTableFieldError: Register table name '%s' field lendth error.", tbName)
 		panic(errors.New(errStr))
 	}
 	// todo 这里的长度问题和表结构的顺序问题
-	if len(dc.Field) == 0{
+	if len(dc.Field) == 0 {
 
 	}
 
 }
 
 // 更新相关字段, 主键、和表结构
-func updateDesc(dbName string, dc *descConf)  {
+func updateDesc(dbName string, dc *descConf) {
 	sqlCmd := `select COLUMN_NAME,COLUMN_TYPE, COLUMN_KEY
 			   from information_schema.COLUMNS
 			   where table_schema=? AND table_name=?`
 	stmt, err := Dbm.DefaultDB.Prepare(sqlCmd)
 	result, err := Dbm.SelectSlice(stmt, dbName, dc.Name)
 	utils.PanicCheck(err)
-	for _,line :=range result{
-		if line[2] == "PRI"{
+	for _, line := range result {
+		if line[2] == "PRI" && dc.Primary == "" {
 			dc.Primary = line[0]
 		}
-		dc.Desc[line[0]] = line[1]
+		dc.DescField = append(dc.DescField, line[0])
+		dc.DescType[line[0]] = line[1]
 	}
-}
-
-// 注册表配置, 遍历一个目录, 数据表文件命名规则: database.table.json/yml/xml
-func Register(confPath string, confType string, analy analyzer) {
-	confType = strings.ToLower(confType)
-
-	changeAnalyzer(confType, analy)
-
-	// 库名和表文件名, 用于支持跨库的表注册操作, 就要有多个数据库连接池
-	var fileList []string
-	fileList = readDir(confPath, fileList)
-
-	checkConfFileList(fileList)
-
-	if App.tables == nil {
-		fmt.Println("Warning: No form to register was found.")
-		return
-	}
-
-	for dbName, tbInfo := range App.tables {
-		for _, tb := range tbInfo{
-			fmt.Println(dbName, tb)
-		}
-	}
-	//
-	//tableConfig := handle.ParseDesc(desc)
-	//fmt.Println(tableConfig.Display, tableConfig.Name, tableConfig.Methods, tableConfig.Field)
-	//
-	//if len(tc.Field) != len(tc.Title) {
-	//	panic(errors.New("SugarTable: Table field length unequal to title length"))
-	//}
-	//name := tc.Name()
-	//if ! verifyName(name) {
-	//	panic(errors.New("SugarTable: database not found [" + name + "] table"))
-	//}
-	//
-	//if ! verifyField(tc) {
-	//	panic(errors.New("SugarTable: Table [" + name + "] Field error"))
-	//}
-	//
-	//if _, ok := App.registry[name]; ok {
-	//	panic(errors.New("SugarTable: table [" + name + "] has already registered"))
-	//}
-	//
-	//App.registry[name] = tc
-}
-
-
-var App appAdmin
-
-func init() {
-	// 基本的配置文件
-	Config("")
-	c := AdminConf{DatabaseAlias: map[string]string{}}
-	c.CheckParams()
-	fmt.Println(c)
-	App = appAdmin{Config: c, tables: map[string]map[string]*descConf{}}
-
 }
 
 
@@ -397,12 +422,18 @@ func SetAdmin(conf AdminConf) {
 	//App.groupRouter.init()
 }
 
-// 全局的中间件
-func AddGlobalMiddles(middles ...gin.HandlerFunc) {
-	App.Config.globalMiddlewares = append(App.Config.globalMiddlewares, middles...)
-}
 
-// 单纯的Group中间件
-func AddGroupMiddles(middles ...gin.HandlerFunc) {
-	App.Config.groupMiddlewares = append(App.Config.groupMiddlewares, middles...)
+func init() {
+	// 基本的配置文件
+	Config("")
+	c := AdminConf{}
+	c.CheckParams()
+	fmt.Println(c)
+	App = appAdmin{Config: c,
+		Registry:        map[string]map[string]*descConf{},
+		databaseAlias: map[string]string{},
+		aliasDatabase: map[string]string{},
+		tableAlias:    map[string]map[string]string{},
+		aliasTable:    map[string]map[string]string{},
+	}
 }

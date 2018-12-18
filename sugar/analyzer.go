@@ -12,7 +12,6 @@ import (
 	"miller-blogs/sugar/utils"
 	"os"
 	"path/filepath"
-	"reflect"
 	"strings"
 )
 
@@ -23,118 +22,30 @@ var confTypeList = []string{
 	"xml",
 }
 
+type tableDesc interface {
+	DisplayName() string
+}
+
 type descConf struct {
-	Name    string
-	Display string
-	Primary  string
-	Field   []string
-	Title   []string
-	Filter  map[string]string	// todo 字段和对应的类型
-	Desc    map[string]string	// todo 查询数据库生成
-	Left    bool
-	Right   bool
-	Methods []int
+	Name      string
+	Display   string
+	Primary   string            // todo 扩展, 手动配置和自动查询数据库配置, 目前自动匹配
+	Foreign   map[string]string // todo 扩展, 手动配置和自动查询数据库配置, 目前自动匹配
+	Field     []string
+	Title     []string
+	Filter    map[string]string // todo 字段和对应的类型、根据DescType匹配生成
+	DescField []string          // todo 查询数据库生成, 如果Field没有配置, 那么使用该字段
+	DescType  map[string]string // todo 查询数据库生成
+	Left      bool
+	Right     bool
+	Methods   []int
 }
 
-// 配置表接口
-type TableHandle interface {
-	//Name(desc tableDesc) string
-	//DisplayName(desc tableDesc) string
-	ParseDesc(desc tableDesc) *descConf
+func (dc *descConf) DisplayName() string {
+	return dc.Display + "(" + dc.Name + ")"
 }
 
-//
-type TableConf struct {
-	Left    bool
-	Right   bool
-	Methods []int
-}
-type defaultDescAnalyzer struct {
-	Display     string
-	DisplayJoin bool
-	//Desc interface{}
-}
 
-func (da *defaultDescAnalyzer) ParseDesc(desc tableDesc) *descConf {
-	//field, title, primary = da.getField()
-	return &descConf{
-		Name:    da.getName(desc),
-		Display: da.getDisplay(desc),
-		Field:   da.getField(desc),
-		Title:   da.getTitle(desc),
-	}
-}
-
-func (da *defaultDescAnalyzer) getName(desc tableDesc) string {
-	tmpSlice := strings.Split(reflect.TypeOf(desc).String(), ".")
-	return utils.SnakeString(tmpSlice[len(tmpSlice)-1])
-}
-
-func (da *defaultDescAnalyzer) getDisplay(desc tableDesc) string {
-	return desc.DisplayName() + "(" + da.getName(desc) + ")"
-}
-func (da *defaultDescAnalyzer) getField(desc tableDesc) []string {
-	//var fields []string
-	//var titles []string
-	//var primary string
-	value := reflect.ValueOf(desc)
-	//fmt.Println(value.CanSet())
-	//te := value.Type()
-	//n := value.Type().NumField()
-	//if value.Kind() != reflect.Ptr {
-	//	fmt.Println("xxxxxxxxxxxxxx")
-	//}
-	fmt.Println(value.Kind())
-	//elem := value.Elem()
-	//for i:=0;i< 3 ;i++{
-	//	elemField := elem.Field(i)
-	//	switch elemField.Kind() {
-	//	case 	reflect.Struct:
-	//		fmt.Println("xxxxxxxxxxxxxxxxxxxxxx")
-	//	}
-	//	//fmt.Println(te.Field(i), )
-	//	//
-	//	//fields = append(fields, utils.SnakeString(te.Field(i).Name))
-	//	//
-	//	//tit := te.Field(i).Tag.Get("title")
-	//	//if tit != ""{
-	//	//	titles = append(titles, tit)
-	//	//}
-	//	//
-	//	//if primary == ""{
-	//	//	primary = te.Field(i).Tag.Get("primary")
-	//	//
-	//	//}
-	//	//fmt.Println(tit,te.Field(i).Tag.Get("title"),primary)
-	//
-	//}
-	//fmt.Println(fields, titles, primary)
-	//for t.Elem().
-	//field := t.Elem().Field(0)
-	//fmt.Println(field.Tag)
-	return nil
-}
-func (da *defaultDescAnalyzer) getTitle(desc tableDesc) []string {
-	var titles []string
-	return titles
-}
-
-//
-func (da *defaultDescAnalyzer) Name(desc interface{}) string {
-	return ""
-}
-
-func (da *defaultDescAnalyzer) DisplayName(desc interface{}) string {
-	return ""
-}
-
-//// 验证表名字
-//func verifyName(name string) bool {
-//	if ! utils.InStringSlice(name, tables) {
-//		return false
-//	}
-//	return true
-//}
 
 
 type analyzer interface {
@@ -159,8 +70,8 @@ func (jana *jsonAnalyzer) verifyPath(fp string) (string, string, error) {
 		// 以backup后缀的为备份文件，不需要解析
 		if nameFields[len(nameFields)-1] != App.Config.BackupSuffix {
 			return "", "", TableConfFileNameError
-		}else {
-			return "","",TableConfBackupWarning
+		} else {
+			return "", "", TableConfBackupWarning
 		}
 	} else if lenField != 3 || strings.ToLower(nameFields[2]) != jana.FileSuffix { // 过滤配置文件设置
 		return "", "", TableConfFileNameError
@@ -204,7 +115,6 @@ func (jana *jsonAnalyzer) loads(r io.Writer, desc *descConf) error {
 	return encoder.Encode(desc)
 
 }
-
 
 type yamlAnalyzer struct {
 	FileSuffix string
