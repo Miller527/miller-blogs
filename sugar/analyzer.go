@@ -30,7 +30,7 @@ type descConf struct {
 	Name      string
 	Display   string
 	Primary   string            // todo 扩展, 手动配置和自动查询数据库配置, 目前自动匹配
-	Foreign   map[string]string // todo 扩展, 手动配置和自动查询数据库配置, 目前自动匹配
+	Foreign   map[string]string // todo 扩展, 手动配置和自动查询数据库配置, 目前自动匹配, 还没用到就没写呢
 	Field     []string
 	Title     []string
 	Filter    map[string]string // todo 字段和对应的类型、根据DescType匹配生成
@@ -44,9 +44,6 @@ type descConf struct {
 func (dc *descConf) DisplayName() string {
 	return dc.Display + "(" + dc.Name + ")"
 }
-
-
-
 
 type analyzer interface {
 	dump() (*descConf, error)

@@ -28,7 +28,7 @@ var TableConfBackupWarning = errors.New("TableConfBackupWarning: Register config
 type AdminConf struct {
 	AccessControl string
 	Address       string // 0.0.0.0:9090
-	Prefix        string // 标注
+	Prefix        string // 前缀
 	Extend        string // 匹配数据库名字 默认 :dbname/
 	extendKey     string // 默认 dbname
 
@@ -44,6 +44,17 @@ type AdminConf struct {
 	//Static        string
 	whiteUrls []string
 	blackUrls []string
+}
+
+// 增加全局中间件
+func (conf *AdminConf) AddGlobalMiddle(middles ...gin.HandlerFunc) {
+	conf.globalMiddlewares = append(conf.globalMiddlewares, middles...)
+}
+
+// 增加组中间件
+func (conf *AdminConf) AddGroupMiddle(middles ...gin.HandlerFunc) {
+	conf.groupMiddlewares = append(conf.groupMiddlewares, middles...)
+
 }
 
 func (conf *AdminConf) AddWhite(urlSlice ...string) {
@@ -222,13 +233,13 @@ func (app *appAdmin) TBAlias(dbName, tbName, tbAlias string) {
 }
 
 // 全局的中间件
-func (app *appAdmin) AddGlobalMiddles(middles ...gin.HandlerFunc) {
-	app.Config.globalMiddlewares = append(app.Config.globalMiddlewares, middles...)
+func (app *appAdmin) AddGlobalMiddle(middles ...gin.HandlerFunc) {
+	app.Config.AddGlobalMiddle(middles...)
 }
 
 // 单纯的Group中间件
-func (app *appAdmin) AddGroupMiddles(middles ...gin.HandlerFunc) {
-	app.Config.groupMiddlewares = append(app.Config.groupMiddlewares, middles...)
+func (app *appAdmin) AddGroupMiddle(middles ...gin.HandlerFunc) {
+	app.Config.AddGroupMiddle(middles...)
 }
 
 func (app *appAdmin) new(middleware ...gin.HandlerFunc) {
@@ -256,9 +267,9 @@ func (app *appAdmin) static() {
 	//app.Sugar.Static(app.Prefix+app.Static, tplPath)
 
 }
-func (app *appAdmin) InitApp(middleware ...gin.HandlerFunc) {
+func (app *appAdmin) InitApp(middles ...gin.HandlerFunc) {
 	app.Config.CheckParams()
-	app.new(middleware...)
+	app.new(middles...)
 	app.htmlGlob()
 	app.static()
 
@@ -376,39 +387,51 @@ func checkDesc(tbName, dbName string, dc *descConf) {
 	}
 	if dc.DescType == nil {
 		dc.DescType = map[string]string{}
-
 	}
 	if dc.Foreign == nil {
 		dc.Foreign = map[string]string{}
 
 	}
-
 	updateDesc(dbName, dc)
+
+}
+
+// 检验字段配置是否为空, 为空的话进行全填充
+func verifyDescField(dc *descConf)bool{
 	if len(dc.Field) != len(dc.Title) {
-		errStr := fmt.Sprintf("RegisterTableFieldError: Register table name '%s' field lendth error.", tbName)
+		errStr := fmt.Sprintf("RegisterTableFieldError: Register table name '%s' field lendth error.", dc.Name)
 		panic(errors.New(errStr))
 	}
 	// todo 这里的长度问题和表结构的顺序问题
 	if len(dc.Field) == 0 {
-
+		return true
 	}
-
+	return false
 }
 
 // 更新相关字段, 主键、和表结构
 func updateDesc(dbName string, dc *descConf) {
+
+	fieldStatus := verifyDescField(dc)
+
 	sqlCmd := `select COLUMN_NAME,COLUMN_TYPE, COLUMN_KEY
 			   from information_schema.COLUMNS
 			   where table_schema=? AND table_name=?`
 	stmt, err := Dbm.DefaultDB.Prepare(sqlCmd)
 	result, err := Dbm.SelectSlice(stmt, dbName, dc.Name)
 	utils.PanicCheck(err)
+
+
 	for _, line := range result {
 		if line[2] == "PRI" && dc.Primary == "" {
 			dc.Primary = line[0]
 		}
 		dc.DescField = append(dc.DescField, line[0])
 		dc.DescType[line[0]] = line[1]
+		if fieldStatus{
+			dc.Field = append(dc.Field, line[0])
+			dc.Title = append(dc.Title, line[0])
+		}
 	}
 }
 

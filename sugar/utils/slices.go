@@ -22,7 +22,15 @@ func InIntSlice(val int, sl []int) bool {
 	}
 	return false
 }
+func InInterfaceSlice(val interface{}, sl []interface{}) bool {
 
+	for _, v := range sl {
+		if v == val {
+			return true
+		}
+	}
+	return false
+}
 
 func DelStringSliceEle(sl []string, val string) []string {
 	for i := 0; i < len(sl); i++ {
