@@ -181,8 +181,8 @@ func (conf *AdminConf) checkExtend() {
 var App appAdmin
 
 type appAdmin struct {
-	Config AdminConf
-	Sugar  *gin.Engine
+	Config   AdminConf
+	Sugar    *gin.Engine
 	Registry map[string]map[string]*descConf // database table list
 	//groupRouter
 	//registry map[string]*TableConf
@@ -221,11 +221,11 @@ func (app *appAdmin) TBAlias(dbName, tbName, tbAlias string) {
 		fmt.Println("TBAliasSetWarning: Not found table name in registry.")
 		return
 	}
-	if app.tableAlias[dbName] == nil{
+	if app.tableAlias[dbName] == nil {
 		app.tableAlias[dbName] = map[string]string{}
 	}
 	app.tableAlias[dbName][tbName] = tbAlias
-	if app.aliasTable[dbName] == nil{
+	if app.aliasTable[dbName] == nil {
 		app.aliasTable[dbName] = map[string]string{}
 	}
 
@@ -397,7 +397,7 @@ func checkDesc(tbName, dbName string, dc *descConf) {
 }
 
 // 检验字段配置是否为空, 为空的话进行全填充
-func verifyDescField(dc *descConf)bool{
+func verifyDescField(dc *descConf) bool {
 	if len(dc.Field) != len(dc.Title) {
 		errStr := fmt.Sprintf("RegisterTableFieldError: Register table name '%s' field lendth error.", dc.Name)
 		panic(errors.New(errStr))
@@ -421,20 +421,18 @@ func updateDesc(dbName string, dc *descConf) {
 	result, err := Dbm.SelectSlice(stmt, dbName, dc.Name)
 	utils.PanicCheck(err)
 
-
 	for _, line := range result {
 		if line[2] == "PRI" && dc.Primary == "" {
 			dc.Primary = line[0]
 		}
 		dc.DescField = append(dc.DescField, line[0])
 		dc.DescType[line[0]] = line[1]
-		if fieldStatus{
+		if fieldStatus {
 			dc.Field = append(dc.Field, line[0])
 			dc.Title = append(dc.Title, line[0])
 		}
 	}
 }
-
 
 func SetAdmin(conf AdminConf) {
 	App.Config = conf
@@ -445,7 +443,6 @@ func SetAdmin(conf AdminConf) {
 	//App.groupRouter.init()
 }
 
-
 func init() {
 	// 基本的配置文件
 	Config("")
@@ -453,7 +450,7 @@ func init() {
 	c.CheckParams()
 	fmt.Println(c)
 	App = appAdmin{Config: c,
-		Registry:        map[string]map[string]*descConf{},
+		Registry:      map[string]map[string]*descConf{},
 		databaseAlias: map[string]string{},
 		aliasDatabase: map[string]string{},
 		tableAlias:    map[string]map[string]string{},
