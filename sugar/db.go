@@ -241,10 +241,11 @@ func NewDbm(dbc DBConfig) DBManager {
 	return DBManager{Conf: dbc,DBPool: map[string]*sql.DB{}}
 }
 
-func DbmInit() {
+func DBMInit(dbConfig map[string]interface{}) {
 	dbc := DBConfig{}
-	v, err := json.Marshal(settings.DBConfig)
+	v, err := json.Marshal(dbConfig)
 	utils.PanicCheck(err)
+
 	err = json.Unmarshal(v, &dbc)
 	utils.PanicCheck(err)
 	Dbm = NewDbm(dbc)

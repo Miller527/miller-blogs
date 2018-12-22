@@ -34,7 +34,7 @@ func (conf *configuration) GetKafkaHosts() ([]string, error) {
 
 var settings configuration
 
-func Config(confPath string) {
+func Settings(confPath string) {
 
 	if confPath == ""{
 		confPath = "./settings/config.json"
@@ -55,5 +55,5 @@ func Config(confPath string) {
 
 func pluginInit() {
 	// 数据库连接池初始化
-	DbmInit()
+	DBMInit(settings.DBConfig)
 }

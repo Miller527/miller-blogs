@@ -29,12 +29,9 @@ type AdminConf struct {
 	AccessControl string
 	Address       string // 0.0.0.0:9090
 	Prefix        string // 前缀
-	Extend        string // 匹配数据库名字 默认 :dbname/
-	extendKey     string // 默认 dbname
-
 	Relative    string // 默认 :tablename/
 	relativeKey string // 默认 tablename
-
+	ExtendKey string	// 中间件获取数据库名
 	BackupSuffix string // 注册表配置文件的扩展名
 
 	//buttons           []string
@@ -45,6 +42,8 @@ type AdminConf struct {
 	whiteUrls []string
 	blackUrls []string
 }
+
+
 
 // 增加全局中间件
 func (conf *AdminConf) AddGlobalMiddle(middles ...gin.HandlerFunc) {
@@ -57,6 +56,7 @@ func (conf *AdminConf) AddGroupMiddle(middles ...gin.HandlerFunc) {
 
 }
 
+
 func (conf *AdminConf) AddWhite(urlSlice ...string) {
 	for _, urlTmp := range urlSlice {
 		if utils.InStringSlice(urlTmp, conf.whiteUrls) {
@@ -66,7 +66,6 @@ func (conf *AdminConf) AddWhite(urlSlice ...string) {
 		conf.whiteUrls = append(conf.whiteUrls, urlTmp)
 	}
 }
-
 func (conf *AdminConf) DelWhite(urlSlice ...string) {
 	conf.whiteUrls = utils.DelStringSliceEles(conf.whiteUrls, urlSlice...)
 }
@@ -100,6 +99,8 @@ func (conf *AdminConf) CheckParams() {
 	conf.checkBackupSuffix()
 	conf.checkRelative()
 	conf.checkExtend()
+	conf.AddWhite(conf.Prefix+"login")
+	conf.AddWhite(conf.Prefix+"verify-login")
 	//conf.checkStatic()
 }
 
@@ -132,8 +133,6 @@ func (conf *AdminConf) checkRelative() {
 	if conf.Relative == "" {
 		if conf.AccessControl == "rbac" {
 			conf.Relative = ":tablename/"
-		} else {
-			conf.Relative = "tablename/"
 		}
 		conf.relativeKey = "tablename"
 
@@ -153,17 +152,13 @@ func (conf *AdminConf) checkRelative() {
 }
 
 func (conf *AdminConf) checkExtend() {
-	if conf.Extend == "" {
-		conf.Extend = "curd/"
-		return
+		for _, b := range conf.ExtendKey {
+			if b < 'a' || b > 'Z' || b != '_' {
+				panic(errors.New("SugarAdminError: Extend only be case letters"))
+			}
+		}
+
 	}
-	if strings.HasPrefix(conf.Extend, "/") {
-		conf.Extend = conf.Extend[1:]
-	}
-	if ! strings.HasSuffix(conf.Extend, "/") {
-		conf.Extend += "/"
-	}
-}
 
 // todo 前端代码里怎么改动（预加载选择主题时候的路径问题）
 //func (conf *Config) checkStatic() {
@@ -184,13 +179,24 @@ type appAdmin struct {
 	Config   AdminConf
 	Sugar    *gin.Engine
 	Registry map[string]map[string]*descConf // database table list
-	//groupRouter
+	GroupRouter groupRouter
 	//registry map[string]*TableConf
 	// 先从别名中找, 然后从原名中找
 	databaseAlias map[string]string            //数据库名对应别名, 用于修改url路径
 	aliasDatabase map[string]string            //数据库别名对应的数据库名
 	tableAlias    map[string]map[string]string // 数据库下的表名和别名
 	aliasTable    map[string]map[string]string // 数据库下的别名和表名
+
+	DB *DBManager
+}
+
+func (app *appAdmin) WhiteUrls() []string{
+	return app.Config.whiteUrls
+
+}
+func (app *appAdmin) BlackUrls() []string {
+	return app.Config.blackUrls
+
 }
 
 // 数据库别名设置
@@ -293,7 +299,7 @@ func (app *appAdmin) Start(back bool) {
 }
 
 // 注册表配置, 遍历一个目录, 数据表文件命名规则: database.table.json/yml/xml
-func Register(confPath string, confType string, analy analyzer) {
+func Register(confPath string, confType string, analy IAnalyzer) {
 	confType = strings.ToLower(confType)
 
 	changeAnalyzer(confType, analy)
@@ -324,7 +330,6 @@ func readDir(dirPath string, fileList []string) []string {
 	}
 	for _, f := range flist {
 		if f.IsDir() {
-
 			fileList = readDir(dirPath+"/"+f.Name(), fileList)
 		} else {
 
@@ -436,20 +441,24 @@ func updateDesc(dbName string, dc *descConf) {
 
 func SetAdmin(conf AdminConf) {
 	App.Config = conf
+	conf.CheckParams()
+
 	App.InitApp(gin.Logger(), gin.Recovery())
 	rg := App.InitGroup()
-	print(rg)
-	//App.groupRouter = groupRouter{group: rg, conf: App.conf}
-	//App.groupRouter.init()
+	App.GroupRouter = groupRouter{group: rg, conf: App.Config}
+	App.GroupRouter.init()
 }
+
+
+
 
 func init() {
 	// 基本的配置文件
-	Config("")
-	c := AdminConf{}
-	c.CheckParams()
-	fmt.Println(c)
-	App = appAdmin{Config: c,
+	Settings("")
+	conf := AdminConf{}
+	conf.CheckParams()
+	fmt.Println(conf)
+	App = appAdmin{Config: conf,
 		Registry:      map[string]map[string]*descConf{},
 		databaseAlias: map[string]string{},
 		aliasDatabase: map[string]string{},

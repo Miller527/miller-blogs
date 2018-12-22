@@ -10,15 +10,13 @@ import (
 )
 
 func main() {
-	sugar.Config("settings/config.json")
+	sugar.Settings("settings/config.json")
 	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/models", "json",nil)
 	sugar.App.DBAlias("miller_blogs","blogs")
 	sugar.App.TBAlias("miller_blogs","role","userrole")
-	//sugar.SetAdmin(sugar.Config{Prefix:"sugar"})
-	//sugar.App.Start(false)
-
+	sugar.SetAdmin(sugar.AdminConf{Prefix:"manager"})
+	sugar.App.Start(false)
 	//urls.AdApp.LoadHTMLGlob("sugar/rbac/*")
-	//
 	//sugar.AppInit(urls.AdApp,"","")
 	//go urls.AdApp.Run("0.0.0.0:9090")
 }

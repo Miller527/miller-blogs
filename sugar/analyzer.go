@@ -45,7 +45,7 @@ func (dc *descConf) DisplayName() string {
 	return dc.Display + "(" + dc.Name + ")"
 }
 
-type analyzer interface {
+type IAnalyzer interface {
 	dump() (*descConf, error)
 	dumps(r io.Reader) (*descConf, error)
 	load(desc *descConf) error
@@ -53,7 +53,7 @@ type analyzer interface {
 	verifyPath(fp string) (string, string, error)
 }
 
-var defaultAnalyzer analyzer
+var defaultAnalyzer IAnalyzer
 
 type jsonAnalyzer struct {
 	FileSuffix string
@@ -163,7 +163,7 @@ func (xana *xmlAnalyzer) load(desc *descConf) error {
 func (xana *xmlAnalyzer) loads(r io.Writer, desc *descConf) error {
 	return nil
 }
-func analyzerInit(confType string) analyzer {
+func analyzerInit(confType string) IAnalyzer {
 	switch confType {
 	case "json":
 		return &jsonAnalyzer{FileSuffix: confType}
@@ -178,7 +178,7 @@ func analyzerInit(confType string) analyzer {
 }
 
 // 注册表分析器接口修改
-func changeAnalyzer(confType string, analy analyzer) {
+func changeAnalyzer(confType string, analy IAnalyzer) {
 	if analy == nil && utils.InStringSlice(confType, confTypeList) {
 		defaultAnalyzer = analyzerInit(confType)
 	} else if analy != nil && !utils.InStringSlice(confType, confTypeList) {
