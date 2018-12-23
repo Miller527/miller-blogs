@@ -3,9 +3,7 @@
 <head>
 
     {{template "head" .}}
-    <link id="bs-css" href="{{.path}}static/css/{{.site}}.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/static/slide_code/style.css">
-    <script src="/static/bower_components/jquery/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
 
     <script src="/static/slide_code/img_ver.js"></script>
@@ -24,12 +22,10 @@
         }
 
         #box {
-            margin-top: 70px;
+            margin-top: 40px;
         }
 
         .login {
-            position: absolute;
-            width: 320px;
             left: 0;
             top: 0;
             padding: 42px 42px 36px;
@@ -98,8 +94,6 @@
     </div><!--/fluid-row-->
 
 
-
-
     <hr>
 
     {{template "modal_box"}}
@@ -109,17 +103,19 @@
 <div class="verBox">
     <div id="imgVer" style="display:inline-block;"></div>
 </div>
+
 {{template "external" .}}
 
-
 <script>
-
+    var verifyLogin = {{.urlprefix}}+"login";
+    var indexUrl = {{.urlprefix}}+"index";
+    var slideCode = {{.urlprefix}}+"slidecode";
     imgVer({
         el: '$("#imgVer")',
         queryParams: function () {
-            var ppp = {}
+            var ppp = {};
             $.ajax({
-                url: "/manager/login-slide-code",
+                url: slideCode,
                 type: 'GET',
                 dataType: 'JSON',
                 async: false,
@@ -133,20 +129,22 @@
             return ppp
 
         },
-        success: function (coord) {
-            var password = md5("curd" + $("#password").val() + "rbac")
+        success: function (coordX, coordY) {
+            var password = md5("curd" + $("#password").val() + "rbac");
             $.ajax({
-                url: "/manager/verify-login",
+                url: verifyLogin,
                 type: 'POST',
                 data: {
                     'username': $("#username").val(),
                     'password': password,
-                    'coord': coord
+                    'coordX': coordX,
+                    'coordY': coordY
                 },
                 dataType: 'JSON',
                 success: function (response) {
+                    console.log(response["status"]);
                     if (response["status"] === 200) {
-                        window.location.href = "/manager/index"
+                        window.location.href = indexUrl
                     } else {
                         $(".login").css({
                             "left": "0",
@@ -160,12 +158,28 @@
                         $("#tips").text(response["msg"])
                     }
                 },
-                error: function () {
+                error: function (response) {
+                    $(".login").css({
+                        "left": "0",
+                        "opacity": "1"
+                    });
+                    $(".verBox").css({
+                        "left": "404px",
+                        "opacity": "0"
+                    });
+                    $("#tips").removeClass("alert-info").addClass("alert-danger");
+                    if (response["status"] === 500) {
+                        $("#tips").text("请求异常错误, 请稍后重试. ");
+                        return
+                    }
+
+                    $("#tips").text(response["msg"])
+
                 }
             })
         },
         error: function () {
-            //alert('错误什么都不执行')
+
         }
     });
 

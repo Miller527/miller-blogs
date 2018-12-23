@@ -5,6 +5,7 @@
 package sugar
 
 import (
+	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
 	"miller-blogs/sugar/utils"
@@ -56,21 +57,23 @@ type SessionConfig struct {
 	Protocol string
 	Address  string
 	Password string
-
-	keys []string
+	Keys []string
+	Name string
+	Expires int
 }
 
 var sessionStore sessions.Store
 
 func InitSession(sessConf SessionConfig) {
 	bytesKeys := [][]byte{}
-	for _, k := range sessConf.keys {
+	for _, k := range sessConf.Keys {
 		bytesKeys = append(bytesKeys, []byte(k))
 	}
+	fmt.Println(bytesKeys)
 	store, err := redis.NewStore(sessConf.Size, sessConf.Protocol,
 		sessConf.Address, sessConf.Password, bytesKeys...)
 	utils.PanicCheck(err)
-
+store.Options(sessions.Options{MaxAge:sessConf.Expires})
 	sessionStore = store
 
 }

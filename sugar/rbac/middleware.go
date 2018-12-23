@@ -16,12 +16,12 @@ import (
 
 func RbacLoginMiddle() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		fmt.Println(c)
+		fmt.Println("RbacLoginMiddle qian")
 
 		// Process request
 		c.Next()
 
-		fmt.Println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+		fmt.Println("RbacLoginMiddle hou")
 	}
 }
 

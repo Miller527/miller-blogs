@@ -17,16 +17,13 @@ func main() {
 	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/models", "json", nil)
 	sugar.App.DBAlias("miller_blogs", "blogs")
 	sugar.App.TBAlias("miller_blogs", "role", "userrole")
-	sugar.SetAuthenticate(rbac.Register, true)
+	sugar.SetAuthenticate(rbac.Register, false)
 	sugar.App.Start(false)
 
 	//urls.AdApp.LoadHTMLGlob("sugar/rbac/*")
 	//sugar.AppInit(urls.AdApp,"","")
 	//go urls.AdApp.Run("0.0.0.0:9090")
 }
-
-
-
 
 //fmt.Println(sessionStore)
 //session := sessions.Default(c)

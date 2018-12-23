@@ -18,5 +18,5 @@ func Register(ac *sugar.AdminConf, all bool)  {
 	if all{
 		ac.LoginFunc = handleLogin
 	}
-	ac.AddGlobalMiddle(RbacLoginMiddle())
+	//ac.AddGlobalMiddle(RbacLoginMiddle(), Logger() )
 }

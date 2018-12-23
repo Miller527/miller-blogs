@@ -131,6 +131,7 @@ func (gr *groupRouter) staticRouter() {
 
 	gr.group.GET("/index", HandlerIndex)
 	gr.group.GET("/index.html", HandlerIndex)
+	gr.group.GET("/slidecode", SlideCode)
 }
 
 // 通过配置限制限制访问权限, 不分用户

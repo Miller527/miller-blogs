@@ -33,7 +33,6 @@ func init() {
 		rotatelogs.WithMaxAge(30*24*time.Hour), // 文件最大保存时间
 		rotatelogs.WithRotationTime(24*time.Second), // 日志切割时间间隔
 	)
-	fmt.Println("x")
 	writeMap := lfshook.WriterMap{
 		logrus.DebugLevel: logWriter,
 		logrus.InfoLevel:  logWriter,

@@ -1,0 +1,19 @@
+{{define "base_head"}}
+
+    </head>
+
+    <body>
+    {{template "topbar"}}
+
+    <div class="ch-container">
+        <div class="row">
+
+            {{template "menu"}}
+            {{template "noscript"}}
+
+            <div id="content" class="col-lg-10 col-sm-10">
+                <!-- content starts -->
+                {{template "path"}}
+
+
+{{end}}

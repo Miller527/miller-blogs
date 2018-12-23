@@ -19,6 +19,9 @@
     "type": "redis",
     "address": "192.168.71.63:16379",
     "protocol": "tcp",
+    "name": "mysession",
+    "expires": 3600,
+
     "size": 10,
     "password": "",
     "keys": ["secret"]

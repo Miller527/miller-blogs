@@ -8,6 +8,7 @@ package sugar
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"math"
 	"miller-blogs/sugar/utils"
@@ -25,8 +26,10 @@ func htmlStaticPath() string {
 
 // 登录页面
 func HandlerLogin(c *gin.Context) {
+	fmt.Println(htmlStaticPath())
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"path": htmlStaticPath(),
+		"urlprefix": App.Config.Prefix,
 		"site": "bootstrap-cerulean",
 	})
 }
@@ -37,10 +40,19 @@ func HandlerVerifyLogin(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, App.Config.Prefix+"index.html")
 }
 
+// 登录页面
+func HandlerLogout(c *gin.Context) {
+	session := sessions.Default(c)
+	session.Clear()
+	c.Redirect(http.StatusFound, App.Config.Prefix+"login")
+}
+
 // 首页
 func HandlerIndex(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", gin.H{
-		"site": "static/css/bootstrap-cerulean.min.css",
+		"path": htmlStaticPath(),
+		"urlprefix": App.Config.Prefix,
+		"site": "bootstrap-cerulean",
 	})
 }
 
@@ -164,39 +176,47 @@ func HandlerDelete(c *gin.Context) {
 //	c.String(http.StatusOK, "MulitDelete")
 //
 //}
-//
-//func SlideCode(c *gin.Context) {
-//	s := htmlStaticPath()
-//	width := 360
-//	height := 176
-//	img := []string{
-//		s + "static/slide_code/images/ver-0.png",
-//		s + "static/slide_code/images/ver-1.png",
-//		s + "static/slide_code/images/ver-2.png",
-//		s + "static/slide_code/images/ver-3.png",
-//	}
-//
-//	img_src := img[utils.RandomInt(len(img))]
-//	fmt.Println(img_src)
-//
-//	plSize := 48
-//	Padding := 20
-//	MinX := plSize + Padding
-//	MaxX := width - Padding - plSize - plSize/6
-//	MinY := height - Padding - plSize - plSize/6
-//	MaxY := Padding
-//	Deviation := 4 // 滑动偏移量
-//
-//	X := RandomCoord(MinX, MaxX)
-//	Y := RandomCoord(MinY, MaxY)
-//	request["session"]["coords"] = [x - 10 - deviation, x-10+deviation]
-//return JsonResponse({"width": width, "height": height,
-//"img_src": img_src, "pl_size": pl_size,
-//"padding": padding, "x": x, "y": y,
-//"deviation": deviation
-//})
-//
-//}
+
+// 获取验证码
+func SlideCode(c *gin.Context) {
+	s := htmlStaticPath()
+	width := 360
+	height := 176
+	img := []string{
+		s + "static/slide_code/images/ver-0.png",
+		s + "static/slide_code/images/ver-1.png",
+		s + "static/slide_code/images/ver-2.png",
+		s + "static/slide_code/images/ver-3.png",
+	}
+
+	img_src := img[utils.RandomInt(len(img))]
+	fmt.Println(img_src)
+
+	plSize := 48
+	Padding := 20
+	minX := plSize + Padding
+	maxX := width - Padding - plSize - plSize/6
+	minY := height - Padding - plSize - plSize/6
+	maxY := Padding
+	deviation := 4 // 滑动偏移量
+
+	X := RandomCoord(minX, maxX)
+	Y := RandomCoord(minY, maxY)
+	ccc := map[string]interface{}{"width": width, "height": height,
+		"img_src": img_src, "pl_size": plSize,
+		"padding": Padding, "x": X , "y": Y,
+		"deviation": deviation}
+	session := sessions.Default(c)
+	//tmp, err := json.Marshal()
+	//fmt.Println("json", err)
+
+	session.Set("coordX",[]int{X - 10 - deviation, X-10+deviation})
+	session.Set("coordY",Y)
+	err  := session.Save()
+	fmt.Println("save", err)
+	c.JSON(http.StatusOK,ccc)
+
+}
 
 func RandomCoord(minn, maxn int) int {
 	rangFloat := float64(maxn - minn)

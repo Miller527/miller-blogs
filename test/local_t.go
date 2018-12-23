@@ -4,8 +4,12 @@
 */
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
-	fmt.Println(7%3)
+
+	fmt.Println(strconv.Atoi(""))
 }
