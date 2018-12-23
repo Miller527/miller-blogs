@@ -15,6 +15,14 @@
       "192.168.71.64:9092"
     ]
   },
+  "session": {
+    "type": "redis",
+    "address": "192.168.71.63:16379",
+    "protocol": "tcp",
+    "size": 10,
+    "password": "",
+    "keys": ["secret"]
+  },
   "dbconfig": {
     "driver": "mysql",
     "username": "root",

@@ -4,14 +4,18 @@
 */
 package rbac
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
 
 func handleVerifyLogin(c *gin.Context) {
-
+	c.String(http.StatusOK, "handleVerifyLogin")
 
 }
 
 func handleLogin(c *gin.Context) {
+	c.String(http.StatusOK, "handleLogin")
 
 
 }

@@ -9,19 +9,26 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"math"
+	"miller-blogs/sugar/utils"
 	"net/http"
 	"reflect"
 	"strings"
 )
 
-
+func htmlStaticPath() string {
+	if App.Config.StaticPrefix {
+		return App.Config.Prefix
+	}
+	return "/"
+}
 
 // 登录页面
 func HandlerLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", gin.H{
-		"path": "/sugar/static",
+		"path": htmlStaticPath(),
+		"site": "bootstrap-cerulean",
 	})
-
 }
 
 // 登录验证
@@ -30,15 +37,12 @@ func HandlerVerifyLogin(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, App.Config.Prefix+"index.html")
 }
 
-
-
 // 首页
 func HandlerIndex(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", gin.H{
-		"site":"static/css/bootstrap-cerulean.min.css",
+		"site": "static/css/bootstrap-cerulean.min.css",
 	})
 }
-
 
 //列表
 func HandlerList(c *gin.Context) {
@@ -47,13 +51,13 @@ func HandlerList(c *gin.Context) {
 	fmt.Println(App.Config.relativeKey)
 	fmt.Println(tbInfo)
 	fmt.Println(c.Params)
-	tb,ok := tbInfo[c.Param(App.Config.relativeKey)]
+	tb, ok := tbInfo[c.Param(App.Config.relativeKey)]
 	if !ok {
 		c.HTML(http.StatusNotFound, "error.html", gin.H{})
 		return
 	}
 	queryCmd := fmt.Sprintf("SELECT %s FROM %s", strings.Join(tb.Field, ","), tb.Name)
-	Db,ok :=Dbm.DBPool[dbName]
+	Db, ok := Dbm.DBPool[dbName]
 	stmt, err := Db.Prepare(queryCmd)
 	result, err := Dbm.SelectSlice(stmt, tb)
 	if err != nil {
@@ -63,7 +67,7 @@ func HandlerList(c *gin.Context) {
 
 	// todo 是不是可以在取数据那里处理, 根据权限生成这个点击字符串，同样前端的多操作按钮也要根据权限去判断生成
 	var newResult [][]string
-	for _,line :=range result{
+	for _, line := range result {
 		v := `<i class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
              <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
              <i class="glyphicon glyphicon-trash icon-white"></i>`
@@ -73,7 +77,7 @@ func HandlerList(c *gin.Context) {
 	}
 	fmt.Println(result)
 	res, err := json.Marshal(map[string]interface{}{
-		"data":     newResult,
+		"data": newResult,
 	})
 	if err == nil {
 		c.String(http.StatusOK, string(res))
@@ -81,7 +85,6 @@ func HandlerList(c *gin.Context) {
 	}
 	c.String(http.StatusInternalServerError, "")
 }
-
 
 func HandlerCurd(c *gin.Context) {
 	//var line []*TableConf
@@ -108,42 +111,37 @@ func HandlerCurd(c *gin.Context) {
 	c.HTML(http.StatusOK, "table.html", gin.H{
 		//"tables": tables,
 		"config": v,
-		"site":"static/css/bootstrap-cerulean.min.css",
-
+		"site":   "static/css/bootstrap-cerulean.min.css",
 	})
 }
-
 
 // 详情的一条
 func HandlerGet(c *gin.Context) {
 	c.String(http.StatusOK, "Get")
 }
 
-
 // 添加
 func HandlerAdd(c *gin.Context) {
-fmt.Println("Params", c.Params)
+	fmt.Println("Params", c.Params)
 
-fmt.Println("c.Request.PostForm",c.Request.PostForm)
-fmt.Println("c.Request.ParseForm()",c.Request.ParseForm())
-	fmt.Println("c.Request.PostForm",c.Request.PostForm)
-fmt.Println("c.Request.Body",c.Request.Body)
-fmt.Println( c.GetQuery("name"))
-fmt.Println("c.Query",c.Query("name"))
-x, _ :=c.GetQueryArray("name")
-fmt.Println("type",reflect.TypeOf(x),x)
+	fmt.Println("c.Request.PostForm", c.Request.PostForm)
+	fmt.Println("c.Request.ParseForm()", c.Request.ParseForm())
+	fmt.Println("c.Request.PostForm", c.Request.PostForm)
+	fmt.Println("c.Request.Body", c.Request.Body)
+	fmt.Println(c.GetQuery("name"))
+	fmt.Println("c.Query", c.Query("name"))
+	x, _ := c.GetQueryArray("name")
+	fmt.Println("type", reflect.TypeOf(x), x)
 
-fmt.Println(c.Query("name"))
-fmt.Println("drc",c.Query("sex"))
+	fmt.Println(c.Query("name"))
+	fmt.Println("drc", c.Query("sex"))
 	c.String(http.StatusOK, "Add")
 }
-
 
 // 更新一条
 func HandlerUpdate(c *gin.Context) {
 	c.String(http.StatusOK, "Update")
 }
-
 
 // 删除
 func HandlerDelete(c *gin.Context) {
@@ -166,3 +164,50 @@ func HandlerDelete(c *gin.Context) {
 //	c.String(http.StatusOK, "MulitDelete")
 //
 //}
+//
+//func SlideCode(c *gin.Context) {
+//	s := htmlStaticPath()
+//	width := 360
+//	height := 176
+//	img := []string{
+//		s + "static/slide_code/images/ver-0.png",
+//		s + "static/slide_code/images/ver-1.png",
+//		s + "static/slide_code/images/ver-2.png",
+//		s + "static/slide_code/images/ver-3.png",
+//	}
+//
+//	img_src := img[utils.RandomInt(len(img))]
+//	fmt.Println(img_src)
+//
+//	plSize := 48
+//	Padding := 20
+//	MinX := plSize + Padding
+//	MaxX := width - Padding - plSize - plSize/6
+//	MinY := height - Padding - plSize - plSize/6
+//	MaxY := Padding
+//	Deviation := 4 // 滑动偏移量
+//
+//	X := RandomCoord(MinX, MaxX)
+//	Y := RandomCoord(MinY, MaxY)
+//	request["session"]["coords"] = [x - 10 - deviation, x-10+deviation]
+//return JsonResponse({"width": width, "height": height,
+//"img_src": img_src, "pl_size": pl_size,
+//"padding": padding, "x": x, "y": y,
+//"deviation": deviation
+//})
+//
+//}
+
+func RandomCoord(minn, maxn int) int {
+	rangFloat := float64(maxn - minn)
+	randFloat := utils.RandomFloat64()
+
+	if math.Round(randFloat*rangFloat) == 0 {
+		return minn + 1
+
+	} else if int(math.Round(randFloat*float64(maxn))) == maxn {
+		return maxn - 1
+	} else {
+		return minn + int(math.Round(randFloat*rangFloat)) - 1
+	}
+}

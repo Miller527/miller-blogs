@@ -8,12 +8,15 @@ package sugar
 import (
 	"errors"
 	"fmt"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
+	"log"
 	"miller-blogs/sugar/utils"
 	"path"
 	"runtime"
 	"strings"
+	"unicode"
 )
 
 var TableConfDirError = errors.New("TableConfDirError: Register dir is none.")
@@ -28,6 +31,7 @@ var TableConfBackupWarning = errors.New("TableConfBackupWarning: Register config
 type AdminConf struct {
 	AccessControl string
 	Address       string // 0.0.0.0:9090
+	StaticPrefix bool // 是否使用前缀
 	Prefix        string // 前缀
 	Relative    string // 默认 :tablename/
 	relativeKey string // 默认 tablename
@@ -37,12 +41,12 @@ type AdminConf struct {
 	//buttons           []string
 	globalMiddlewares []gin.HandlerFunc
 	groupMiddlewares  []gin.HandlerFunc
-	loginFunc         gin.HandlerFunc
+	LoginFunc         gin.HandlerFunc
+	VerifyLoginFunc         gin.HandlerFunc
 	//Static        string
 	whiteUrls []string
 	blackUrls []string
 }
-
 
 
 // 增加全局中间件
@@ -110,12 +114,12 @@ func (conf *AdminConf) checkBackupSuffix() {
 		return
 	}
 	for _, b := range conf.BackupSuffix {
-		if b < 'a' || b > 'Z' {
+		if ! unicode.IsLetter(b) {
 			panic(errors.New("SugarAdminError: BackupSuffix only be case letters"))
 		}
 	}
 }
-
+// 判断url上的前缀字段
 func (conf *AdminConf) checkPrefix() {
 	if conf.Prefix == "" {
 		conf.Prefix = "/"
@@ -129,7 +133,9 @@ func (conf *AdminConf) checkPrefix() {
 	}
 }
 
+// 判断url上的表名字段
 func (conf *AdminConf) checkRelative() {
+
 	if conf.Relative == "" {
 		if conf.AccessControl == "rbac" {
 			conf.Relative = ":tablename/"
@@ -138,15 +144,20 @@ func (conf *AdminConf) checkRelative() {
 
 	} else {
 		for _, b := range conf.Relative {
-			if b < 'a' || b > 'Z' || b != '_' {
+			if ! unicode.IsLetter(b) && b != '_'&& b != ':' && b != '/' {
+
 				panic(errors.New("SugarAdminError: Relative only be case letters"))
 			}
 		}
 		conf.relativeKey = conf.Relative
 
-		conf.Relative += "/"
-		if conf.AccessControl == "rbac" {
+
+		if conf.AccessControl == "rbac" && !strings.HasPrefix(conf.Relative,":"){
 			conf.Relative = ":" + conf.Relative
+		}
+		if !strings.HasSuffix(conf.Relative,"/"){
+			conf.Relative += "/"
+
 		}
 	}
 }
@@ -176,7 +187,7 @@ func (conf *AdminConf) checkExtend() {
 var App appAdmin
 
 type appAdmin struct {
-	Config   AdminConf
+	Config   *AdminConf
 	Sugar    *gin.Engine
 	Registry map[string]map[string]*descConf // database table list
 	GroupRouter groupRouter
@@ -263,22 +274,32 @@ func (app *appAdmin) htmlGlob() {
 
 }
 
-func (app *appAdmin) static() {
+func (app *appAdmin) staticFile() {
 	_, file, _, ok := runtime.Caller(0)
 	if ! ok {
 		panic(errors.New("SugarAdminError: get template path error"))
 	}
 	tplPath := path.Join(path.Dir(file), "static")
-	app.Sugar.Static(app.Config.Prefix+"static", tplPath)
-	//app.Sugar.Static(app.Prefix+app.Static, tplPath)
+	staticUrl := "static"
+	if app.Config.StaticPrefix{
+		staticUrl = app.Config.Prefix+staticUrl
+	}
+	app.Sugar.Static(staticUrl, tplPath)
 
 }
 func (app *appAdmin) InitApp(middles ...gin.HandlerFunc) {
 	app.Config.CheckParams()
 	app.new(middles...)
 	app.htmlGlob()
-	app.static()
+	app.staticFile()
 
+}
+// 生效session
+func (app *appAdmin)UseSession( name string, store sessions.Store){
+	if store != nil{
+		sessionStore = store
+	}
+	app.Sugar.Use(sessions.Sessions(name, store))
 }
 
 func (app *appAdmin) InitGroup(middles ...gin.HandlerFunc) *gin.RouterGroup {
@@ -289,8 +310,43 @@ func (app *appAdmin) InitGroup(middles ...gin.HandlerFunc) *gin.RouterGroup {
 
 }
 
-func (app *appAdmin) Start(back bool) {
+func (app *appAdmin) globalMiddle() {
+	if app.Config.AccessControl == "static" {
+	}
+	app.Sugar.Use(app.Config.globalMiddlewares...)
+	//sugar.App.Sugar.Use(sugar.App.Config.GetGlobalMiddle()...)
+}
 
+func Logger() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		// Set example variable
+		c.Set("example", "12345")
+
+		// before request
+		log.Print("before request")
+
+		c.Next()
+
+		// after request
+		log.Print("after request")
+
+		// access the status we are sending
+		status := c.Writer.Status()
+		log.Println(status)
+	}
+}
+
+func (app *appAdmin) Start(back bool) {
+	App.globalMiddle()
+
+	rg := App.InitGroup()
+	App.GroupRouter = groupRouter{group: rg, conf: App.Config}
+	App.GroupRouter.init()
+	rg.Use(App.Config.groupMiddlewares...)
+
+
+fmt.Println(	App.Sugar.Handlers)
 	if back {
 		go app.Sugar.Run(app.Config.Address)
 	} else {
@@ -439,30 +495,36 @@ func updateDesc(dbName string, dc *descConf) {
 	}
 }
 
-func SetAdmin(conf AdminConf) {
+func SetAdmin(conf *AdminConf) {
 	App.Config = conf
-	conf.CheckParams()
+	App.InitApp(App.Config.globalMiddlewares...)
+	App.AddGlobalMiddle(gin.Logger(), gin.Recovery())
 
-	App.InitApp(gin.Logger(), gin.Recovery())
-	rg := App.InitGroup()
-	App.GroupRouter = groupRouter{group: rg, conf: App.Config}
-	App.GroupRouter.init()
 }
 
+func SetAuthenticate(handle digestHandler, all bool) {
+	if handle != nil{
+		handle(App.Config, all)
+	}
+}
 
-
+type digestHandler func(ac *AdminConf, all bool)
 
 func init() {
 	// 基本的配置文件
 	Settings("")
-	conf := AdminConf{}
-	conf.CheckParams()
-	fmt.Println(conf)
-	App = appAdmin{Config: conf,
+	pluginInit()
+	App = appAdmin{
 		Registry:      map[string]map[string]*descConf{},
 		databaseAlias: map[string]string{},
 		aliasDatabase: map[string]string{},
 		tableAlias:    map[string]map[string]string{},
 		aliasTable:    map[string]map[string]string{},
 	}
+}
+
+func pluginInit() {
+	// 数据库连接池初始化
+	DBMInit(settings.DBConfig)
+	InitSession(settings.Session)
 }

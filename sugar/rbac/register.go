@@ -4,8 +4,19 @@
 */
 package rbac
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"miller-blogs/sugar"
+)
 
-func Register(app *gin.Engine)  {
-
+func Register(ac *sugar.AdminConf, all bool)  {
+	if ac.AccessControl != "rbac"{
+		fmt.Println("Warning: AccessControl must 'rbac', register error.")
+		return
+	}
+	ac.VerifyLoginFunc = handleVerifyLogin
+	if all{
+		ac.LoginFunc = handleLogin
+	}
+	ac.AddGlobalMiddle(RbacLoginMiddle())
 }

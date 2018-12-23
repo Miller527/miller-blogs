@@ -20,7 +20,8 @@ type configuration struct {
 	AllKafkaHosts  map[string][]string `json:"kafkahosts"`
 	Kafkatimeout   time.Duration
 	Kafkaconnsleep time.Duration
-	DBConfig       map[string]interface{}
+	DBConfig      DBConfig
+	Session       SessionConfig
 }
 
 func (conf *configuration) GetKafkaHosts() ([]string, error) {
@@ -50,10 +51,6 @@ func Settings(confPath string) {
 
 	err = decoder.Decode(&settings)
 	utils.PanicCheck(err)
-	pluginInit()
 }
 
-func pluginInit() {
-	// 数据库连接池初始化
-	DBMInit(settings.DBConfig)
-}
+

@@ -16,7 +16,7 @@ $(document).ready(function () {
     if (currentTheme === null) {
         currentTheme = 'cerulean';
     }
-    switchTheme(currentTheme);
+    // switchTheme(currentTheme);
 
     $('.navbar-toggle').click(function (e) {
         e.preventDefault();

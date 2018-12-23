@@ -48,7 +48,7 @@ var methods = []int{
 }
 //
 type groupRouter struct {
-	conf  AdminConf
+	conf  *AdminConf
 	group *gin.RouterGroup
 	login gin.HandlerFunc
 }
@@ -97,30 +97,37 @@ func (gr *groupRouter) staticMiddle() gin.HandlerFunc {
 
 	}
 }
-func (gr *groupRouter) initMiddle() {
+func (gr *groupRouter) groupMiddle() {
 	if gr.conf.AccessControl == "static" {
-		gr.conf.groupMiddlewares = append(gr.conf.groupMiddlewares, gr.staticMiddle())
+		gr.conf.AddGroupMiddle(gr.staticMiddle())
 	}
-	fmt.Println(gr.conf.groupMiddlewares)
 	gr.group.Use(gr.conf.groupMiddlewares...)
 
 }
 
+
 func (gr *groupRouter) init() {
-	gr.initMiddle()
+	gr.groupMiddle()
 	gr.staticRouter()
 	gr.dynamicRouter()
 }
 
 func (gr *groupRouter) staticRouter() {
 
-	if gr.conf.loginFunc != nil {
-		gr.group.POST("/login", gr.conf.loginFunc)
+	if gr.conf.LoginFunc != nil {
+		gr.group.GET("/login", gr.conf.LoginFunc)
+
+	} else {
+		gr.group.GET("/login", HandlerLogin)
+
+	}
+
+	if gr.conf.VerifyLoginFunc != nil {
+		gr.group.POST("/login", gr.conf.VerifyLoginFunc)
 
 	} else {
 		gr.group.POST("/login", HandlerVerifyLogin)
 	}
-	gr.group.GET("/login", HandlerLogin)
 
 	gr.group.GET("/index", HandlerIndex)
 	gr.group.GET("/index.html", HandlerIndex)
@@ -180,6 +187,12 @@ func (gr *groupRouter) dynamicRouter() {
 		}
 		for tbName, tbConf := range tbInfo{
 
+			// 表别名
+			tbAlice, ok := App.tableAlias[dbName][tbName]
+			if ok{
+				tbName = tbAlice
+			}
+
 			if gr.conf.AccessControl == "static" || tbConf.Methods == nil {
 
 				gr.groupRouter(urlExtend, tbName, methods)
@@ -190,6 +203,7 @@ func (gr *groupRouter) dynamicRouter() {
 					panic(errors.New("SugarTable: table [" + tbConf.Name + "] method error"))
 				}
 			}
+
 			gr.groupRouter(dbName, tbName, tbConf.Methods)
 		}
 

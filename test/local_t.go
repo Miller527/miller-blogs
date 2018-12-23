@@ -7,7 +7,5 @@ package main
 import "fmt"
 
 func main() {
-	v := map[string]string{"a":"b"}
-	fmt.Println(len(v))
+	fmt.Println(7%3)
 }
-

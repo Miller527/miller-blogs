@@ -6,10 +6,9 @@
 package sugar
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"database/sql"
-	"encoding/json"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"
 	"miller-blogs/sugar/utils"
 )
@@ -241,13 +240,13 @@ func NewDbm(dbc DBConfig) DBManager {
 	return DBManager{Conf: dbc,DBPool: map[string]*sql.DB{}}
 }
 
-func DBMInit(dbConfig map[string]interface{}) {
-	dbc := DBConfig{}
-	v, err := json.Marshal(dbConfig)
-	utils.PanicCheck(err)
+func DBMInit(dbConfig DBConfig) {
+	//dbc := DBConfig{}
+	//v, err := json.Marshal(dbConfig)
+	//utils.PanicCheck(err)
 
-	err = json.Unmarshal(v, &dbc)
-	utils.PanicCheck(err)
-	Dbm = NewDbm(dbc)
+	//err = json.Unmarshal(v, &dbc)
+	//utils.PanicCheck(err)
+	Dbm = NewDbm(dbConfig)
 	Dbm.init()
 }
