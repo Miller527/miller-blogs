@@ -130,6 +130,7 @@ func (gr *groupRouter) staticRouter() {
 	}
 
 	gr.group.GET("/index", HandlerIndex)
+	gr.group.GET("/logout", HandlerLogout)
 	gr.group.GET("/index.html", HandlerIndex)
 	gr.group.GET("/slidecode", SlideCode)
 }

@@ -49,14 +49,16 @@ func handleVerifyLogin(c *gin.Context) {
 		return
 	}
 	fmt.Println("xxxxxxx",sugar.App.DB)
-	sqlCmd := `SELECT id FROM userinfo WHERE uid=? and password=?`
+	sqlCmd := `SELECT id FROM userinfo WHERE uid=? and password=? AND status=1`
 
 	stmt, err := sugar.App.DB.DefaultDB.Prepare(sqlCmd)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,ResMsg(500,"用户查询失败."))
 		return
 	}
-	result, err := sugar.App.DB.SelectSlice(stmt, username, password)
+	result, err := sugar.App.DB.SelectValues(stmt, username, password)
+	fmt.Println(result)
+
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,ResMsg(500,"用户查询失败."))
 		return
@@ -65,22 +67,32 @@ func handleVerifyLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden,ResMsg(403,"用户或密码输入错误, 请重新输入."))
 		return
 	}
-
-	//sqlCmd = `SELECT * FROM permission WHERE id in (SELECT menu_id FROM role_menu WHERE role_id
- //in (SELECT role_id FROM userinfo_role WHERE userinfo_id=?)) and status=1`
- //
-	//stmt, err := sugar.App.DB.DefaultDB.Prepare(sqlCmd)
-
+	fmt.Println(result)
+	sqlCmd = `SELECT * FROM permission WHERE id in (SELECT permission_id FROM role_permission WHERE role_id
+ in (SELECT role_id FROM userinfo_role WHERE userinfo_id=?)) and status=1`
+	stmt, err = sugar.App.DB.DefaultDB.Prepare(sqlCmd)
+	if err != nil{
+		c.JSON(http.StatusInternalServerError,ResMsg(500,"用户查询失败."))
+		return
+	}
+	permissions, err := sugar.App.DB.SelectSlice(stmt, result[0])
+	MenuList(permissions)
+	fmt.Println(permissions)
 	fmt.Println(username,password, coordX,reflect.TypeOf(coordY))
 	c.JSON(http.StatusOK,ResMsg(200,"登录成功."))
 
 
 }
 
+
+func MenuList(premiss [][]string){
+
+}
+
 func ResMsg(status int, msg string)map[string]interface{}{
 	return map[string]interface{}{"status":status, "msg":msg}
 }
-func handleLogin(c *gin.Context) {
+func handleLogin(c *gin.Context) [] Menu {
 	c.String(http.StatusOK, "handleLogin")
 
 
