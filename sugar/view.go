@@ -190,7 +190,6 @@ func SlideCode(c *gin.Context) {
 	}
 
 	img_src := img[utils.RandomInt(len(img))]
-	fmt.Println(img_src)
 
 	plSize := 48
 	Padding := 20
@@ -202,19 +201,18 @@ func SlideCode(c *gin.Context) {
 
 	X := RandomCoord(minX, maxX)
 	Y := RandomCoord(minY, maxY)
-	ccc := map[string]interface{}{"width": width, "height": height,
+	result := map[string]interface{}{"width": width, "height": height,
 		"img_src": img_src, "pl_size": plSize,
 		"padding": Padding, "x": X , "y": Y,
 		"deviation": deviation}
 	session := sessions.Default(c)
-	//tmp, err := json.Marshal()
-	//fmt.Println("json", err)
 
 	session.Set("coordX",[]int{X - 10 - deviation, X-10+deviation})
 	session.Set("coordY",Y)
+
 	err  := session.Save()
 	fmt.Println("save", err)
-	c.JSON(http.StatusOK,ccc)
+	c.JSON(http.StatusOK,result)
 
 }
 

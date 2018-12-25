@@ -11,6 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"
 	"miller-blogs/sugar/utils"
+	"strconv"
 )
 
 // connection database config
@@ -95,7 +96,7 @@ func (dbm *DBManager) NewDB(source string) (*sql.DB, error) {
 }
 
 // update database conn pool
-func (dbm *DBManager) UpdateDBPool(name string)  {
+func (dbm *DBManager) UpdateDBPool(name string) {
 	_, ok := dbm.DBPool[name]
 	if ! ok {
 		db, err := dbm.NewDB(dbm.Conf.changeSourceName(name))
@@ -147,7 +148,7 @@ func (dbm *DBManager) showTables(name string) []string {
 }
 
 // get raw line
-func (dbm *DBManager) line(vals []sql.RawBytes) []string {
+func (dbm *DBManager) list(vals []sql.RawBytes) []string {
 	var val string
 	var resLine []string
 	for _, col := range vals {
@@ -158,6 +159,39 @@ func (dbm *DBManager) line(vals []sql.RawBytes) []string {
 			val = string(col)
 		}
 		resLine = append(resLine, val)
+	}
+	return resLine
+}
+func (dbm *DBManager) dict(vals []sql.RawBytes, columns []string) map[string]interface{} {
+	var val interface{}
+	var resLine = make(map[string]interface{})
+	for i, col := range vals {
+		// Here we can check if the value is nil (NULL value)
+		//switch col {
+		//case nil:
+		//	val = "NULL"
+		//case []byte("false"):
+		//	val = false
+		//case []byte("true"):
+		//	val = true
+		//default:
+		//	val = string(col)
+		//	k, err := strconv.Atoi(val.(string))
+		//	if err == nil{
+		//		val = k
+		//	}
+		//}
+		if col == nil {
+			val = "NULL"
+		} else {
+			val = string(col)
+			k, err := strconv.Atoi(val.(string))
+			if err == nil {
+				val = k
+			}
+		}
+		resLine[columns[i]] = val
+
 	}
 	return resLine
 }
@@ -178,7 +212,7 @@ func (dbm *DBManager) SelectValues(stmt *sql.Stmt, args ...interface{}) ([]strin
 		if err != nil {
 			return nil, err
 		}
-		line := dbm.line(values)
+		line := dbm.list(values)
 		result = append(result, line...)
 	}
 	if err = rows.Err(); err != nil {
@@ -224,7 +258,7 @@ func (dbm *DBManager) SelectSlice(stmt *sql.Stmt, args ...interface{}) ([][]stri
 		if err != nil {
 			return nil, err
 		}
-		line := dbm.line(values)
+		line := dbm.list(values)
 
 		result = append(result, line)
 	}
@@ -234,10 +268,36 @@ func (dbm *DBManager) SelectSlice(stmt *sql.Stmt, args ...interface{}) ([][]stri
 	return result, nil
 }
 
+func (dbm *DBManager) SelectDict(stmt *sql.Stmt, args ...interface{}) ([]map[string]interface{}, error) {
+	rows, err := dbm.selectQuery(stmt, args...)
+	columns, err := rows.Columns()
+
+	if err != nil {
+		return nil, err
+	}
+	values, scanArgs, err := dbm.valuesScan(rows)
+	if err != nil {
+		return nil, err
+	}
+	var result []map[string]interface{}
+	for rows.Next() {
+		err = rows.Scan(scanArgs...)
+		if err != nil {
+			return nil, err
+		}
+		line := dbm.dict(values, columns)
+
+		result = append(result, line)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
 
 // Create New DBModel
 func NewDbm(dbc DBConfig) DBManager {
-	return DBManager{Conf: dbc,DBPool: map[string]*sql.DB{}}
+	return DBManager{Conf: dbc, DBPool: map[string]*sql.DB{}}
 }
 
 func DBMInit(dbConfig DBConfig) {
