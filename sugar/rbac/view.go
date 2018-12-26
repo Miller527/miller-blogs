@@ -84,7 +84,7 @@ func handleVerifyLogin(c *gin.Context) {
 }
 
 func MenuList(permiss []map[string]interface{}) [] Menu {
-	var menus []Menu
+	var menus SortedMenu
 	for _, line := range permiss {
 		fmt.Println(line)
 		v, e := json.Marshal(line)
@@ -92,6 +92,7 @@ func MenuList(permiss []map[string]interface{}) [] Menu {
 		if e == nil {
 			err := json.Unmarshal(v, &menu)
 			if err == nil {
+				menus = SortedInsert(menus,menu)
 				fmt.Println("menu----------------", menu)
 			}
 			fmt.Println("err----------------", err)
@@ -104,6 +105,19 @@ func MenuList(permiss []map[string]interface{}) [] Menu {
 	return menus
 }
 
+func SortedInsert(menus SortedMenu, menu Menu)  SortedMenu {
+	if len(menus) == 0{
+		return append(menus, menu)
+	}
+
+	for i,v := range menus{
+		if menu.Sort < v.Sort {
+			s :=  append(SortedMenu{}, menus[i:]...)
+			return append(append(menus[:i], menu), s...)
+		}
+	}
+	return menus
+}
 func ResMsg(status int, msg string) map[string]interface{} {
 	return map[string]interface{}{"status": status, "msg": msg}
 }
