@@ -16,5 +16,5 @@ type IndexController struct {
 func (this *IndexController) Get () {
 	fmt.Println(this.Data)
 	this.TplName = "index.html"
-
+	beego.Run()
 }

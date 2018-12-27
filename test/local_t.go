@@ -10,7 +10,7 @@ import (
 
 
 func main() {
-	arr := []int{6, 5, 4, 3, 2, 1, 0}
+	arr := []int{6, 1, 3, 3, 2, 1, 0}
 
 	a2 := []int{}
 
@@ -33,5 +33,5 @@ func l (x []int,y int)[]int{
 			return append(append(x[:i],y), c...)
 		}
 	}
-	return x
+	return append(x,y)
 }
