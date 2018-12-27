@@ -82,63 +82,46 @@ func handleVerifyLogin(c *gin.Context) {
 	c.JSON(http.StatusOK, ResMsg(200, "登录成功."))
 
 }
-func disposeMenus(menus SortedMenu, child *Menu, lev bool) SortedMenu {
-
+func disposeMenus(menus SortedMenu, child *Menu, pid int) SortedMenu {
 	for i, m := range menus {
-		fmt.Println(child.Id ,child.ParentId ,m.Id)
 		if child.ParentId == m.Id {
-			fmt.Println(child.ParentId ,m.Id,i)
 			m.Children = SortedInsert(m.Children, child)
-			fmt.Println(m.Children)
 			return menus
-		}else if len(m.Children) != 0 {
-			m.Children = disposeMenus(m.Children, child, false)
-			for _, v := range m.Children{
+		} else if len(m.Children) != 0 {
+			m.Children = disposeMenus(m.Children, child, m.Id)
+			for _, v := range m.Children {
 				if v.Id == child.Id {
 					return menus
 				}
 			}
-		} else {
-			if i == len(menus)-1 && lev{
-				menus = append(menus, child)
-				return menus
-			}
+		}
+		if i+1 == len(menus) && pid == child.ParentId {
+			menus = append(menus, child)
 		}
 	}
 	return menus
 }
-
 func MenuList(permiss []map[string]interface{}) SortedMenu {
 	var menus SortedMenu
-
 	for _, line := range permiss {
-		fmt.Println("line-------------", line)
 		v, e := json.Marshal(line)
-		menu := &Menu{}
 		if e != nil {
-			fmt.Println("e----------------", e)
-			continue
+			return menus
 		}
+		menu := &Menu{}
 		err := json.Unmarshal(v, menu)
 		if err != nil {
-			fmt.Println("err----------------", err)
-			continue
+			return menus
 
 		}
 		if len(menus) == 0 {
 			menus = append(menus, menu)
 			continue
 		}
-		menus = disposeMenus(menus, menu, true)
+		menus = disposeMenus(menus, menu, 0)
 	}
-
-	fmt.Println("xxxxxxxxxxxxx", menus)
-	jsonBytes, _ := json.Marshal(menus)
-	fmt.Println(string(jsonBytes))
 	return menus
 }
-
-
 
 func SortedInsert(menus SortedMenu, menu *Menu) SortedMenu {
 	if len(menus) == 0 {
