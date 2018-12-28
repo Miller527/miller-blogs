@@ -40,7 +40,7 @@ func HandlerVerifyLogin(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, App.Config.Prefix+"index.html")
 }
 
-// 登录页面
+// 登出页面
 func HandlerLogout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
@@ -49,6 +49,9 @@ func HandlerLogout(c *gin.Context) {
 
 // 首页
 func HandlerIndex(c *gin.Context) {
+	session := sessions.Default(c)
+	fmt.Println(session.Get("permission"))
+	fmt.Println(session.Get("menu"))
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"path": htmlStaticPath(),
 		"urlprefix": App.Config.Prefix,

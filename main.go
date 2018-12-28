@@ -17,7 +17,11 @@ func main() {
 	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/models", "json", nil)
 	sugar.App.DBAlias("miller_blogs", "blogs")
 	sugar.App.TBAlias("miller_blogs", "role", "userrole")
-	sugar.SetAuthenticate(rbac.Register, false)
+	//rbac.BlackList("/manager/index","/favicon.ico")
+	rbac.ParamsRbac.Url("/manager/login","/manager/index")
+	rbac.ParamsRbac.WhiteList("/manager/login")
+	rbac.ParamsRbac.Path("/manager/","/")
+	sugar.SetAuthenticate(rbac.Register)
 	sugar.App.Start(false)
 
 	//urls.AdApp.LoadHTMLGlob("sugar/rbac/*")

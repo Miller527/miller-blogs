@@ -11,44 +11,37 @@ import (
 	"github.com/gin-gonic/gin"
 	"miller-blogs/sugar"
 	"net/http"
-	"reflect"
 	"strconv"
 )
 
-func handleVerifyLogin(c *gin.Context) {
-	fmt.Println("handleVerifyLogin")
+func handlerVerifyLogin(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 	coordX := c.PostForm("coordX")
 	coordY := c.PostForm("coordY")
 	x, errx := strconv.Atoi(coordX)
 	y, erry := strconv.Atoi(coordY)
-	fmt.Println("x", x, errx)
-	fmt.Println("y", y, erry)
+
 	// 验证码请求错误
 	if errx != nil && erry == nil {
 		c.JSON(http.StatusForbidden, ResMsg(403, "验证码错误."))
 		return
 	}
+	// 获取登录验证码
 	session := sessions.Default(c)
 	sessionCoordX := session.Get("coordX")
 	sessionCoordY := session.Get("coordY")
-	fmt.Println("session", sessionCoordX, reflect.TypeOf(sessionCoordX), sessionCoordY)
 
 	// todo 用更安全的方式取判断session的正确性
 	if sessionCoordY.(int) < 0 && len(sessionCoordX.([]int)) != 2 {
-		c.JSON(http.StatusInternalServerError, ResMsg(500, "服务端验session验证码错误."))
+		c.JSON(http.StatusInternalServerError, ResMsg(500, "服务端session验证码生成错误."))
 		return
 	}
 	if x < sessionCoordX.([]int)[0] && x > sessionCoordX.([]int)[1] || y != sessionCoordY {
 		c.JSON(http.StatusForbidden, ResMsg(403, "验证码验证失败."))
 		return
 	}
-	if username == "" || password == "" {
-		c.JSON(http.StatusForbidden, ResMsg(403, "用户名或密码输入为空."))
-		return
-	}
-	fmt.Println("xxxxxxx", sugar.App.DB)
+
 	sqlCmd := `SELECT id FROM userinfo WHERE uid=? and password=? AND status=1`
 
 	stmt, err := sugar.App.DB.DefaultDB.Prepare(sqlCmd)
@@ -57,7 +50,6 @@ func handleVerifyLogin(c *gin.Context) {
 		return
 	}
 	result, err := sugar.App.DB.SelectValues(stmt, username, password)
-	fmt.Println(result)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ResMsg(500, "用户查询失败."))
@@ -67,21 +59,33 @@ func handleVerifyLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden, ResMsg(403, "用户或密码输入错误, 请重新输入."))
 		return
 	}
-	fmt.Println(result)
 	sqlCmd = `SELECT * FROM permission WHERE id in (SELECT permission_id FROM role_permission WHERE role_id
- in (SELECT role_id FROM userinfo_role WHERE userinfo_id=?)) and status=1`
+			  in (SELECT role_id FROM userinfo_role WHERE userinfo_id=?)) and status=1`
 	stmt, err = sugar.App.DB.DefaultDB.Prepare(sqlCmd)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ResMsg(500, "用户查询失败."))
 		return
 	}
-	permissions, err := sugar.App.DB.SelectDict(stmt, result[0])
-	MenuList(permissions)
-	fmt.Println("xxx", permissions)
-	fmt.Println(username, password, coordX, reflect.TypeOf(coordY))
+	reult, err := sugar.App.DB.SelectDict(stmt, result[0])
+	menuJson, permiss := MenuList(reult)
+	if menuJson == "" && permiss == "" {
+		c.JSON(http.StatusOK, ResMsg(403, "没有任何访问权限."))
+		return
+	}
+	session.Set("menu", menuJson)
+	session.Set("permission", permiss)
+	session.Set("username", username)
+	err = session.Save()
+	fmt.Println(err)
+	if err != nil {
+		c.JSON(http.StatusOK, ResMsg(500, "权限初始化失败, 请稍后再试."))
+		return
+	}
 	c.JSON(http.StatusOK, ResMsg(200, "登录成功."))
 
 }
+
+// 处理菜单列表
 func disposeMenus(menus SortedMenu, child *Menu, pid int) SortedMenu {
 	for i, m := range menus {
 		if child.ParentId == m.Id {
@@ -101,17 +105,38 @@ func disposeMenus(menus SortedMenu, child *Menu, pid int) SortedMenu {
 	}
 	return menus
 }
-func MenuList(permiss []map[string]interface{}) SortedMenu {
+
+// 生成菜单列表和权限表
+func MenuList(pList []map[string]interface{}) (string, string) {
+	fmt.Println(pList)
 	var menus SortedMenu
-	for _, line := range permiss {
+	var permiss = &Permissions{}
+	for _, line := range pList {
+
+		isRegex, rok := line["is_regex"]
+		isMenu, mok := line["is_menu"]
+		url, uok := line["url"]
+
+		if rok && mok && uok {
+			if isRegex.(int) == 1 {
+				permiss.Regex = append(permiss.Regex, url.(string))
+			} else {
+				permiss.Static = append(permiss.Static, url.(string))
+
+			}
+		}
+		if isMenu.(int) != 1 {
+			continue
+		}
 		v, e := json.Marshal(line)
 		if e != nil {
-			return menus
+			return "", ""
 		}
+
 		menu := &Menu{}
 		err := json.Unmarshal(v, menu)
 		if err != nil {
-			return menus
+			return "", ""
 
 		}
 		if len(menus) == 0 {
@@ -120,9 +145,18 @@ func MenuList(permiss []map[string]interface{}) SortedMenu {
 		}
 		menus = disposeMenus(menus, menu, 0)
 	}
-	return menus
+	menuByte, err := json.Marshal(menus)
+	if err != nil {
+		return "", ""
+	}
+	permissByte, err := json.Marshal(permiss)
+	if err != nil {
+		return "", ""
+	}
+	return string(menuByte), string(permissByte)
 }
 
+// 顺序插入
 func SortedInsert(menus SortedMenu, menu *Menu) SortedMenu {
 	if len(menus) == 0 {
 		return append(menus, menu)
@@ -136,12 +170,28 @@ func SortedInsert(menus SortedMenu, menu *Menu) SortedMenu {
 	}
 	return append(menus, menu)
 }
+
+// 获取状态信息
 func ResMsg(status int, msg string) map[string]interface{} {
 	return map[string]interface{}{"status": status, "msg": msg}
 }
-func handleLogin(c *gin.Context) {
-	c.String(http.StatusOK, "handleLogin")
 
+func handlerLogin(c *gin.Context) {
+	session := sessions.Default(c)
+	permiss := Permissions{Regex:[]string{ParamsRbac.urlPrefix + "slidecode"}}
+	permissByte, _ := json.Marshal(permiss)
+
+	session.Set("permission", string(permissByte))
+	err := session.Save()
+	if err != nil {
+		c.JSON(http.StatusOK, ResMsg(500, "权限初始化失败, 请稍后再试."))
+		return
+	}
+	c.HTML(http.StatusOK, "login.html", gin.H{
+		"path": ParamsRbac.staticPath,
+		"urlprefix": ParamsRbac.urlPrefix,
+		"site": "bootstrap-cerulean",
+	})
 }
 
 type SortedMenu [] *Menu
@@ -159,7 +209,11 @@ type Menu struct {
 	IsRegex  int `json:"is_regex"`
 }
 
-func xxx() {
-	//m := Menu{Children:SortedMenu{}}
-	//{{}}
+type Permissions struct {
+	Static []string
+	Regex  []string
 }
+
+//func init(){
+//gob.Register(Permissions)
+//}

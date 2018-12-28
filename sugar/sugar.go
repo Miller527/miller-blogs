@@ -502,13 +502,13 @@ func SetAdmin(conf *AdminConf) {
 
 }
 
-func SetAuthenticate(handle digestHandler, all bool) {
+func SetAuthenticate(handle digestHandler) {
 	if handle != nil {
-		handle(App.Config, all)
+		handle(App.Config)
 	}
 }
 
-type digestHandler func(ac *AdminConf, all bool)
+type digestHandler func(ac *AdminConf)
 
 func init() {
 	// 基本的配置文件

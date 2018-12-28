@@ -110,78 +110,6 @@
     var verifyLogin = {{.urlprefix}}+"login";
     var indexUrl = {{.urlprefix}}+"index";
     var slideCode = {{.urlprefix}}+"slidecode";
-    imgVer({
-        el: '$("#imgVer")',
-        queryParams: function () {
-            var ppp = {};
-            $.ajax({
-                url: slideCode,
-                type: 'GET',
-                dataType: 'JSON',
-                async: false,
-                success: function (response) {
-                    ppp = response
-
-                },
-                error: function () {
-                }
-            });
-            return ppp
-
-        },
-        success: function (coordX, coordY) {
-            var password = md5("curd" + $("#password").val() + "rbac");
-            $.ajax({
-                url: verifyLogin,
-                type: 'POST',
-                data: {
-                    'username': $("#username").val(),
-                    'password': password,
-                    'coordX': coordX,
-                    'coordY': coordY
-                },
-                dataType: 'JSON',
-                success: function (response) {
-                    console.log(response["status"]);
-                    if (response["status"] === 200) {
-                        window.location.href = indexUrl
-                    } else {
-                        $(".login").css({
-                            "left": "0",
-                            "opacity": "1"
-                        });
-                        $(".verBox").css({
-                            "left": "404px",
-                            "opacity": "0"
-                        });
-                        $("#tips").removeClass("alert-info").addClass("alert-danger");
-                        $("#tips").text(response["msg"])
-                    }
-                },
-                error: function (response) {
-                    $(".login").css({
-                        "left": "0",
-                        "opacity": "1"
-                    });
-                    $(".verBox").css({
-                        "left": "404px",
-                        "opacity": "0"
-                    });
-                    $("#tips").removeClass("alert-info").addClass("alert-danger");
-                    if (response["status"] === 500) {
-                        $("#tips").text("请求异常错误, 请稍后重试. ");
-                        return
-                    }
-
-                    $("#tips").text(response["msg"])
-
-                }
-            })
-        },
-        error: function () {
-
-        }
-    });
 
     $("#login-btn").on('click', function () {
         if ($("#username").val() === '') {
@@ -201,6 +129,78 @@
             $(".verBox").css({
                 "left": "0",
                 "opacity": "1"
+            });
+            imgVer({
+                el: '$("#imgVer")',
+                queryParams: function () {
+                    var ppp = {};
+                    $.ajax({
+                        url: slideCode,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        async: false,
+                        success: function (response) {
+                            ppp = response
+
+                        },
+                        error: function () {
+                        }
+                    });
+                    return ppp
+
+                },
+                success: function (coordX, coordY) {
+                    var password = md5("curd" + $("#password").val() + "rbac");
+                    $.ajax({
+                        url: verifyLogin,
+                        type: 'POST',
+                        data: {
+                            'username': $("#username").val(),
+                            'password': password,
+                            'coordX': coordX,
+                            'coordY': coordY
+                        },
+                        dataType: 'JSON',
+                        success: function (response) {
+                            console.log(response["status"]);
+                            if (response["status"] === 200) {
+                                window.location.href = indexUrl
+                            } else {
+                                $(".login").css({
+                                    "left": "0",
+                                    "opacity": "1"
+                                });
+                                $(".verBox").css({
+                                    "left": "404px",
+                                    "opacity": "0"
+                                });
+                                $("#tips").removeClass("alert-info").addClass("alert-danger");
+                                $("#tips").text(response["msg"])
+                            }
+                        },
+                        error: function (response) {
+                            $(".login").css({
+                                "left": "0",
+                                "opacity": "1"
+                            });
+                            $(".verBox").css({
+                                "left": "404px",
+                                "opacity": "0"
+                            });
+                            $("#tips").removeClass("alert-info").addClass("alert-danger");
+                            if (response["status"] === 500) {
+                                $("#tips").text("请求异常错误, 请稍后重试. ");
+                                return
+                            }
+
+                            $("#tips").text(response["msg"])
+
+                        }
+                    })
+                },
+                error: function () {
+
+                }
             });
 
         }
