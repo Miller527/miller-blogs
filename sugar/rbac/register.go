@@ -6,6 +6,7 @@ package rbac
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"miller-blogs/sugar"
 )
@@ -30,6 +31,7 @@ func Register(ac *sugar.AdminConf) {
 var ParamsRbac Params
 
 type Params struct {
+	config  *sugar.AdminConf
 	whiteList  []string
 	blackList  []string
 	loginUrl   string
@@ -57,9 +59,25 @@ func (par *Params) Path(p, s string) {
 	par.urlPrefix = p
 	par.staticPath = s
 }
+func (par *Params) SetAdmin(conf *sugar.AdminConf) {
+	par.config = conf
+	par.setParams()
+}
 
-func ParamsNew(whiteList, blackList []string, loginUrl,indexUrl, staticPath, urlPrefix string) {
+func (par *Params) setParams(){
+	conf := par.config
+	par.urlPrefix = conf.Prefix
+	par.staticPath = conf.Static
+	fmt.Println(par.staticPath)
+	par.loginUrl = conf.Prefix + "login"
+	par.indexUrl = conf.Prefix + "index"
+	par.whiteList =conf.WhiteUrls()
+	par.blackList=conf.BlackUrls()
+}
+
+func ParamsNew(conf *sugar.AdminConf,whiteList, blackList []string, loginUrl,indexUrl, staticPath, urlPrefix string) {
 	ParamsRbac = Params{
+		config:  conf,
 		whiteList:  whiteList,
 		blackList:  blackList,
 		loginUrl:   loginUrl,

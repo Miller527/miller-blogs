@@ -17,18 +17,12 @@ import (
 	"strings"
 )
 
-func htmlStaticPath() string {
-	if App.Config.StaticPrefix {
-		return App.Config.Prefix
-	}
-	return "/"
-}
+
 
 // 登录页面
 func HandlerLogin(c *gin.Context) {
-	fmt.Println(htmlStaticPath())
 	c.HTML(http.StatusOK, "login.html", gin.H{
-		"path": htmlStaticPath(),
+		"path": App.Config.Static,
 		"urlprefix": App.Config.Prefix,
 		"site": "bootstrap-cerulean",
 	})
@@ -53,7 +47,8 @@ func HandlerIndex(c *gin.Context) {
 	fmt.Println(session.Get("permission"))
 	fmt.Println(session.Get("menu"))
 	c.HTML(http.StatusOK, "index.html", gin.H{
-		"path": htmlStaticPath(),
+		"path": App.Config.Static,
+
 		"urlprefix": App.Config.Prefix,
 		"site": "bootstrap-cerulean",
 	})
@@ -182,14 +177,15 @@ func HandlerDelete(c *gin.Context) {
 
 // 获取验证码
 func SlideCode(c *gin.Context) {
-	s := htmlStaticPath()
+	s := App.Config.Static
+
 	width := 360
 	height := 176
 	img := []string{
-		s + "static/slide_code/images/ver-0.png",
-		s + "static/slide_code/images/ver-1.png",
-		s + "static/slide_code/images/ver-2.png",
-		s + "static/slide_code/images/ver-3.png",
+		s + "slide_code/images/ver-0.png",
+		s + "slide_code/images/ver-1.png",
+		s + "slide_code/images/ver-2.png",
+		s + "slide_code/images/ver-3.png",
 	}
 
 	img_src := img[utils.RandomInt(len(img))]

@@ -6,19 +6,15 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 )
 
-
 func main() {
-	arr := []int{6, 1, 3, 3, 2, 1, 0}
-
-	a2 := []int{}
-
-	for _ ,v :=range arr{
-		a2 = l(a2, v)
-		fmt.Println("Sorted arr: ", a2)
-
-	}
+	u := `^/www/\d+/aaab$`
+fmt.Println(	regexp.Match(u, []byte("/www/4/aaab")))
+	//req, err := regexp.Compile(u)
+	//fmt.Println(req, err)
+	//fmt.Println(req.MatchString("/www/4/aaab"))
 }
 
 

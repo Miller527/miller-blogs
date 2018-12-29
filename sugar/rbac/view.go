@@ -178,7 +178,7 @@ func ResMsg(status int, msg string) map[string]interface{} {
 
 func handlerLogin(c *gin.Context) {
 	session := sessions.Default(c)
-	permiss := Permissions{Regex:[]string{ParamsRbac.urlPrefix + "slidecode"}}
+	permiss := Permissions{Static:[]string{ParamsRbac.urlPrefix + "slidecode"}}
 	permissByte, _ := json.Marshal(permiss)
 
 	session.Set("permission", string(permissByte))

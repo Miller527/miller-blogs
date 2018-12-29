@@ -31,6 +31,7 @@ var TableConfBackupWarning = errors.New("TableConfBackupWarning: Register config
 type AdminConf struct {
 	AccessControl string
 	Address       string // 0.0.0.0:9090
+	Static        string
 	StaticPrefix  bool   // 是否使用前缀
 	Prefix        string // 前缀
 	Relative      string // 默认 :tablename/
@@ -43,11 +44,17 @@ type AdminConf struct {
 	groupMiddlewares  []gin.HandlerFunc
 	LoginFunc         gin.HandlerFunc
 	VerifyLoginFunc   gin.HandlerFunc
-	//Static        string
-	whiteUrls []string
-	blackUrls []string
+	whiteUrls         []string
+	blackUrls         []string
 }
+func (conf *AdminConf)  WhiteUrls() []string {
+	return conf.whiteUrls
 
+}
+func(conf *AdminConf)  BlackUrls() []string {
+	return conf.blackUrls
+
+}
 // 增加全局中间件
 func (conf *AdminConf) AddGlobalMiddle(middles ...gin.HandlerFunc) {
 	conf.globalMiddlewares = append(conf.globalMiddlewares, middles...)
@@ -98,12 +105,12 @@ func (conf *AdminConf) CheckParams() {
 	}
 
 	conf.checkPrefix()
+	conf.checkStatic()
 	conf.checkBackupSuffix()
 	conf.checkRelative()
 	conf.checkExtend()
 	conf.AddWhite(conf.Prefix + "login")
 	conf.AddWhite(conf.Prefix + "verify-login")
-	//conf.checkStatic()
 }
 
 func (conf *AdminConf) checkBackupSuffix() {
@@ -129,6 +136,24 @@ func (conf *AdminConf) checkPrefix() {
 	}
 	if ! strings.HasSuffix(conf.Prefix, "/") {
 		conf.Prefix += "/"
+	}
+}
+func (conf *AdminConf) checkStatic() {
+	if conf.Static == "" {
+		conf.Static = "static/"
+	} else {
+		if strings.HasPrefix(conf.Static, "/") {
+			conf.Static = conf.Static[1:]
+		}
+		if ! strings.HasSuffix(conf.Static, "/") {
+			conf.Static = conf.Static +"/"
+		}
+	}
+	if conf.StaticPrefix {
+		conf.Static = conf.Prefix + conf.Static
+	}else {
+		conf.Static =  "/" + conf.Static
+
 	}
 }
 
@@ -169,19 +194,6 @@ func (conf *AdminConf) checkExtend() {
 
 }
 
-// todo 前端代码里怎么改动（预加载选择主题时候的路径问题）
-//func (conf *Config) checkStatic() {
-//	if conf.Static == "" {
-//		conf.Static = "static"
-//		return
-//	}
-//	if strings.HasPrefix(conf.Static, "/") {
-//		conf.Static = conf.Static[1:]
-//	}
-//	if ! strings.HasSuffix(conf.Static, "/") {
-//		conf.Static = conf.Static[:len(conf.Static)-1]
-//	}
-//}
 var App appAdmin
 
 type appAdmin struct {
@@ -278,11 +290,8 @@ func (app *appAdmin) staticFile() {
 		panic(errors.New("SugarAdminError: get template path error"))
 	}
 	tplPath := path.Join(path.Dir(file), "static")
-	staticUrl := "static"
-	if app.Config.StaticPrefix {
-		staticUrl = app.Config.Prefix + staticUrl
-	}
-	app.Sugar.Static(staticUrl, tplPath)
+
+	app.Sugar.Static(app.Config.Static, tplPath)
 
 }
 func (app *appAdmin) InitApp(middles ...gin.HandlerFunc) {

@@ -12,6 +12,7 @@ import (
 	"log"
 	"miller-blogs/sugar/utils"
 	"net/http"
+	"regexp"
 )
 
 // session中存储生成的所有的前端左侧菜单代码，不依赖于原来的内容
@@ -23,15 +24,9 @@ import (
 
 func RbacLoginMiddle() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		session := sessions.Default(c)
-
 		log.Println("RbacLoginMiddle start")
-		fmt.Println(c.Request.URL.String())
-		fmt.Println(c.Request.URL.User)
-		fmt.Println(c.Request.Host)
-		fmt.Println(c.Request.RequestURI)
-		fmt.Println(c.Request)
-		// Process request
+
+		session := sessions.Default(c)
 
 		url := c.Request.RequestURI
 		loginUrl := ParamsRbac.loginUrl
@@ -43,8 +38,9 @@ func RbacLoginMiddle() gin.HandlerFunc {
 			return
 		}
 		perStr := session.Get("permission")
+		menuStr := session.Get("menu")
 		per := Permissions{}
-
+		me := SortedMenu{}
 
 		if ! utils.InStringSlice(url, ParamsRbac.whiteList){
 
@@ -60,47 +56,58 @@ func RbacLoginMiddle() gin.HandlerFunc {
 				c.Abort()
 				return
 			}
-			// 静态路由校验
+			if menuStr != nil{
+				err = json.Unmarshal([]byte(menuStr.(string)), &me)
+				x, e := json.Marshal(me)
+				fmt.Println("xxxxxxxxxxxxxxxxxxx", e, string(x),me)
+
+			}
+
+			// 静态、动态路由校验
 			if !utils.InStringSlice(url, per.Static) && ! regexUrlVerify(url, per.Regex){
 				c.JSON(http.StatusForbidden, ResMsg(403,"无访问权限"))
 				c.Abort()
 				return
 			}
-			fmt.Println("sssssssssssssssssssssss", per.Static)
-			fmt.Println("rrrrrrrrrrrrrrrrrrrrrrr", per.Regex)
 		}else {
 			if 	perStr != nil{
 				err := json.Unmarshal([]byte(perStr.(string)), &per)
-
 				if  err != nil {
 					c.Redirect(http.StatusFound,loginUrl)
 					c.Abort()
 					return
 				}
-
 			}
 
 			if url == ParamsRbac.loginUrl && (len(per.Static) > 1 || len(per.Regex) >0) {
-				fmt.Println("xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-				fmt.Println(per.Static)
-				fmt.Println(per.Regex)
 				fmt.Println(len(per.Static) > 1 || len(per.Regex) >0)
-				c.Redirect(http.StatusFound,ParamsRbac.indexUrl)
-				c.Abort()
+					c.Redirect(http.StatusFound,ParamsRbac.indexUrl)
+					c.Abort()
 				return
 			}
 		}
 
 
 		c.Next()
-		fmt.Println(session.Get("permission"))
+
 
 		log.Println("RbacLoginMiddle end")
 	}
 }
 
 func regexUrlVerify(url string, regs []string) bool{
-	return true
+	byteUrl := []byte(url)
+	for _, r := range regs {
+		status, err := regexp.Match(r, byteUrl)
+		if err != nil{
+			// todo 记录日志输出检查错误
+			fmt.Println(err)
+		}
+		if status{
+			return true
+		}
+	}
+	return false
 }
 
 
