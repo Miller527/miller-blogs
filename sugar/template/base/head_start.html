@@ -1,4 +1,4 @@
-{{define "base_top"}}
+{{define "head_start"}}
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -22,12 +22,11 @@
         <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
         <meta name="author" content="Mr.Miller">
 
-        <link id="bs-css" href="{{.path}}css/{{.site}}.min.css" rel="stylesheet">
-
-
-        <link href='{{.path}}css/sugar.css' rel='stylesheet'>
 
         <!-- The styles -->
+        <link id="bs-css" href="{{.path}}css/{{.site}}.min.css" rel="stylesheet">
+        <link href='{{.path}}css/sugar.css' rel='stylesheet'>
+
         <link href='{{.path}}bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
         <link href='{{.path}}bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet'
               media='print'>

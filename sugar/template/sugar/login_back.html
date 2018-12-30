@@ -1,96 +1,110 @@
-{{template "head_start" .}}
-<link type="text/css" rel="stylesheet" href="{{.path}}slide_code/style.css">
-<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<script src="{{.path}}slide_code/img_ver.js"></script>
-<style>
+    {{template "head" .}}
+    <link type="text/css" rel="stylesheet" href="{{.path}}slide_code/style.css">
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
 
-    .logo-box {
-        border: 1px solid #e5e5e5;
-        border-radius: 4px;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
-        position: relative;
-        overflow: hidden;
-    }
+    <script src="{{.path}}slide_code/img_ver.js"></script>
+    <style>
 
-    .input-prepend {
-        padding-top: 20px;
-    }
+        .logo-box {
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
 
-    #box {
-        margin-top: 40px;
-    }
+        .input-prepend {
+            padding-top: 20px;
+        }
 
-    .login {
-        left: 0;
-        top: 0;
-        padding: 42px 42px 36px;
-        transition: all 0.8s;
-    }
+        #box {
+            margin-top: 40px;
+        }
 
-    .verBox {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        left: 404px;
-        top: 0;
-        opacity: 0;
-        transition: all 0.8s;
-        padding-top: 170px;
-    }
-</style>
-{{template "head_end"}}
+        .login {
+            left: 0;
+            top: 0;
+            padding: 42px 42px 36px;
+            transition: all 0.8s;
+        }
 
-{{template "content_start"}}
+        .verBox {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            left: 404px;
+            top: 0;
+            opacity: 0;
+            transition: all 0.8s;
+            padding-top: 170px;
+        }
+    </style>
+</head>
 
-<div class="row">
-    <div class="col-md-12 center login-header">
-        <h2>Welcome to Miller's Blog Management System </h2>
-    </div>
-</div><!--/row-->
+<body>
+<div class="ch-container">
+    <div class="row" id="box">
 
-
-<div class="row" id="box">
-    <div class="well col-md-5 center login-box logo-box login">
-        <div id="tips" class="alert alert-info">
-            请输入正确的用户名和密码登录.
-        </div>
-        <fieldset>
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
-                <input id="username" type="text" class="form-control" placeholder="用户名">
+        <div class="row">
+            <div class="col-md-12 center login-header">
+                <h2>Welcome to Miller's Blog Management System </h2>
             </div>
-            <!--<div class="clearfix"></div>-->
-            <br>
+            <!--/span-->
+        </div><!--/row-->
 
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                <input id="password" type="password" class="form-control" placeholder="密码">
+
+        <div class="row">
+            <div class="well col-md-5 center login-box logo-box login">
+                <div id="tips" class="alert alert-info">
+                    请输入正确的用户名和密码登录.
+                </div>
+                <!--<form class="form-horizontal" action="index.html" method="post">-->
+                <fieldset>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
+                        <input id="username" type="text" class="form-control" placeholder="用户名">
+                    </div>
+                    <!--<div class="clearfix"></div>-->
+                    <br>
+
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+                        <input id="password" type="password" class="form-control" placeholder="密码">
+                    </div>
+                    <!--<div class="clearfix"></div>-->
+
+
+                    <div class="input-prepend">
+                        <p class="center col-md-5">
+                            <button id="login-btn" type="submit" class="btn btn-primary">Login</button>
+                        </p>
+                        <label class="remember" for="remember"><input type="checkbox" id="remember"> Remember me</label>
+                    </div>
+                    <!--<div class="clearfix"></div>-->
+
+                </fieldset>
+                <!--</form>-->
             </div>
-            <!--<div class="clearfix"></div>-->
+            <!--/span-->
+        </div><!--/row-->
+    </div><!--/fluid-row-->
 
 
-            <div class="input-prepend">
-                <p class="center col-md-5">
-                    <button id="login-btn" type="submit" class="btn btn-primary">Login</button>
-                </p>
-                <label class="remember" for="remember"><input type="checkbox" id="remember"> Remember me</label>
-            </div>
-            <!--<div class="clearfix"></div>-->
+    <hr>
 
-        </fieldset>
-    </div>
-</div><!--/row-->
+    {{template "modal_box"}}
+    {{template "footer"}}
 
-{{template "content_end"}}
-
-
+</div><!--/.fluid-container-->
 <div class="verBox">
     <div id="imgVer" style="display:inline-block;"></div>
 </div>
 
-
-{{ template "bottom_start" .}}
+{{template "external" .}}
 
 <script>
     var verifyLogin = {{.urlprefix}}+"login";
@@ -194,5 +208,5 @@
     })
 
 </script>
-
-{{ template "bottom_end" }}
+</body>
+</html>

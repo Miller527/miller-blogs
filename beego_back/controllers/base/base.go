@@ -329,7 +329,7 @@ func (curd *curdBaseController) DefaultFiledTitles(model struct{}) {
 
 // 生成模范的返回数据
 func (curd *curdBaseController) ResponseTemplate(htmlName string) {
-	curd.Layout = curd.GetManagerPagePath("base_top.html")
+	curd.Layout = curd.GetManagerPagePath("head_start.html")
 	curd.TplName = curd.GetManagerPagePath(htmlName)
 	curd.LayoutSections = make(map[string]string)
 	curd.LayoutSections["HeadMeta"] = curd.GetManagerPagePath("headmeta.html")

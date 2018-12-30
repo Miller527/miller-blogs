@@ -29,8 +29,8 @@
                            {{ $lenTitle := len $v.Title}}
                            {{if  le $lenTitle  5}}
                                <div class="box col-md-6">
-                           {{else}}
-                               <div class="box col-md-12">
+                           {{/*{{else}}*/}}
+                               {{/*<div class="box col-md-12">*/}}
                            {{end}}
                            <div class="box-inner">
 
@@ -85,12 +85,14 @@
 
             </div>
             <!-- content ends -->
+
+            {{template "modal_box"}}
+
         </div><!--/#content.col-md-0-->
 
     </div><!-- row end -->
 
     <hr>
-    {{template "modal_box"}}
     {{template "footer"}}
 
 </div><!-- container end -->

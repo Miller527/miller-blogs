@@ -58,7 +58,7 @@ func (perMC *PermissionManagerController) Post() {
 
 	//fmt.Println("1111---",indexMC.GetSession("permissions"))
 
-	perMC.Layout = "manager/base_top.html"
+	perMC.Layout = "manager/head_start.html"
 
 	perMC.TplName = "manager/Hui-admin/index.html"
 
@@ -73,7 +73,7 @@ func (perMC *PermissionManagerController) Put() {
 
 	//fmt.Println("1111---",indexMC.GetSession("permissions"))
 
-	perMC.Layout = "manager/base_top.html"
+	perMC.Layout = "manager/head_start.html"
 
 	perMC.TplName = "manager/Hui-admin/index.html"
 
@@ -88,7 +88,7 @@ func (perMC *PermissionManagerController) Del() {
 
 	//fmt.Println("1111---",indexMC.GetSession("permissions"))
 	perMC.Ctx.ResponseWriter.Write()
-	perMC.Layout = "manager/base_top.html"
+	perMC.Layout = "manager/head_start.html"
 
 	perMC.TplName = "manager/Hui-admin/index.html"
 
@@ -146,7 +146,7 @@ func (userMC *UserManagerController) TitleInit() {
 //func (userMC *UserManagerController) Get() {
 //
 //	userMC.GetUserList()
-//	userMC.Layout = "manager/base_top.html"
+//	userMC.Layout = "manager/head_start.html"
 //	userMC.TplName = "manager/Hui-admin/admin_list.html"
 //	userMC.LayoutSections = make(map[string]string)
 //	userMC.LayoutSections["HeadMeta"] = "manager/Hui-admin/headmeta.html"
@@ -203,7 +203,7 @@ func (userMC *UserManagerController) Post() {
 //
 //func (articleMC *ArticleManagerController) Get() {
 //	articleMC.GetUserList()
-//	articleMC.Layout = "manager/base_top.html"
+//	articleMC.Layout = "manager/head_start.html"
 //	articleMC.TplName = "manager/Hui-admin/article_list.html"
 //
 //	articleMC.LayoutSections = make(map[string]string)
