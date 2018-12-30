@@ -507,7 +507,7 @@ func updateDesc(dbName string, dc *descConf) {
 func SetAdmin(conf *AdminConf) {
 	App.Config = conf
 	App.InitApp(App.Config.globalMiddlewares...)
-	App.AddGlobalMiddle(gin.Logger(), gin.Recovery())
+	App.AddGlobalMiddle(gin.Logger(), gin.Recovery(), GetMenu())
 
 }
 

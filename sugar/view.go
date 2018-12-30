@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"math"
 	"miller-blogs/sugar/utils"
 	"net/http"
@@ -38,19 +39,58 @@ func HandlerVerifyLogin(c *gin.Context) {
 func HandlerLogout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
+	err := session.Save()
+	if err != nil{
+		c.String(http.StatusInternalServerError, "登出失败")
+	}
 	c.Redirect(http.StatusFound, App.Config.Prefix+"login")
 }
 
 // 首页
 func HandlerIndex(c *gin.Context) {
-	session := sessions.Default(c)
-	fmt.Println(session.Get("permission"))
-	fmt.Println(session.Get("menu"))
+	// todo 拼接一次菜单放到redis
+	fmt.Println("HandlerIndex")
+	menu , stat := c.Get("menu")
+	if ! stat {
+		fmt.Println("HandlerIndex menu error")
+	}
+	fmt.Println(menu)
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"path": App.Config.Static,
-
 		"urlprefix": App.Config.Prefix,
 		"site": "bootstrap-cerulean",
+		"menu": menu.(SortedMenu),
+		"ssss": template.HTML("<h1>ssss</h1>"),
+	})
+}
+
+
+func HandlerTables(c *gin.Context) {
+	//var line []*TableConf
+	//var tables [][]*TableConf
+	//count := 0
+	//for _, val := range App.Registry {
+	//	if len(val.Field) >= 5 {
+	//		tables = append(tables, []*TableConf{val})
+	//	} else {
+	//		line = append(line, val)
+	//		if len(line) == 2 {
+	//			tables = append(tables, line)
+	//			line = []*TableConf{}
+	//			continue
+	//		}
+	//	}
+	//	if count == len(App.registry)-1 {
+	//		tables = append(tables, line)
+	//	}
+	//}
+	//v := `<i id="detailBtn" class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
+	//         <i id="updateBtn" class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
+	//         <i id="deleteBtn"class="glyphicon glyphicon-trash icon-white"></i>`
+	c.HTML(http.StatusOK, "table.html", gin.H{
+		//"tables": tables,
+		//"config": v,
+		"site":   "bootstrap-cerulean",
 	})
 }
 
@@ -96,34 +136,6 @@ func HandlerList(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "")
 }
 
-func HandlerCurd(c *gin.Context) {
-	//var line []*TableConf
-	//var tables [][]*TableConf
-	//count := 0
-	//for _, val := range App.Registry {
-	//	if len(val.Field) >= 5 {
-	//		tables = append(tables, []*TableConf{val})
-	//	} else {
-	//		line = append(line, val)
-	//		if len(line) == 2 {
-	//			tables = append(tables, line)
-	//			line = []*TableConf{}
-	//			continue
-	//		}
-	//	}
-	//	if count == len(App.registry)-1 {
-	//		tables = append(tables, line)
-	//	}
-	//}
-	v := `<i id="detailBtn" class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
-             <i id="updateBtn" class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
-             <i id="deleteBtn"class="glyphicon glyphicon-trash icon-white"></i>`
-	c.HTML(http.StatusOK, "table.html", gin.H{
-		//"tables": tables,
-		"config": v,
-		"site":   "static/css/bootstrap-cerulean.min.css",
-	})
-}
 
 // 详情的一条
 func HandlerGet(c *gin.Context) {
@@ -227,4 +239,21 @@ func RandomCoord(minn, maxn int) int {
 	} else {
 		return minn + int(math.Round(randFloat*rangFloat)) - 1
 	}
+}
+
+
+
+type SortedMenu [] *Menu
+
+// todo 这里的类型是否能够改成正常的类型
+type Menu struct {
+	Id       int
+	Title    string
+	Url      string
+	Icon     string
+	Children SortedMenu
+	ParentId int `json:"parent_id"`
+	Sort     int
+	IsMenu   int `json:"is_menu"`
+	IsRegex  int `json:"is_regex"`
 }

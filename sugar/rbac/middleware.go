@@ -10,6 +10,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
+	"miller-blogs/sugar"
 	"miller-blogs/sugar/utils"
 	"net/http"
 	"regexp"
@@ -40,7 +41,7 @@ func RbacLoginMiddle() gin.HandlerFunc {
 		perStr := session.Get("permission")
 		menuStr := session.Get("menu")
 		per := Permissions{}
-		me := SortedMenu{}
+		me := sugar.SortedMenu{}
 
 		if ! utils.InStringSlice(url, ParamsRbac.whiteList){
 
@@ -69,6 +70,7 @@ func RbacLoginMiddle() gin.HandlerFunc {
 				c.Abort()
 				return
 			}
+			fmt.Println("cccccccccccccccccccccccccc")
 		}else {
 			if 	perStr != nil{
 				err := json.Unmarshal([]byte(perStr.(string)), &per)

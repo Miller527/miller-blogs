@@ -1,52 +1,18 @@
 function imgVer(Config) {
 
-// 图形滑块验证码参数配置
     var el = eval(Config.el);
-    // var w = Config.width;
-    // var h = Config.height;
-    // var imgLibrary = Config.img;
     var res = Config.queryParams();
 
     var w = res["width"];
     var h = res["height"];
     var PL_Size = res["pl_size"];//**缺失拼图的大小
     var padding = res["padding"];//缺失拼图与边框的距离
-    console.log("调用函数的res",res);
-// 设置拼图缺失坐标取值范围
-//     var PL_Size = 48;//**缺失拼图的大小
-//     var padding = 20;//缺失拼图与边框的距离
-//
-//     var MinN_X = padding + PL_Size;
-//     var MaxN_X = w - padding - PL_Size - PL_Size / 6;
-//     var MaxN_Y = padding;
-//     var MinN_Y = h - padding - PL_Size - PL_Size / 6;
 
-    // //生成随机数的公共函数
-    // function RandomNum(Min, Max) {
-    //     var Range = Max - Min;
-    //     var Rand = Math.random();
-    //     if (Math.round(Rand * Range) == 0) {
-    //         return Min + 1;
-    //     } else if (Math.round(Rand * Max) == Max) {
-    //         // index++;
-    //         return Max - 1;
-    //     } else {
-    //         var num = Min + Math.round(Rand * Range) - 1;
-    //         return num;
-    //     }
-    // }
 
 //随机读取图片库的图片
-//     var imgRandom = RandomNum(0, imgLibrary.length);//从图库随机抽取
-//     var imgSrc = imgLibrary[imgRandom];
     var imgSrc = res["img_src"];
     var X =res["x"];
     var Y = res["y"];
-    console.log("yyyyyyyyyyyyyyy", Y)
-//生成缺失拼图的随机坐标 X,Y
-//     var X = RandomNum(MinN_X, MaxN_X);
-//     var X = RandomNum(MinN_X, MaxN_X);
-//     var Y = RandomNum(MinN_Y, MaxN_Y);
 
 // 拼图初始化存在的left位置
     var left_Num = -X + 10;

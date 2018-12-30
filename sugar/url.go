@@ -133,6 +133,7 @@ func (gr *groupRouter) staticRouter() {
 	gr.group.GET("/logout", HandlerLogout)
 	gr.group.GET("/index.html", HandlerIndex)
 	gr.group.GET("/slidecode", SlideCode)
+	gr.group.GET("/tables", HandlerTables)
 }
 
 // 通过配置限制限制访问权限, 不分用户

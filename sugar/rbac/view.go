@@ -86,7 +86,7 @@ func handlerVerifyLogin(c *gin.Context) {
 }
 
 // 处理菜单列表
-func disposeMenus(menus SortedMenu, child *Menu, pid int) SortedMenu {
+func disposeMenus(menus sugar.SortedMenu, child *sugar.Menu, pid int) sugar.SortedMenu {
 	for i, m := range menus {
 		if child.ParentId == m.Id {
 			m.Children = SortedInsert(m.Children, child)
@@ -109,7 +109,7 @@ func disposeMenus(menus SortedMenu, child *Menu, pid int) SortedMenu {
 // 生成菜单列表和权限表
 func MenuList(pList []map[string]interface{}) (string, string) {
 	fmt.Println(pList)
-	var menus SortedMenu
+	var menus sugar.SortedMenu
 	var permiss = &Permissions{}
 	for _, line := range pList {
 
@@ -133,7 +133,7 @@ func MenuList(pList []map[string]interface{}) (string, string) {
 			return "", ""
 		}
 
-		menu := &Menu{}
+		menu := &sugar.Menu{}
 		err := json.Unmarshal(v, menu)
 		if err != nil {
 			return "", ""
@@ -157,14 +157,14 @@ func MenuList(pList []map[string]interface{}) (string, string) {
 }
 
 // 顺序插入
-func SortedInsert(menus SortedMenu, menu *Menu) SortedMenu {
+func SortedInsert(menus sugar.SortedMenu, menu *sugar.Menu) sugar.SortedMenu {
 	if len(menus) == 0 {
 		return append(menus, menu)
 	}
 
 	for i, v := range menus {
 		if menu.Sort < v.Sort {
-			s := append(SortedMenu{}, menus[i:]...)
+			s := append(sugar.SortedMenu{}, menus[i:]...)
 			return append(append(menus[:i], menu), s...)
 		}
 	}
@@ -194,20 +194,6 @@ func handlerLogin(c *gin.Context) {
 	})
 }
 
-type SortedMenu [] *Menu
-
-// todo 这里的类型是否能够改成正常的类型
-type Menu struct {
-	Id       int
-	Title    string
-	Url      string
-	Icon     string
-	Children SortedMenu
-	ParentId int `json:"parent_id"`
-	Sort     int
-	IsMenu   int `json:"is_menu"`
-	IsRegex  int `json:"is_regex"`
-}
 
 type Permissions struct {
 	Static []string
