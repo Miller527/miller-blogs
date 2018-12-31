@@ -4,24 +4,7 @@
         <div class="sidebar-nav">
             <div class="nav-canvas">
                 <ul class="nav nav-pills nav-stacked main-menu">
-                    {{/*<li class="nav-header">Main</li>*/}}
-                    {{/*<li class="nav-header hidden-md">Sample Section</li>*/}}
-                    {{range $index, $line :=  .menu}}
-                        <li class="accordion">
-                            <a href="#"><i class="glyphicon glyphicon-plus"></i><span> {{$line.Title}}</span></a>
-                        {{ $lenChildren := len $line.Children}}
-                        {{if  gt $lenChildren 0 }}
-                            <ul class="nav nav-pills nav-stacked">
-                                {{range $i, $li :=   $line.Children}}
-                                    <li><a href="#"> {{$li.Title}}</a></li>
-                                {{end}}
-                            </ul>
-                        {{end}}
-                        </li>
-
-                    {{end}}
-
-
+                   {{ .menu }}
                 </ul>
                 {{/*<label id="for-is-ajax" for="is-ajax"><input id="is-ajax" type="checkbox"> Ajax on menu</label>*/}}
             </div>

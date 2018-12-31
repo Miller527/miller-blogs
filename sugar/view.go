@@ -46,21 +46,26 @@ func HandlerLogout(c *gin.Context) {
 	c.Redirect(http.StatusFound, App.Config.Prefix+"login")
 }
 
+func getMenu(c *gin.Context)string{
+	menu , stat := c.Get("menu")
+	if ! stat {
+		fmt.Println("HandlerIndex menu error")
+		return "<h1>无权限</h1>"
+	}
+	return menu.(string)
+}
+
 // 首页
 func HandlerIndex(c *gin.Context) {
 	// todo 拼接一次菜单放到redis
 	fmt.Println("HandlerIndex")
-	menu , stat := c.Get("menu")
-	if ! stat {
-		fmt.Println("HandlerIndex menu error")
-	}
-	fmt.Println(menu)
+	fmt.Println(getMenu(c))
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"path": App.Config.Static,
 		"urlprefix": App.Config.Prefix,
 		"site": "bootstrap-cerulean",
-		"menu": menu.(SortedMenu),
-		"ssss": template.HTML("<h1>ssss</h1>"),
+		"menu": template.HTML(getMenu(c)),
+
 	})
 }
 
@@ -257,3 +262,5 @@ type Menu struct {
 	IsMenu   int `json:"is_menu"`
 	IsRegex  int `json:"is_regex"`
 }
+
+type MenuGenerator func(sortManu SortedMenu) string

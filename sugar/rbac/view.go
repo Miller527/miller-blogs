@@ -67,16 +67,17 @@ func handlerVerifyLogin(c *gin.Context) {
 		return
 	}
 	reult, err := sugar.App.DB.SelectDict(stmt, result[0])
-	menuJson, permiss := MenuList(reult)
-	if menuJson == "" && permiss == "" {
+	menuObj, permiss := MenuList(reult)
+	if menuObj == nil && permiss == "" {
 		c.JSON(http.StatusOK, ResMsg(403, "没有任何访问权限."))
 		return
 	}
-	session.Set("menu", menuJson)
+	menuHtml := manuGenHandle(menuObj)
+	fmt.Println("handlerVerifyLogin", menuHtml)
+	session.Set("menu", menuHtml)
 	session.Set("permission", permiss)
 	session.Set("username", username)
 	err = session.Save()
-	fmt.Println(err)
 	if err != nil {
 		c.JSON(http.StatusOK, ResMsg(500, "权限初始化失败, 请稍后再试."))
 		return
@@ -107,8 +108,7 @@ func disposeMenus(menus sugar.SortedMenu, child *sugar.Menu, pid int) sugar.Sort
 }
 
 // 生成菜单列表和权限表
-func MenuList(pList []map[string]interface{}) (string, string) {
-	fmt.Println(pList)
+func MenuList(pList []map[string]interface{}) (sugar.SortedMenu, string) {
 	var menus sugar.SortedMenu
 	var permiss = &Permissions{}
 	for _, line := range pList {
@@ -130,30 +130,27 @@ func MenuList(pList []map[string]interface{}) (string, string) {
 		}
 		v, e := json.Marshal(line)
 		if e != nil {
-			return "", ""
+			return nil, ""
 		}
 
 		menu := &sugar.Menu{}
 		err := json.Unmarshal(v, menu)
 		if err != nil {
-			return "", ""
-
+			return nil, ""
 		}
+
 		if len(menus) == 0 {
 			menus = append(menus, menu)
 			continue
 		}
 		menus = disposeMenus(menus, menu, 0)
 	}
-	menuByte, err := json.Marshal(menus)
-	if err != nil {
-		return "", ""
-	}
+
 	permissByte, err := json.Marshal(permiss)
 	if err != nil {
-		return "", ""
+		return nil, ""
 	}
-	return string(menuByte), string(permissByte)
+	return menus, string(permissByte)
 }
 
 // 顺序插入

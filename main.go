@@ -28,15 +28,3 @@ func main() {
 	//sugar.AppInit(urls.AdApp,"","")
 	//go urls.AdApp.Run("0.0.0.0:9090")
 }
-
-//fmt.Println(sessionStore)
-//session := sessions.Default(c)
-//v := session.Get("count")
-//if v == nil {
-//count = 0
-//} else {
-//count = v.(int)
-//count++
-//}
-//session.Set("count", count)
-//session.Save()

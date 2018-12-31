@@ -11,8 +11,6 @@ import (
 	"miller-blogs/sugar"
 )
 
-
-
 func Register(ac *sugar.AdminConf) {
 	if ParamsRbac.loginUrl == "" {
 		panic(errors.New("RbacRegisterError: login url not found."))
@@ -23,7 +21,7 @@ func Register(ac *sugar.AdminConf) {
 		return
 	}
 	ac.VerifyLoginFunc = handlerVerifyLogin
-	ac.LoginFunc =handlerLogin
+	ac.LoginFunc = handlerLogin
 	ac.AddGlobalMiddle(RbacLoginMiddle(), BehaviorLog())
 
 }
@@ -31,7 +29,7 @@ func Register(ac *sugar.AdminConf) {
 var ParamsRbac Params
 
 type Params struct {
-	config  *sugar.AdminConf
+	config     *sugar.AdminConf
 	whiteList  []string
 	blackList  []string
 	loginUrl   string
@@ -64,20 +62,20 @@ func (par *Params) SetAdmin(conf *sugar.AdminConf) {
 	par.setParams()
 }
 
-func (par *Params) setParams(){
+func (par *Params) setParams() {
 	conf := par.config
 	par.urlPrefix = conf.Prefix
 	par.staticPath = conf.Static
 	fmt.Println(par.staticPath)
 	par.loginUrl = conf.Prefix + "login"
 	par.indexUrl = conf.Prefix + "index"
-	par.whiteList =conf.WhiteUrls()
-	par.blackList=conf.BlackUrls()
+	par.whiteList = conf.WhiteUrls()
+	par.blackList = conf.BlackUrls()
 }
 
-func ParamsNew(conf *sugar.AdminConf,whiteList, blackList []string, loginUrl,indexUrl, staticPath, urlPrefix string) {
+func ParamsNew(conf *sugar.AdminConf, whiteList, blackList []string, loginUrl, indexUrl, staticPath, urlPrefix string) {
 	ParamsRbac = Params{
-		config:  conf,
+		config:     conf,
 		whiteList:  whiteList,
 		blackList:  blackList,
 		loginUrl:   loginUrl,
@@ -85,4 +83,37 @@ func ParamsNew(conf *sugar.AdminConf,whiteList, blackList []string, loginUrl,ind
 		staticPath: staticPath,
 		urlPrefix:  urlPrefix,
 	}
+}
+
+var manuGenHandle sugar.MenuGenerator
+
+func SetManuGenerator(f sugar.MenuGenerator) {
+	if f != nil {
+		manuGenHandle = f
+	}
+
+}
+
+func secondaryMenu(sortManu sugar.SortedMenu) string {
+	htmlMenu := `<ul class="nav nav-pills nav-stacked main-menu">`
+	for _, menu := range sortManu {
+		htmlMenu = htmlMenu + `<li class="accordion"><a href="`+ menu.Url +`"><i class="glyphicon `+menu.Icon+
+			`"></i><span>` + menu.Title + `</span></a>`
+		if menu.Children != nil {
+			htmlMenu = htmlMenu + `<ul class="nav nav-pills nav-stacked">`
+
+			for _, s := range menu.Children {
+				htmlMenu = htmlMenu + `<li><a href="`+s.Url+`">` + s.Title + `</a></li>`
+
+			}
+			htmlMenu += `</ul>`
+		}
+		htmlMenu += `</li>`
+	}
+	htmlMenu += `</ul>`
+	return htmlMenu
+}
+
+func init() {
+	manuGenHandle = secondaryMenu
 }

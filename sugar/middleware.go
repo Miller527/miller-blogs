@@ -5,7 +5,6 @@
 package sugar
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -24,17 +23,12 @@ func GetMenu() gin.HandlerFunc {
 		log.Println("GetSession start")
 
 		session := sessions.Default(c)
-		menuStr := session.Get("menu")
+		menuJson := session.Get("menu")
 
-		if menuStr != nil {
-			me := SortedMenu{}
-			err := json.Unmarshal([]byte(menuStr.(string)), &me)
-			if err == nil{
-				c.Set("menu",me)
-
-			}else {
-				fmt.Println("GetMenu set error ")
-			}
+		if menuJson != nil {
+			c.Set("menu",menuJson.(string))
+		}else{
+			fmt.Println("GetMenu set error ")
 		}
 		c.Next()
 
