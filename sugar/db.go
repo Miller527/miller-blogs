@@ -181,6 +181,7 @@ func (dbm *DBManager) dict(vals []sql.RawBytes, columns []string) map[string]int
 		//		val = k
 		//	}
 		//}
+		// todo 这里优化取值
 		if col == nil {
 			val = "NULL"
 		} else {

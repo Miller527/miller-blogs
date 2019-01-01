@@ -23,9 +23,30 @@ var confTypeList = []string{
 	"xml",
 }
 
-type tableDesc interface {
+type iTableDesc interface {
 	DisplayName() string
 }
+
+
+type iFieldFilter interface {
+	// 过滤器, 返回msg和状态
+	Filter(str string) (string, bool)
+	// todo 处理所有
+	FilterAll(str string) (string, bool)
+}
+
+// 过滤器, 类型为正则表达式, 还没想好其他的过滤方式
+type RegexFilter struct {
+	Length  int
+	Rule string
+}
+
+func (rgf RegexFilter) Filter(str string) (string, bool){
+	return "",true
+}
+
+
+
 
 type descConf struct {
 	Name      string
@@ -34,7 +55,8 @@ type descConf struct {
 	Foreign   map[string]string // todo 扩展, 手动配置和自动查询数据库配置, 目前自动匹配, 还没用到就没写呢
 	Field     []string
 	Title     []string
-	Filter    map[string]string // todo 字段和对应的类型、根据DescType匹配生成
+	FilterType string  // todo 过滤器类型, 暂时只支持正则
+	Filter    map[string]iFieldFilter // todo 字段和对应的类型、根据DescType匹配生成
 	DescField []string          // todo 查询数据库生成, 如果Field没有配置, 那么使用该字段
 	DescType  map[string]string // todo 查询数据库生成
 	Left      bool

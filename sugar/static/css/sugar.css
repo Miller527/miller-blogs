@@ -9,3 +9,7 @@
 .sugar-btn {
     width: 60px;
 }
+
+label {
+    margin-bottom: 0;
+}

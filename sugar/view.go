@@ -137,13 +137,12 @@ func HandlerList(c *gin.Context) {
 	//dbAlias, dbName := DbAliasAndName(c)
 	//tbAlias, tbName := TbAliasAndName(c, dbName)
 
-
 	_, dbName := DbAliasAndName(c)
 	_, tbName := TbAliasAndName(c, dbName)
 
-	if dbName == "" || tbName == ""{
-			c.HTML(http.StatusNotFound, "error.html", gin.H{})
-			return
+	if dbName == "" || tbName == "" {
+		c.HTML(http.StatusNotFound, "error.html", gin.H{})
+		return
 	}
 	fmt.Println(dbName, tbName)
 	tb, _ := App.Registry[dbName][tbName]
@@ -158,33 +157,30 @@ func HandlerList(c *gin.Context) {
 	if err == nil {
 
 		result, err := Dbm.SelectDict(stmt)
-		fmt.Println("result",result,err)
+		fmt.Println("result", result, err)
 
-		if result != nil{
+		if result != nil {
 			// todo 是不是可以在取数据那里处理, 根据权限生成这个点击字符串，同样前端的多操作按钮也要根据权限去判断生成
 			var newLine []interface{}
 			for _, line := range result {
-				if tb.Left{
+				if tb.Left {
 					f := fmt.Sprintf(`<input class="checkline" type="checkbox" value="%s">`, line["id"])
 					newLine = append(newLine, f)
 				}
-				for _, k := range tb.Field{
+				for _, k := range tb.Field {
 					newLine = append(newLine, line[k])
 
 				}
-				if tb.Right{
+				if tb.Right {
 					v := `<i class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
             <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
             <i class="glyphicon glyphicon-trash icon-white"></i>`
-					newLine = append(newLine,v)
+					newLine = append(newLine, v)
 
 				}
 
-
 				defaultRes = append(defaultRes, newLine)
 			}
-
-
 
 			//defaultRes = result
 
@@ -327,7 +323,7 @@ func DbAliasAndName(c *gin.Context) (string, string) {
 	dbAlias := c.Param(App.Config.ExtendKey)
 
 	dbName := App.aliasDatabase[dbAlias]
-	if dbName == ""{
+	if dbName == "" {
 		dbName = dbAlias
 	}
 	return dbAlias, dbName
@@ -337,12 +333,12 @@ func TbAliasAndName(c *gin.Context, dbName string) (string, string) {
 	tbAlias := c.Param(App.Config.RelativeKey)
 
 	tbInfo := App.aliasTable[dbName]
-	fmt.Println(tbInfo,tbAlias)
-	if tbInfo == nil{
-		return "" ,""
+	fmt.Println(tbInfo, tbAlias)
+	if tbInfo == nil {
+		return "", ""
 	}
 	tbName := tbInfo[tbAlias]
-	if tbName == ""{
+	if tbName == "" {
 		tbName = tbAlias
 	}
 

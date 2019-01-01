@@ -492,15 +492,15 @@ func updateDesc(dbName string, dc *descConf) {
 
 	fieldStatus := verifyDescField(dc)
 
-	sqlCmd := `select COLUMN_NAME,COLUMN_TYPE, COLUMN_KEY
-			   from information_schema.COLUMNS
+	sqlCmd := `select COLUMN_NAME,DATE_TYPE,CHARACTER_MAXIMUM_LENGTH, 
+			   COLUMN_KEY from information_schema.COLUMNS
 			   where table_schema=? AND table_name=?`
 	stmt, err := Dbm.DefaultDB.Prepare(sqlCmd)
 	result, err := Dbm.SelectSlice(stmt, dbName, dc.Name)
 	utils.PanicCheck(err)
 
 	for _, line := range result {
-		if line[2] == "PRI" && dc.Primary == "" {
+		if line[3] == "PRI" && dc.Primary == "" {
 			dc.Primary = line[0]
 		}
 		dc.DescField = append(dc.DescField, line[0])
