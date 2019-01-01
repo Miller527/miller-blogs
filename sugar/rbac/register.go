@@ -97,13 +97,18 @@ func SetManuGenerator(f sugar.MenuGenerator) {
 func secondaryMenu(sortManu sugar.SortedMenu) string {
 	htmlMenu := `<ul class="nav nav-pills nav-stacked main-menu">`
 	for _, menu := range sortManu {
-		htmlMenu = htmlMenu + `<li class="accordion"><a href="`+ menu.Url +`"><i class="glyphicon `+menu.Icon+
-			`"></i><span>` + menu.Title + `</span></a>`
-		if menu.Children != nil {
-			htmlMenu = htmlMenu + `<ul class="nav nav-pills nav-stacked">`
+
+		if menu.Children == nil {
+
+			htmlMenu = htmlMenu + `<li class="ajax-link"><a href="`+ menu.Url +`"><i class="glyphicon `+menu.Icon+
+				`"></i><span> ` + menu.Title + `</span></a>`
+		}else{
+			htmlMenu = htmlMenu + `<li class="accordion"><a href="`+ menu.Url +`"><i class="glyphicon `+menu.Icon+
+				`"></i><span> ` + menu.Title + `</span></a>` + `<ul class="nav nav-pills nav-stacked">`
 
 			for _, s := range menu.Children {
-				htmlMenu = htmlMenu + `<li><a href="`+s.Url+`">` + s.Title + `</a></li>`
+				htmlMenu = htmlMenu + `<li><a href="`+s.Url+`"><i class="glyphicon `+s.Icon+
+					`"></i><span> ` + s.Title + `</span></a></li>`
 
 			}
 			htmlMenu += `</ul>`

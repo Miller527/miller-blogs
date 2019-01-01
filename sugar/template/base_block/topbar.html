@@ -38,19 +38,20 @@
             <!-- theme selector ends -->
             <!-- user dropdown starts -->
             <div class="btn-group pull-right">
-                <ul class="collapse navbar-collapse nav navbar-nav top-menu">
-                    <li class="dropdown">
+                <ul class="nav navbar-nav">
 
-                        <a href="#" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"> admin</span>
-                            <span class="caret"></span></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Profile</a></li>
-                            <li class="divider"></li>
+                            <li role="separator" class="divider"></li>
+
                             <li><a href="{{.path}}logout">Logout</a></li>
                         </ul>
-                    </li>
+                </li>
                 </ul>
+
+
             </div>
             <!-- user dropdown ends -->
 
@@ -81,4 +82,7 @@
     </div>
     <!-- topbar ends -->
 {{end}}
+
+
+
 

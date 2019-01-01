@@ -1,22 +1,7 @@
 $(document).ready(function () {
-    //themes, change CSS with JS
-    //default theme(CSS) is cerulean, change it if needed
-    // console.log("xxxxxx", defaultTheme)
-    //
-    if (defaultTheme === undefined) {
-        var defaultTheme = 'cerulean';
-    }
-    // console.log("bbbbbbbb", defaultTheme)
-
-    var currentTheme = $.cookie('currentTheme') == null ? defaultTheme : $.cookie('currentTheme');
-    console.log("current theme", currentTheme);
     var msie = navigator.userAgent.match(/msie/i);
     $.browser = {};
     $.browser.msie = {};
-    if (currentTheme === null) {
-        currentTheme = 'cerulean';
-    }
-    // switchTheme(currentTheme);
 
     $('.navbar-toggle').click(function (e) {
         e.preventDefault();
@@ -41,32 +26,6 @@ $(document).ready(function () {
         }
     });
 
-
-    $('#themes a').click(function (e) {
-        e.preventDefault();
-        currentTheme = $(this).attr('data-value');
-        $.cookie('currentTheme', currentTheme, {expires: 365});
-        switchTheme(currentTheme);
-    });
-
-
-    function switchTheme(themeName) {
-        console.log("themeName", themeName)
-        if (themeName == 'classic') {
-            $('#bs-css').attr('href', 'static/bower_components/bootstrap/dist/css/bootstrap.min.css');
-        } else {
-            $('#bs-css').attr('href', 'static/css/bootstrap-' + themeName + '.min.css');
-        }
-
-        $('#themes i').removeClass('glyphicon glyphicon-ok whitespace').addClass('whitespace');
-        $('#themes a[data-value=' + themeName + ']').find('i').removeClass('whitespace').addClass('glyphicon glyphicon-ok');
-    }
-
-    // //ajax menu checkbox
-    // $('#is-ajax').click(function (e) {
-    //     $.cookie('is-ajax', $(this).prop('checked'), {expires: 365});
-    // });
-    // $('#is-ajax').prop('checked', $.cookie('is-ajax') === 'true' ? true : false);
 
     //disbaling some functions for Internet Explorer
     if (msie) {
@@ -106,20 +65,6 @@ $(document).ready(function () {
         });
     });
 
-    //ajaxify menus
-    // $('a.ajax-link').click(function (e) {
-    //     if (msie) e.which = 1;
-    //     if (e.which != 1 || !$('#is-ajax').prop('checked') || $(this).parent().hasClass('active')) return;
-    //     e.preventDefault();
-    //     $('.sidebar-nav').removeClass('active');
-    //     $('.navbar-toggle').removeClass('active');
-    //     $('#loading').remove();
-    //     $('#content').fadeOut().parent().append('<div id="loading" class="center">Loading...<div class="center"></div></div>');
-    //     var $clink = $(this);
-    //     History.pushState(null, null, $clink.attr('href'));
-    //     $('ul.main-menu li.active').removeClass('active');
-    //     $clink.parent('li').addClass('active');
-    // });
 
     $('.accordion > a').click(function (e) {
         e.preventDefault();
@@ -134,7 +79,7 @@ $(document).ready(function () {
 
 
     //other things to do on document ready, separated for ajax calls
-    docReady();
+    // docReady();
 });
 
 
