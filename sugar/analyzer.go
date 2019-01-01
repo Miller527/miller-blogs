@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/pkg/errors"
+	"html/template"
 	"io"
 	"miller-blogs/sugar/utils"
 	"os"
@@ -37,7 +38,10 @@ type descConf struct {
 	DescField []string          // todo 查询数据库生成, 如果Field没有配置, 那么使用该字段
 	DescType  map[string]string // todo 查询数据库生成
 	Left      bool
+	LeftHtml      template.HTML
 	Right     bool
+	RightHtml       template.HTML
+
 	Methods   []int
 }
 

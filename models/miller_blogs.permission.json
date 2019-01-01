@@ -1,7 +1,7 @@
 {
   "display": "权限表",
   "field": ["id","title", "url","icon","parent_id", "sort","is_menu", "is_regex","status"],
-  "title": ["ID","标题", "链接","图标", "父id","排序标识","是否为菜单", "是否为正则url","是否启用", "父id"],
+  "title": ["ID","标题", "链接","图标", "父id","排序标识","是否为菜单", "是否为正则url","是否启用"],
   "filter": {
     "id": "int",
     "rid": "string",

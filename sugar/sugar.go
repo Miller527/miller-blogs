@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"miller-blogs/sugar/utils"
@@ -508,6 +509,27 @@ func updateDesc(dbName string, dc *descConf) {
 			dc.Field = append(dc.Field, line[0])
 			dc.Title = append(dc.Title, line[0])
 		}
+	}
+	updateDescLeft(dc)
+	updateDescRight(dc)
+}
+func updateDescLeft( dc *descConf){
+	if dc.Left {
+		// todo 验证左侧html代码合法性
+		if dc.LeftHtml == ""{
+			dc.LeftHtml = template.HTML(`<label><input class="checkall" type="checkbox" value="all">选择</label>`)
+		}
+
+	}
+
+}
+func updateDescRight( dc *descConf){
+	if dc.Right {
+		// todo 验证左侧html代码合法性
+		if dc.RightHtml == ""{
+			dc.RightHtml = template.HTML(`操作`)
+		}
+
 	}
 }
 

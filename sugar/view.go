@@ -145,41 +145,56 @@ func HandlerList(c *gin.Context) {
 			c.HTML(http.StatusNotFound, "error.html", gin.H{})
 			return
 	}
+	fmt.Println(dbName, tbName)
 	tb, _ := App.Registry[dbName][tbName]
 
 	queryCmd := fmt.Sprintf("SELECT %s FROM %s ORDER BY id ASC", strings.Join(tb.Field, ","), tb.Name)
 	Db, _ := Dbm.DBPool[dbName]
 	stmt, err := Db.Prepare(queryCmd)
 
-	defaultRes := [][]string{}
+	defaultRes := [][]interface{}{}
 	status := http.StatusInternalServerError
 
 	if err == nil {
 
-		result, err := Dbm.SelectSlice(stmt)
+		result, err := Dbm.SelectDict(stmt)
 		fmt.Println("result",result,err)
 
 		if result != nil{
 			// todo 是不是可以在取数据那里处理, 根据权限生成这个点击字符串，同样前端的多操作按钮也要根据权限去判断生成
-			//var newResult [][]string
-			//for _, line := range result {
-			//	v := `<i class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
-            // <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
-            // <i class="glyphicon glyphicon-trash icon-white"></i>`
-			//
-			//	newResult = append(newResult, append(line, v))
-			//	fmt.Println(line)
-			//}
+			var newLine []interface{}
+			for _, line := range result {
+				if tb.Left{
+					f := fmt.Sprintf(`<input class="checkline" type="checkbox" value="%s">`, line["id"])
+					newLine = append(newLine, f)
+				}
+				for _, k := range tb.Field{
+					newLine = append(newLine, line[k])
+
+				}
+				if tb.Right{
+					v := `<i class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
+            <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
+            <i class="glyphicon glyphicon-trash icon-white"></i>`
+					newLine = append(newLine,v)
+
+				}
+
+
+				defaultRes = append(defaultRes, newLine)
+			}
 
 
 
-			defaultRes = result
+			//defaultRes = result
 
 		}
 
 		status = http.StatusOK
 
 	}
+	fmt.Println(defaultRes)
+
 	resTmp, _ := json.Marshal(map[string]interface{}{
 		"data": defaultRes,
 	})
@@ -312,6 +327,9 @@ func DbAliasAndName(c *gin.Context) (string, string) {
 	dbAlias := c.Param(App.Config.ExtendKey)
 
 	dbName := App.aliasDatabase[dbAlias]
+	if dbName == ""{
+		dbName = dbAlias
+	}
 	return dbAlias, dbName
 }
 
@@ -324,6 +342,10 @@ func TbAliasAndName(c *gin.Context, dbName string) (string, string) {
 		return "" ,""
 	}
 	tbName := tbInfo[tbAlias]
+	if tbName == ""{
+		tbName = tbAlias
+	}
+
 	return tbAlias, tbName
 
 }
