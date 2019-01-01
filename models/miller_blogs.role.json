@@ -1,6 +1,6 @@
 {
   "display": "角色表",
-  "field": ["id","rid", "name"],
+  "field": ["id","role_id", "role_name"],
   "title": ["ID","角色ID", "角色名称"],
   "filter": {
     "id": "int",

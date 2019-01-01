@@ -35,7 +35,7 @@ type AdminConf struct {
 	StaticPrefix  bool   // 是否使用前缀
 	Prefix        string // 前缀
 	Relative      string // 默认 :tablename/
-	relativeKey   string // 默认 tablename
+	RelativeKey   string // 默认 tablename
 	ExtendKey     string // 中间件获取数据库名
 	BackupSuffix  string // 注册表配置文件的扩展名
 
@@ -164,7 +164,7 @@ func (conf *AdminConf) checkRelative() {
 		if conf.AccessControl == "rbac" {
 			conf.Relative = ":tablename/"
 		}
-		conf.relativeKey = "tablename"
+		conf.RelativeKey = "tablename"
 
 	} else {
 		for _, b := range conf.Relative {
@@ -173,7 +173,7 @@ func (conf *AdminConf) checkRelative() {
 				panic(errors.New("SugarAdminError: Relative only be case letters"))
 			}
 		}
-		conf.relativeKey = conf.Relative
+		conf.RelativeKey = conf.Relative
 
 		if conf.AccessControl == "rbac" && !strings.HasPrefix(conf.Relative, ":") {
 			conf.Relative = ":" + conf.Relative
@@ -319,14 +319,20 @@ func (app *appAdmin) InitGroup(middles ...gin.HandlerFunc) *gin.RouterGroup {
 }
 
 func (app *appAdmin) globalMiddle() {
-	// session
 	app.Sugar.Use(sessions.Sessions(settings.Session.Name, sessionStore))
 	if app.Config.AccessControl == "static" {
+		app.Config.AddGlobalMiddle(staticGlobalMiddle())
 	}
 	app.Sugar.Use(app.Config.globalMiddlewares...)
-	//sugar.App.Sugar.Use(sugar.App.Config.GetGlobalMiddle()...)
 }
+func (app *appAdmin) groupMiddle() {
+	app.Sugar.Use(sessions.Sessions(settings.Session.Name, sessionStore))
+	if app.Config.AccessControl == "static" {
+		app.Config.AddGroupMiddle(staticGroupMiddle())
 
+	}
+	app.Sugar.Use(app.Config.groupMiddlewares...)
+}
 func Logger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -352,6 +358,7 @@ func (app *appAdmin) Start(back bool) {
 	App.globalMiddle()
 
 	rg := App.InitGroup()
+	App.groupMiddle()
 	App.GroupRouter = groupRouter{group: rg, conf: App.Config}
 	App.GroupRouter.init()
 	rg.Use(App.Config.groupMiddlewares...)

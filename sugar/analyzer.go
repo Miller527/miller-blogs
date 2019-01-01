@@ -42,6 +42,9 @@ type descConf struct {
 }
 
 func (dc *descConf) DisplayName() string {
+	if dc.Display ==""{
+		return dc.Name
+	}
 	return dc.Display + "(" + dc.Name + ")"
 }
 

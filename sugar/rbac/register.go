@@ -22,7 +22,7 @@ func Register(ac *sugar.AdminConf) {
 	}
 	ac.VerifyLoginFunc = handlerVerifyLogin
 	ac.LoginFunc = handlerLogin
-	ac.AddGlobalMiddle(RbacLoginMiddle(), BehaviorLog())
+	ac.AddGroupMiddle(RbacLoginMiddle(), groupParamsMiddle(), BehaviorLog())
 
 }
 
@@ -36,6 +36,9 @@ type Params struct {
 	indexUrl   string
 	staticPath string
 	urlPrefix  string
+	extendKey  string
+	relativeKey  string
+
 }
 
 func (par *Params) WhiteList(urls ...string) {
@@ -47,7 +50,13 @@ func (par *Params) BlackList(urls ...string) {
 
 }
 
-func (par *Params) Url(login, index string) {
+func (par *Params) Url(relative, extend string) {
+	par.extendKey = extend
+	par.relativeKey = relative
+
+}
+
+func (par *Params) UrlKey(login, index string) {
 	par.loginUrl = login
 	par.indexUrl = index
 
@@ -71,6 +80,9 @@ func (par *Params) setParams() {
 	par.indexUrl = conf.Prefix + "index"
 	par.whiteList = conf.WhiteUrls()
 	par.blackList = conf.BlackUrls()
+	par.extendKey = conf.ExtendKey
+	par.relativeKey = conf.RelativeKey
+
 }
 
 func ParamsNew(conf *sugar.AdminConf, whiteList, blackList []string, loginUrl, indexUrl, staticPath, urlPrefix string) {

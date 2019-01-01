@@ -18,18 +18,16 @@ import (
 	"strings"
 )
 
-
-
 // 登录页面
 func HandlerLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", gin.H{
-		"path": App.Config.Static,
+		"path":      App.Config.Static,
 		"urlprefix": App.Config.Prefix,
-		"site": "bootstrap-cerulean",
+		"site":      "bootstrap-cerulean",
 	})
 }
 
-// 登录验证
+// todo 登录验证, 完成RBAC的验证
 func HandlerVerifyLogin(c *gin.Context) {
 
 	c.Redirect(http.StatusMovedPermanently, App.Config.Prefix+"index.html")
@@ -40,14 +38,15 @@ func HandlerLogout(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
 	err := session.Save()
-	if err != nil{
+	if err != nil {
 		c.String(http.StatusInternalServerError, "登出失败")
 	}
 	c.Redirect(http.StatusFound, App.Config.Prefix+"login")
 }
 
-func getMenu(c *gin.Context)string{
-	menu , stat := c.Get("menu")
+// 获取左侧菜单
+func getMenu(c *gin.Context) string {
+	menu, stat := c.Get("menu")
 	if ! stat {
 		fmt.Println("HandlerIndex menu error")
 		return "<h1>无权限</h1>"
@@ -55,92 +54,138 @@ func getMenu(c *gin.Context)string{
 	return menu.(string)
 }
 
-// 首页
+// 全局首页
 func HandlerIndex(c *gin.Context) {
 	// todo 拼接一次菜单放到redis
 	fmt.Println("HandlerIndex")
-	fmt.Println(getMenu(c))
-	c.HTML(http.StatusOK, "index.html", gin.H{
-		"path": App.Config.Static,
-		"urlprefix": App.Config.Prefix,
-		"site": "bootstrap-cerulean",
-		"menu": template.HTML(getMenu(c)),
 
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"path":      App.Config.Static,
+		"urlprefix": App.Config.Prefix,
+		"site":      "bootstrap-cerulean",
+		"menu":      template.HTML(getMenu(c)),
 	})
 }
 
+// todo 未完成 单应用首页
+func HandlerAppIndex(c *gin.Context) {
+	// todo 拼接一次菜单放到redis
+	fmt.Println("HandlerAppIndex", c.Param(App.Config.ExtendKey))
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"path":      App.Config.Static,
+		"urlprefix": App.Config.Prefix,
+		"site":      "bootstrap-cerulean",
+		"menu":      template.HTML(getMenu(c)),
+	})
+}
 
+// 每个应用的表管理
 func HandlerTables(c *gin.Context) {
-	//var line []*TableConf
-	//var tables [][]*TableConf
-	//count := 0
-	//for _, val := range App.Registry {
-	//	if len(val.Field) >= 5 {
-	//		tables = append(tables, []*TableConf{val})
-	//	} else {
-	//		line = append(line, val)
-	//		if len(line) == 2 {
-	//			tables = append(tables, line)
-	//			line = []*TableConf{}
-	//			continue
-	//		}
-	//	}
-	//	if count == len(App.registry)-1 {
-	//		tables = append(tables, line)
-	//	}
-	//}
+	fmt.Println("HandlerTables", )
+	dbAlias, dbName := DbAliasAndName(c)
+
+	tbInfo, ok := App.Registry[dbName]
+	if ! ok {
+		c.HTML(http.StatusOK, "tables.html", gin.H{
+			"path":      App.Config.Static,
+			"urlprefix": App.Config.Prefix,
+			"site":      "bootstrap-cerulean",
+			"menu":      template.HTML(getMenu(c)),
+		})
+		return
+	}
+
+	var line []*descConf
+	var tables [][]*descConf
+	var tbNames []string
+	count := 0
+
+	for tbName, val := range tbInfo {
+		tbNames = append(tbNames, tbName)
+		count += 1
+
+		if len(val.Field) >= 5 {
+			tables = append(tables, []*descConf{val})
+		} else {
+			line = append(line, val)
+			if len(line) == 2 {
+				tables = append(tables, line)
+				line = []*descConf{}
+				continue
+			}
+		}
+		if len(line) == 1 && count == len(tbInfo) {
+			tables = append(tables, line)
+		}
+	}
 	//v := `<i id="detailBtn" class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
 	//         <i id="updateBtn" class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
 	//         <i id="deleteBtn"class="glyphicon glyphicon-trash icon-white"></i>`
-	c.HTML(http.StatusOK, "table.html", gin.H{
-		//"tables": tables,
-		//"config": v,
-		"site":   "bootstrap-cerulean",
+	fmt.Println(App.Config.Prefix, )
+	c.HTML(http.StatusOK, "tables.html", gin.H{
+		"path":      App.Config.Static,
+		"urlprefix": App.Config.Prefix + dbAlias,
+		"tables":    tables,
+		"tbnames":   tbNames,
+		"site":      "bootstrap-cerulean",
+		"menu":      template.HTML(getMenu(c)),
 	})
 }
 
 //列表
 func HandlerList(c *gin.Context) {
-	dbName := c.Param(App.Config.ExtendKey)
-	tbInfo, ok := App.Registry[dbName]
-	fmt.Println(App.Config.relativeKey)
-	fmt.Println(tbInfo)
-	fmt.Println(c.Params)
-	tb, ok := tbInfo[c.Param(App.Config.relativeKey)]
-	if !ok {
-		c.HTML(http.StatusNotFound, "error.html", gin.H{})
-		return
+	//dbAlias, dbName := DbAliasAndName(c)
+	//tbAlias, tbName := TbAliasAndName(c, dbName)
+
+
+	_, dbName := DbAliasAndName(c)
+	_, tbName := TbAliasAndName(c, dbName)
+
+	if dbName == "" || tbName == ""{
+			c.HTML(http.StatusNotFound, "error.html", gin.H{})
+			return
 	}
-	queryCmd := fmt.Sprintf("SELECT %s FROM %s", strings.Join(tb.Field, ","), tb.Name)
-	Db, ok := Dbm.DBPool[dbName]
+	tb, _ := App.Registry[dbName][tbName]
+
+	queryCmd := fmt.Sprintf("SELECT %s FROM %s ORDER BY id ASC", strings.Join(tb.Field, ","), tb.Name)
+	Db, _ := Dbm.DBPool[dbName]
 	stmt, err := Db.Prepare(queryCmd)
-	result, err := Dbm.SelectSlice(stmt, tb)
-	if err != nil {
-		c.HTML(http.StatusInternalServerError, "error.html", gin.H{})
-		return
-	}
 
-	// todo 是不是可以在取数据那里处理, 根据权限生成这个点击字符串，同样前端的多操作按钮也要根据权限去判断生成
-	var newResult [][]string
-	for _, line := range result {
-		v := `<i class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
-             <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
-             <i class="glyphicon glyphicon-trash icon-white"></i>`
+	defaultRes := [][]string{}
+	status := http.StatusInternalServerError
 
-		newResult = append(newResult, append(line, v))
-		//fmt.Println(line)
-	}
-	fmt.Println(result)
-	res, err := json.Marshal(map[string]interface{}{
-		"data": newResult,
-	})
 	if err == nil {
-		c.String(http.StatusOK, string(res))
-		return
-	}
-	c.String(http.StatusInternalServerError, "")
-}
 
+		result, err := Dbm.SelectSlice(stmt)
+		fmt.Println("result",result,err)
+
+		if result != nil{
+			// todo 是不是可以在取数据那里处理, 根据权限生成这个点击字符串，同样前端的多操作按钮也要根据权限去判断生成
+			//var newResult [][]string
+			//for _, line := range result {
+			//	v := `<i class="glyphicon glyphicon-zoom-in icon-white"></i>&nbsp;
+            // <i class="glyphicon glyphicon-edit icon-white"></i>&nbsp;
+            // <i class="glyphicon glyphicon-trash icon-white"></i>`
+			//
+			//	newResult = append(newResult, append(line, v))
+			//	fmt.Println(line)
+			//}
+
+
+
+			defaultRes = result
+
+		}
+
+		status = http.StatusOK
+
+	}
+	resTmp, _ := json.Marshal(map[string]interface{}{
+		"data": defaultRes,
+	})
+	c.String(status, string(resTmp))
+
+}
 
 // 详情的一条
 func HandlerGet(c *gin.Context) {
@@ -219,16 +264,16 @@ func SlideCode(c *gin.Context) {
 	Y := RandomCoord(minY, maxY)
 	result := map[string]interface{}{"width": width, "height": height,
 		"img_src": img_src, "pl_size": plSize,
-		"padding": Padding, "x": X , "y": Y,
+		"padding": Padding, "x": X, "y": Y,
 		"deviation": deviation}
 	session := sessions.Default(c)
 
-	session.Set("coordX",[]int{X - 10 - deviation, X-10+deviation})
-	session.Set("coordY",Y)
+	session.Set("coordX", []int{X - 10 - deviation, X - 10 + deviation})
+	session.Set("coordY", Y)
 
-	err  := session.Save()
+	err := session.Save()
 	fmt.Println("save", err)
-	c.JSON(http.StatusOK,result)
+	c.JSON(http.StatusOK, result)
 
 }
 
@@ -246,8 +291,6 @@ func RandomCoord(minn, maxn int) int {
 	}
 }
 
-
-
 type SortedMenu [] *Menu
 
 // todo 这里的类型是否能够改成正常的类型
@@ -264,3 +307,23 @@ type Menu struct {
 }
 
 type MenuGenerator func(sortManu SortedMenu) string
+
+func DbAliasAndName(c *gin.Context) (string, string) {
+	dbAlias := c.Param(App.Config.ExtendKey)
+
+	dbName := App.aliasDatabase[dbAlias]
+	return dbAlias, dbName
+}
+
+func TbAliasAndName(c *gin.Context, dbName string) (string, string) {
+	tbAlias := c.Param(App.Config.RelativeKey)
+
+	tbInfo := App.aliasTable[dbName]
+	fmt.Println(tbInfo,tbAlias)
+	if tbInfo == nil{
+		return "" ,""
+	}
+	tbName := tbInfo[tbAlias]
+	return tbAlias, tbName
+
+}

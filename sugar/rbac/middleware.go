@@ -10,10 +10,10 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
-	"miller-blogs/sugar"
 	"miller-blogs/sugar/utils"
 	"net/http"
 	"regexp"
+	"strings"
 )
 
 // session中存储生成的所有的前端左侧菜单代码，不依赖于原来的内容
@@ -29,7 +29,7 @@ func RbacLoginMiddle() gin.HandlerFunc {
 
 		session := sessions.Default(c)
 
-		url := c.Request.RequestURI
+		url := strings.Split(c.Request.RequestURI, "?")[0]
 		loginUrl := ParamsRbac.loginUrl
 
 		if utils.InStringSlice(url,ParamsRbac.blackList){
@@ -39,9 +39,7 @@ func RbacLoginMiddle() gin.HandlerFunc {
 			return
 		}
 		perStr := session.Get("permission")
-		menuStr := session.Get("menu")
 		per := Permissions{}
-		me := sugar.SortedMenu{}
 
 		if ! utils.InStringSlice(url, ParamsRbac.whiteList){
 
@@ -57,12 +55,6 @@ func RbacLoginMiddle() gin.HandlerFunc {
 				c.Abort()
 				return
 			}
-			if menuStr != nil{
-				err = json.Unmarshal([]byte(menuStr.(string)), &me)
-				x, e := json.Marshal(me)
-				fmt.Println("xxxxxxxxxxxxxxxxxxx", e, string(x),me)
-
-			}
 
 			// 静态、动态路由校验
 			if !utils.InStringSlice(url, per.Static) && ! regexUrlVerify(url, per.Regex){
@@ -70,7 +62,6 @@ func RbacLoginMiddle() gin.HandlerFunc {
 				c.Abort()
 				return
 			}
-			fmt.Println("cccccccccccccccccccccccccc")
 		}else {
 			if 	perStr != nil{
 				err := json.Unmarshal([]byte(perStr.(string)), &per)
@@ -115,11 +106,84 @@ func regexUrlVerify(url string, regs []string) bool{
 
 func BehaviorLog() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		log.Println("BehaviorLog start ")
+		//log.Println("BehaviorLog start ")
 
 		c.Next()
 
-		log.Println("BehaviorLog end ")
+		//log.Println("BehaviorLog end ")
 
+	}
+}
+
+
+
+
+
+func groupParamsMiddle() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		log.Println("rbacGroupMiddle start")
+
+		urlTmp := c.Request.URL.String()
+		fmt.Println(ParamsRbac.urlPrefix)
+		fmt.Println(urlTmp)
+		fmt.Println(c.Request.RequestURI)
+		fmt.Println(c.Request.Host)
+		//if utils.InStringSlice(urlTmp, ParamsRbac.whiteList) {
+		//	c.Next()
+		//	return
+		//}
+		//if utils.InStringSlice(urlTmp, ParamsRbac.blackList) {
+		//	// todo 404页面报错
+		//	c.String(http.StatusNotFound, "404")
+		//	c.Abort()
+		//}
+		prefix := ParamsRbac.urlPrefix
+		if strings.HasPrefix(urlTmp, prefix) {
+			urlTmp = urlTmp[len(prefix):]
+			urlFields := strings.Split(urlTmp, "/")
+			if len(urlFields) == 1{
+				dbTmp := strings.Split(urlFields[0],"-")
+
+				c.Params = append(c.Params,
+					gin.Param{ParamsRbac.extendKey, dbTmp[0]},
+				)
+			}else if len(urlFields) > 1{
+				c.Params = append(c.Params,
+					gin.Param{ParamsRbac.extendKey, urlFields[0]},
+					gin.Param{ParamsRbac.relativeKey, urlFields[1]},
+				)
+			}
+			fmt.Println("urlFields",urlFields)
+
+		}
+
+		c.Next()
+		//
+		//
+		//fmt.Println(urlFields)
+		//fmt.Println(len(urlFields))
+
+
+
+		log.Println("rbacGroupMiddle end")
+	}
+}
+
+func globalParamsMiddle() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		log.Println("rbacGlobalMiddle start")
+
+		session := sessions.Default(c)
+		menuJson := session.Get("menu")
+
+		if menuJson != nil {
+			c.Set("menu",menuJson.(string))
+		}else{
+			fmt.Println("GetMenu set error ")
+		}
+		c.Next()
+
+
+		log.Println("rbacGlobalMiddle end")
 	}
 }

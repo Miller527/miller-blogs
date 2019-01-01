@@ -1,0 +1,467 @@
+{{template "head_start" .}}
+
+
+{{template "head_end" }}
+
+
+{{template "topbar"}}
+
+
+{{template "content_start"}}
+
+
+{{template "inner_start" .}}
+
+<div class="row"><!-- row start -->
+
+    <!-- content starts -->
+    <div>
+        {{range $k, $line :=  .tables}}
+
+        <div class="row">
+            {{range $k,$v := $line }}
+            {{ $lenTitle := len $v.Title}}
+            {{if  le $lenTitle  5}}
+            <div class="box col-md-6">
+            {{else}}
+            <div class="box col-md-12">
+            {{end}}
+                <div class="box-inner">
+
+                    <div class="box-header well" data-original-title="">
+                        <h2>{{$v.DisplayName}}</h2>
+
+                        <div class="box-icon">
+                            <a href="#" class="btn btn-setting btn-round btn-default"><i
+                                        class="glyphicon glyphicon-cog"></i></a>
+                            <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                                        class="glyphicon glyphicon-chevron-up"></i></a>
+                            <a href="#" class="btn btn-close btn-round btn-default"><i
+                                        class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </div>
+
+
+                    <div class="box-content">
+                        <div class="table-button-box">
+                            <span class="table-button"><button id="addRows" data-toggle="modal" data-target=".{{$v.Name}}_modal"
+                                                               class="btn btn-success btn-sm sugar-btn">Add </button></span>
+                            <span class="table-button"><button id="deleteRows"
+                                                               class="btn btn-danger btn-sm sugar-btn">Delete</button></span>
+                            <span class="table-button"><button id="updateRows"
+                                                               class="btn btn-info btn-sm sugar-btn">Update</button></span>
+                        </div>
+
+                        <table id="{{$v.Name}}_table" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                {{range $i, $val :=  $v.Title}}
+                                    <th>{{$val}}</th>
+                                {{end}}
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                {{range $i, $val :=  $v.Title}}
+                                    {{/*{{ index .tables.Field 1}}*/}}
+                                    <th>{{$val}}</th>
+
+                                {{end}}
+                            </tr>
+                            </tfoot>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Large modal -->
+            <div class="modal fade {{$v.Name}}_modal" id="{{$v.Name}}_add_modal" tabindex="-1" role="dialog"
+                 aria-labelledby="{{$v.Name}}ModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Add {{$v.Name}} info</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{/*<form class="form-horizontal">*/}}
+
+
+                                {{/*{% for k in tables[name].desc.all_field() %}*/}}
+                                {{/*<script type="text/javascript">*/}}
+                                    {{/*allTableField['{{$v.DisplayName}}'].push('{{k}}')*/}}
+                                {{/*</script>*/}}
+
+                                {{/*<div class="form-group">*/}}
+                                    {{/*<label for="add-{{$v.DisplayName}}-{{k}}" class="col-sm-2 control-label">*/}}
+                                        {{/*{{tables[name].desc.get_field(k).name}}*/}}
+                                    {{/*</label>*/}}
+                                    {{/*<div class="col-sm-9">*/}}
+                                        {{/*{% if tables[name].desc.get_field(k).type == "select"%}*/}}
+
+                                        {{/*{% set line = tables[name].desc.get_field(k).select() %}*/}}
+                                        {{/*<select class="form-control" id="add-{{$v.DisplayName}}-{{k}}">*/}}
+                                            {{/*{%for l in line%}*/}}
+                                            {{/*{% set index = loop.index-1 %}*/}}
+
+                                            {{/*{% if index == 0 %}*/}}
+                                            {{/*<option selected="selected" value="{{l[0]}}">{{l[1]}}</option>*/}}
+                                            {{/*{%else%}*/}}
+                                            {{/*<option value="{{l[0]}}">{{l[1]}}</option>*/}}
+                                            {{/*{% endif %}*/}}
+                                            {{/*{%- endfor %}*/}}
+                                        {{/*</select>*/}}
+                                        {{/*{%elif tables[name].desc.get_field(k).type == "link"%}*/}}
+                                        {{/*{% set line = tables[name].desc.get_field(k).link() %}*/}}
+                                        {{/*<select class="form-control" id="add-{{$v.DisplayName}}-{{k}}">*/}}
+                                            {{/*{%for l in line%}*/}}
+                                            {{/*{% set index = loop.index-1 %}*/}}
+
+                                            {{/*{% if index == 0 %}*/}}
+                                            {{/*<option selected="selected" value="{{l[0]}}">{{l[1]}}</option>*/}}
+                                            {{/*{%else%}*/}}
+                                            {{/*<option value="{{l[0]}}">{{l[1]}}</option>*/}}
+                                            {{/*{% endif %}*/}}
+                                            {{/*{%- endfor %}*/}}
+                                        {{/*</select>*/}}
+                                        {{/*{%else%}*/}}
+                                        {{/*<input type="{{tables[name].desc.get_field(k).type}}" class="form-control"*/}}
+                                               {{/*id="add-{{$v.DisplayName}}-{{k}}" placeholder="{{k}}">*/}}
+                                        {{/*{%endif%}*/}}
+
+
+                                    {{/*</div>*/}}
+                                {{/*</div>*/}}
+                                {{/*<!--<div>{{tables[name].desc.get_field(k).name}}</div>-->*/}}
+
+                                {{/*{% endfor %}*/}}
+                            {{/*</form>*/}}
+
+                        </div>
+
+                        <div class="modal-body">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" value="{{$v.Name}}" class="btn btn-primary table_save">Save changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{end}}
+        </div><!--/span-->
+
+        {{end}}
+
+    </div>
+    <!-- content ends -->
+
+
+    <!-- Public modal -->
+
+    {{template "modal_box" .}}
+
+
+</div><!-- container end -->
+
+{{template "inner_end"}}
+
+
+{{template "content_end"}}
+
+
+{{ template "bottom_start" .}}
+<script>
+    // todo 遍历获取表数据
+
+
+    $(document).ready(function () {
+        //todo 可以拿到配置进行表相关配置
+
+        var urlPrefix = {{.urlprefix}};
+        var tbNames = {{.tbnames}};
+        console.log("tbNames", tbNames);
+        for (i in tbNames){
+            //todo 可以拿到配置进行表相关配置
+            var name = tbNames[i];
+            ajaxUrl = urlPrefix + "/" + name + "/list";
+            console.log("ajaxUrl", ajaxUrl);
+            var selector = '#' + name +"_table";
+            var eventSelector = selector + ' tbody';
+            var t = $(selector).DataTable({
+                "ajax": ajaxUrl,
+                "scrollX": true,
+                // "columns": [
+                //     {"width": "200px"},
+                //     {"width": "200px"},
+                //     {"width": "200px"},
+                //     {"width": "200px"},
+                //     {"width": "200px"},
+                // ]
+            });
+
+            $("#content").on('click', '.line_detail', function () {
+                console.log("line_detail")
+            });
+            $("#content").on('click', '.line_edit', function () {
+                console.log("line_edit")
+            });
+
+            $("#content").on('click', '.line_delete', function () {
+                var tbName = $(this).attr("tbname");
+                var lineId = $(this).attr("value");
+                swal({
+                    title: "你是否确定删除?",
+                    // text: "!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            console.log("x", tbName, lineId);
+                            // //todo 删除流程
+                            let url = "/manager/curd/" + tbName + "/delete"
+                            let res = ajaxDeleteRequest(url, [lineId])
+                            console.log(res)
+                            if (res.hasOwnProperty("status") ){
+                                if (res["status"] === 200){
+                                    swal(res["msg"], {
+                                        icon: "success",
+                                    });
+                                }else {
+                                    swal(res["msg"], {
+                                        icon: "error",
+                                    });
+                                }
+                            }else {
+                                swal("请求异常.", {
+                                    icon: "error",
+                                });
+                            }
+
+                            // $.ajax({
+                            //     url: url,
+                            //     type: "post",
+                            //     data: res,
+                            //     success: function (response) {
+                            //         console.log(response["status"]);
+                            //
+                            //         if ( response["status"] === 200 ){
+                            //             console.log(modelName)
+                            //                 $(modelName).modal("hide");
+                            //         }
+                            //         //
+                            //         // if (data.user) {//验证成功
+                            //         //     location.href = "/index/"//location.href="/xxx/" jquery实现跳转
+                            //         // } else {//验证失败
+                            //         //     $('.error').text(data.msg).css({"color": "red", "margin-left": "10px"});//拿到登陆旁边的span进行提示
+                            //         //     //一秒后清空提醒
+                            //         //     setTimeout(function () {//定时器
+                            //         //         $(".error").text("")//由data.msg变成空字符串
+                            //         //     }, 1000)
+                            //         // }
+                            //     }
+                            // });
+
+                        }else {
+                            swal("异常提示", {
+                                icon: "error",
+                            });
+                        }
+
+                    });
+            });
+            $(eventSelector).on("click", ".checkline", function () {
+                $(this).parent().parent().toggleClass('selected');
+            });
+
+            var checkallList = $(selector).parent().parent().find(".checkall");
+
+            checkallList.each(function () {
+                $(this).attr("selectorStr", eventSelector + ' tr')
+            });
+
+
+        }
+        {{/*var v = {{.config}};*/}}
+        {{/*var selector = '#role';*/}}
+        {{/*var ajaxUrl = 'curd/role/list';*/}}
+        {{/*var t = $(selector).DataTable({*/}}
+            {{/*"ajax": ajaxUrl,*/}}
+        {{/*});*/}}
+
+        {{/*var counter = 1;*/}}
+        {{/*var name = ["aaa", "bbb"]*/}}
+        {{/*name = JSON.stringify(name)*/}}
+        {{/*$('#addRow').on('click', function () {*/}}
+            {{/*$.ajax({*/}}
+                {{/*url: "curd/role/add",*/}}
+                {{/*type: "post",*/}}
+                {{/*data: {*/}}
+                    {{/*"name": name*/}}
+                {{/*},*/}}
+                {{/*success: function (data) {*/}}
+                    {{/*console.log(data);*/}}
+                    {{/*//*/}}
+                    {{/*// if (data.user) {//验证成功*/}}
+                    {{/*//     location.href = "/index/"//location.href="/xxx/" jquery实现跳转*/}}
+                    {{/*// } else {//验证失败*/}}
+                    {{/*//     $('.error').text(data.msg).css({"color": "red", "margin-left": "10px"});//拿到登陆旁边的span进行提示*/}}
+                    {{/*//     //一秒后清空提醒*/}}
+                    {{/*//     setTimeout(function () {//定时器*/}}
+                    {{/*//         $(".error").text("")//由data.msg变成空字符串*/}}
+                    {{/*//     }, 1000)*/}}
+                    {{/*// }*/}}
+                {{/*}*/}}
+            {{/*})*/}}
+
+            {{/*// t.row.add( [*/}}
+            {{/*//     counter +'.1',*/}}
+            {{/*//     counter +'.2',*/}}
+            {{/*//     counter +'.3',*/}}
+            {{/*//     v,*/}}
+            {{/*// ] ).draw( false );*/}}
+            {{/*// counter++;*/}}
+
+        {{/*});*/}}
+
+        // Automatically add a first row of data
+        // $('#addRow').click();
+    })
+</script>
+
+    <script>
+
+        $(".checkall").on("click", function () {
+            if ($(this).prop('checked')) {
+                $($(this).attr("selectorStr")).each(function () {
+
+                    $(this).addClass('selected');
+                    $(this).find("input").prop('checked', true)
+                })
+            } else {
+                $($(this).attr("selectorStr")).each(function () {
+                    $(this).removeClass('selected');
+                    $(this).find("input").prop('checked', false)
+                })
+            }
+        });
+
+        $(".table_save").on("click", function () {
+            var tbName = $(this).attr("value");
+            var fields = allTableField[tbName];
+            var modelName = "#"  + tbName + "_add_modal"
+            var res = {}
+
+            for (var x in fields){
+                var c = "#add-"+ tbName +"-" + fields[x]
+                res[fields[x]] = $(modelName+" "+c).val()
+            }
+            console.log(res)
+            var url = "/manager/curd/"+tbName + "/add";
+            $.ajax({
+                url: url,
+                type: "post",
+                data: res,
+                success: function (response) {
+                    console.log(response["status"]);
+
+                    if ( response["status"] === 200 ){
+                        console.log(modelName)
+                        $(modelName).modal("hide");
+                    }
+                    //
+                    // if (data.user) {//验证成功
+                    //     location.href = "/index/"//location.href="/xxx/" jquery实现跳转
+                    // } else {//验证失败
+                    //     $('.error').text(data.msg).css({"color": "red", "margin-left": "10px"});//拿到登陆旁边的span进行提示
+                    //     //一秒后清空提醒
+                    //     setTimeout(function () {//定时器
+                    //         $(".error").text("")//由data.msg变成空字符串
+                    //     }, 1000)
+                    // }
+                }
+            })
+        });
+
+        function ajaxDeleteRequest(url, delids) {
+            var result = {}
+            $.ajax({
+                url: url,
+                type: "DELETE",
+                data: {
+                    ids:delids
+                },
+                traditional :true,
+                dataType: 'JSON',
+                async: false,
+                success: function (response) {
+                    result = response
+                    // if (data.user) {//验证成功
+                    //     location.href = "/index/"//location.href="/xxx/" jquery实现跳转
+                    // } else {//验证失败
+                    //     $('.error').text(data.msg).css({"color": "red", "margin-left": "10px"});//拿到登陆旁边的span进行提示
+                    //     //一秒后清空提醒
+                    //     setTimeout(function () {//定时器
+                    //         $(".error").text("")//由data.msg变成空字符串
+                    //     }, 1000)
+                    // }
+                },
+                error: function (response) {
+                    result = response
+
+                }
+            });
+            console.log(result,delids);
+
+            return result
+        }
+        // var checkallList = document.getElementsByClassName("checkall")
+        //     console.log("x",checkallList)
+        //
+        //
+        // for (var p in checkallList){
+        //     console.log("c",p)
+        //
+        // }
+
+        // $('#role tbody').on('click', "tr", function () {
+        //     $(this).toggleClass('selected');
+        //     if ($(this).find("input").prop('checked')) {
+        //         $(this).find("input").prop("checked", false)
+        //     } else {
+        //         $(this).find("input").prop('checked', true)
+        //     }
+        // });
+
+
+        // $(eventSelector).on('click', '.bottom_check_all', function () {
+        //                     if ($(this).prop('checked')) {
+        //                         $(eventSelector+" .top_check_all").prop('checked', true)
+        //                     }else {
+        //                         $(eventSelector+" .top_check_all").prop('checked', false)
+        //                     }
+        //     console.log("line_delete")
+        // });
+        // $('#role tbody tr').on('click', "input", function () {
+        //     if ($(this).find("input").prop('checked')) {
+        //         $(this).find("input").prop("checked", false)
+        //     } else {
+        //         $(this).find("input").prop('checked', true)
+        //     }
+        // });
+
+    </script>
+
+
+{{ template "bottom_end" }}
+
+

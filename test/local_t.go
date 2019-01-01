@@ -6,15 +6,12 @@ package main
 
 import (
 	"fmt"
-	"regexp"
+	"strings"
 )
 
 func main() {
-	u := `^/www/\d+/aaab$`
-fmt.Println(	regexp.Match(u, []byte("/www/4/aaab")))
-	//req, err := regexp.Compile(u)
-	//fmt.Println(req, err)
-	//fmt.Println(req.MatchString("/www/4/aaab"))
+	u := "name"
+	fmt.Println(strings.Split(u,"-"))
 }
 
 

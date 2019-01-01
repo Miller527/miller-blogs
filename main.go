@@ -17,7 +17,7 @@ func main() {
 	sugar.Settings("settings/config.json")
 	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/models", "json", nil)
 	sugar.App.DBAlias("miller_blogs", "blogs")
-	sugar.App.TBAlias("miller_blogs", "role", "userrole")
+	sugar.App.TBAlias("miller_blogs", "role", "role")
 	//rbac.BlackList("/manager/index","/favicon.ico")
 	rbac.ParamsRbac.SetAdmin(conf)
 	rbac.ParamsRbac.WhiteList("/sugar/login")

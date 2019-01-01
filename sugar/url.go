@@ -10,8 +10,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"miller-blogs/sugar/utils"
-	"net/http"
-	"strings"
 )
 
 //
@@ -26,7 +24,9 @@ import (
 //
 //
 const (
-	List = iota
+	Index = iota
+	Tables
+	List
 	Get
 	Add
 	Update
@@ -37,6 +37,8 @@ const (
 )
 
 var methods = []int{
+	Index,
+	Tables,
 	List,
 	Get,
 	Add,
@@ -56,51 +58,13 @@ type groupRouter struct {
 // if gr.conf.AccessControl == "rbac" {
 //			if ! utils.InStringSlice(c.Param(gr.conf.Prefix), tables) && strings.IndexAny(urlTmp, gr.conf.Extend)==-1{
 //				// todo 404页面报错
-//				fmt.Println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 //				c.String(http.StatusNotFound, "404")
 //				c.Abort()
 //			}
 //			}
 
-func (gr *groupRouter) staticMiddle() gin.HandlerFunc {
-	return func(c *gin.Context) {
 
-
-		urlTmp := c.Request.URL.String()
-		if utils.InStringSlice(urlTmp, gr.conf.whiteUrls) {
-			c.Next()
-			return
-		}
-		if utils.InStringSlice(urlTmp, gr.conf.blackUrls) {
-			// todo 404页面报错
-			c.String(http.StatusNotFound, "404")
-			c.Abort()
-		}
-		prefix := App.Config.Prefix
-		if ! strings.HasPrefix(urlTmp, prefix) {
-			c.Next()
-		}
-		urlTmp = urlTmp[len(prefix):]
-
-
-		urlFields := strings.Split(urlTmp, "/")
-		fmt.Println(urlFields)
-		fmt.Println(len(urlFields))
-		if len(urlFields) > 1{
-			c.Params = append(c.Params,
-				gin.Param{gr.conf.relativeKey, urlFields[0]},
-				gin.Param{gr.conf.ExtendKey, urlFields[1]},
-			)
-
-
-		}
-
-	}
-}
 func (gr *groupRouter) groupMiddle() {
-	if gr.conf.AccessControl == "static" {
-		gr.conf.AddGroupMiddle(gr.staticMiddle())
-	}
 	gr.group.Use(gr.conf.groupMiddlewares...)
 
 }
@@ -133,30 +97,34 @@ func (gr *groupRouter) staticRouter() {
 	gr.group.GET("/logout", HandlerLogout)
 	gr.group.GET("/index.html", HandlerIndex)
 	gr.group.GET("/slidecode", SlideCode)
-	gr.group.GET("/tables", HandlerTables)
 }
 
 // 通过配置限制限制访问权限, 不分用户
 func (gr *groupRouter) groupRouter(extend , relative string, methodList []int) {
+	ext := extend+relative
 	for _, method := range methodList {
 		switch method {
+		case Index:
+			gr.group.GET(extend[:len(extend)-1], HandlerAppIndex)
+		case Tables:
+			gr.group.GET(extend[:len(extend)-1]+"-tables", HandlerTables)
 		case List:
 			// 单表查询
-			gr.group.GET(extend+relative+"/list", HandlerList)
+			gr.group.GET(ext+"/list", HandlerList)
 
 		case Get:
 			// 单行查询详情
-			gr.group.GET(extend+relative+"/get/:id", HandlerGet)
+			gr.group.GET(ext+"/get/:id", HandlerGet)
 
 		case Add:
 			// 添加一行或多行
-			gr.group.POST(extend+relative+"/add", HandlerAdd)
+			gr.group.POST(ext+"/add", HandlerAdd)
 		case Update:
 			//更新一行或多行
-			gr.group.PUT(extend+relative+"/update", HandlerUpdate)
+			gr.group.PUT(ext+"/update", HandlerUpdate)
 		case Delete:
 			//删除一行或多行
-			gr.group.DELETE(extend+relative+"/delete", HandlerDelete)
+			gr.group.DELETE(ext+"/delete", HandlerDelete)
 		//
 		//case MulitAdd:
 		//	gr.group.DELETE(extend+relative+"/delete/:id", HandlerMulitDelete)
