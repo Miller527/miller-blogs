@@ -28,25 +28,6 @@ type iTableDesc interface {
 }
 
 
-type iFieldFilter interface {
-	// 过滤器, 返回msg和状态
-	Filter(str string) (string, bool)
-	// todo 处理所有
-	FilterAll(str string) (string, bool)
-}
-
-// 过滤器, 类型为正则表达式, 还没想好其他的过滤方式
-type RegexFilter struct {
-	Length  int
-	Rule string
-}
-
-func (rgf RegexFilter) Filter(str string) (string, bool){
-	return "",true
-}
-
-
-
 
 type descConf struct {
 	Name      string

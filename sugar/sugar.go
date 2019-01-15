@@ -446,8 +446,9 @@ func checkDescFileList(fileList []string) {
 		}
 
 		dc, err := defaultAnalyzer.dump()
-		checkDesc(tbName, dbName, dc)
 		utils.PanicCheck(err)
+		checkDesc(tbName, dbName, dc)
+
 		App.Registry[dbName][tbName] = dc
 	}
 }
@@ -461,7 +462,8 @@ func checkDesc(tbName, dbName string, dc *descConf) {
 	}
 
 	if dc.Filter == nil {
-		dc.Filter = map[string]string{}
+		dc.Filter = map[string]iFieldFilter{}
+
 	}
 	if dc.DescType == nil {
 		dc.DescType = map[string]string{}

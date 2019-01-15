@@ -101,13 +101,14 @@ func disposeMenus(menus sugar.SortedMenu, child *sugar.Menu, pid int) sugar.Sort
 			}
 		}
 		if i+1 == len(menus) && pid == child.ParentId {
-			menus = append(menus, child)
+			menus = SortedInsert(menus, child)
 		}
 	}
 	return menus
 }
 
 // 生成菜单列表和权限表
+//todo 如果第一个不是父表
 func MenuList(pList []map[string]interface{}) (sugar.SortedMenu, string) {
 	var menus sugar.SortedMenu
 	var permiss = &Permissions{}
