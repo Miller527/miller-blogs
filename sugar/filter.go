@@ -42,7 +42,8 @@ const (
 )
 
 
-var defaultFilter  iFieldFilter
+var defaultFilter iFieldFilter
+
 
 
 type iFieldFilter interface {
@@ -52,16 +53,21 @@ type iFieldFilter interface {
 	FilterAll(str string) (string, bool)
 }
 
+type Serializer struct {
+	iFieldFilter
+}
+
 // 过滤器, 类型为正则表达式, 还没想好其他的过滤方式
 type RegexFilter struct {
+
 	Length  int
 	Rule string
 }
 
-func (rgf RegexFilter) Filter(str string) (string, bool){
+func (rgf Serializer) Filter(str string) (string, bool){
 	return "",true
 }
-func (rgf RegexFilter) FilterAll(str string) (string, bool){
+func (rgf Serializer) FilterAll(str string) (string, bool){
 	return "",true
 }
 
@@ -73,5 +79,5 @@ func SetFilter(filter iFieldFilter){
 }
 
 func init() {
-	defaultFilter = RegexFilter{}
+	defaultFilter = Serializer{}
 }

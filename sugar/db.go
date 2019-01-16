@@ -224,6 +224,7 @@ func (dbm *DBManager) SelectValues(stmt *sql.Stmt, args ...interface{}) ([]strin
 }
 
 func (dbm *DBManager) selectQuery(stmt *sql.Stmt, args ...interface{}) (*sql.Rows, error) {
+	fmt.Println(args, stmt == nil)
 	return stmt.Query(args...)
 }
 
@@ -245,6 +246,7 @@ func (dbm *DBManager) valuesScan(rows *sql.Rows) ([]sql.RawBytes, []interface{},
 
 // select query return type  [][]string
 func (dbm *DBManager) SelectSlice(stmt *sql.Stmt, args ...interface{}) ([][]string, error) {
+	fmt.Println(args)
 	rows, err := dbm.selectQuery(stmt, args...)
 	if err != nil {
 		return nil, err

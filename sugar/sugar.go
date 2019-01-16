@@ -462,7 +462,7 @@ func checkDesc(tbName, dbName string, dc *descConf) {
 	}
 
 	if dc.Filter == nil {
-		dc.Filter = map[string]iFieldFilter{}
+		dc.Filter = map[string]string{}
 
 	}
 	if dc.DescType == nil {
@@ -494,10 +494,12 @@ func updateDesc(dbName string, dc *descConf) {
 
 	fieldStatus := verifyDescField(dc)
 
-	sqlCmd := `select COLUMN_NAME,DATE_TYPE,CHARACTER_MAXIMUM_LENGTH, 
+	sqlCmd := `select COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH, 
 			   COLUMN_KEY from information_schema.COLUMNS
 			   where table_schema=? AND table_name=?`
 	stmt, err := Dbm.DefaultDB.Prepare(sqlCmd)
+	utils.PanicCheck(err)
+
 	result, err := Dbm.SelectSlice(stmt, dbName, dc.Name)
 	utils.PanicCheck(err)
 
