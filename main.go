@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+
 	conf := &sugar.AdminConf{Prefix: "sugar",AccessControl:"rbac"}
 	sugar.SetAdmin(conf)
 

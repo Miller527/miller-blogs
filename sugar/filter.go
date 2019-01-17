@@ -57,11 +57,13 @@ type Serializer struct {
 	iFieldFilter
 }
 
+type FilterInfo struct {
+	Rule string
+	Length  int
+}
 // 过滤器, 类型为正则表达式, 还没想好其他的过滤方式
 type RegexFilter struct {
-
-	Length  int
-	Rule string
+	FilterInfo
 }
 
 func (rgf Serializer) Filter(str string) (string, bool){

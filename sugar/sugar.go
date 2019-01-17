@@ -462,7 +462,8 @@ func checkDesc(tbName, dbName string, dc *descConf) {
 	}
 
 	if dc.Filter == nil {
-		dc.Filter = map[string]string{}
+		// todo 这里根据字段类型生成过滤器
+		dc.Filter = map[string]FilterInfo{}
 
 	}
 	if dc.DescType == nil {

@@ -3,9 +3,7 @@
   "field": ["id","role_id", "role_name"],
   "title": ["ID","角色ID", "角色名称"],
   "filter": {
-    "id": "int",
-    "rid": "string",
-    "name": "string"
+    "id": { "int": 5}
   },
   "left": true,
   "right": true

@@ -37,7 +37,7 @@ type descConf struct {
 	Field     []string
 	Title     []string
 	FilterType string  // todo 过滤器类型, 暂时只支持正则
-	Filter    map[string]string// todo 字段和对应的类型、根据DescType匹配生成
+	Filter    map[string]FilterInfo// todo 字段和对应的类型、根据DescType匹配生成
 	DescField []string          // todo 查询数据库生成, 如果Field没有配置, 那么使用该字段
 	DescType  map[string]string // todo 查询数据库生成
 	Left      bool
