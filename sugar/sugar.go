@@ -458,7 +458,7 @@ func checkDesc(tbName, dbName string, dc *descConf) {
 	// 以文件名的表明为准
 	dc.Name = tbName
 	if len(dc.Methods) == 0 && App.Config.AccessControl != "rbac" {
-		dc.Methods = append(dc.Methods, methods...)
+		dc.Methods = append(dc.Methods, defaultUrlMethods...)
 	}
 
 	if dc.Filter == nil {

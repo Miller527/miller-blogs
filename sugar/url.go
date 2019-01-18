@@ -35,8 +35,9 @@ const (
 	//MulitAdd
 	//MulitUpdate
 )
+type UrlMethods []int
 
-var methods = []int{
+var defaultUrlMethods = UrlMethods{
 	Index,
 	Tables,
 	List,
@@ -153,7 +154,7 @@ func (gr *groupRouter) dynamicRouter() {
 		urlExtend += "/"
 		//gr.group.GET(urlExtend+"tables", HandlerCurd)
 		if gr.conf.AccessControl == "rbac" {
-			gr.groupRouter(urlExtend,gr.conf.Relative, methods)
+			gr.groupRouter(urlExtend,gr.conf.Relative, defaultUrlMethods)
 			return
 		}
 		for tbName, tbConf := range tbInfo{
@@ -166,11 +167,11 @@ func (gr *groupRouter) dynamicRouter() {
 
 			if gr.conf.AccessControl == "static" || tbConf.Methods == nil {
 
-				gr.groupRouter(urlExtend, tbName, methods)
+				gr.groupRouter(urlExtend, tbName, defaultUrlMethods)
 				continue
 			}
 			for _, v := range tbConf.Methods {
-				if ! utils.InIntSlice(v, methods) {
+				if ! utils.InIntSlice(v, defaultUrlMethods) {
 					panic(errors.New("SugarTable: table [" + tbConf.Name + "] method error"))
 				}
 			}

@@ -50,8 +50,10 @@ type iFieldFilter interface {
 	// 过滤器, 返回msg和状态
 	Filter(str string) (string, bool)
 	// todo 处理所有
-	FilterAll(str string) (string, bool)
+	FilterAll(fields FilterItem) (map[string]string, bool)
 }
+
+type FilterItem map[string]FilterInfo
 
 type Serializer struct {
 	iFieldFilter
@@ -61,16 +63,19 @@ type FilterInfo struct {
 	Rule string
 	Length  int
 }
+
 // 过滤器, 类型为正则表达式, 还没想好其他的过滤方式
 type RegexFilter struct {
-	FilterInfo
+	Rules map[string]string
 }
 
 func (rgf Serializer) Filter(str string) (string, bool){
+
 	return "",true
 }
-func (rgf Serializer) FilterAll(str string) (string, bool){
-	return "",true
+func (rgf Serializer) FilterAll(items FilterItem) (map[string]string, bool){
+
+	return nil,true
 }
 
 func GetFilter()  {
