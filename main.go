@@ -12,15 +12,17 @@ import (
 
 func main() {
 
-	conf := &sugar.AdminConf{Prefix: "sugar",AccessControl:"rbac"}
-	sugar.SetAdmin(conf)
+	//conf := &sugar.AdminConf{Prefix: ,AccessControl:""}
+	sugar.OriginalAdminConf.Prefix = "sugar"
+	sugar.OriginalAdminConf.AccessControl = "rbac"
+	sugar.SetAdmin()
 
 	sugar.Settings("settings/config.json")
-	sugar.Register("E:/GoProject/miller-blogs/src/miller-blogs/models", "json", nil)
+	sugar.Register("models", "json", nil)
 	sugar.App.DBAlias("miller_blogs", "blogs")
 	sugar.App.TBAlias("miller_blogs", "role", "role")
 	//rbac.BlackList("/manager/index","/favicon.ico")
-	rbac.ParamsRbac.SetAdmin(conf)
+	rbac.ParamsRbac.SetAdmin(sugar.OriginalAdminConf)
 	rbac.ParamsRbac.WhiteList("/sugar/login")
 	sugar.SetAuthenticate(rbac.Register)
 	sugar.App.Start(false)

@@ -40,6 +40,8 @@ type AdminConf struct {
 	ExtendKey     string // 中间件获取数据库名
 	BackupSuffix  string // 注册表配置文件的扩展名
 
+	AuthType string // local本地数据库认证、ldap集中认证
+	AuthStoreType string
 	//buttons           []string
 	globalMiddlewares []gin.HandlerFunc
 	groupMiddlewares  []gin.HandlerFunc
@@ -538,8 +540,8 @@ func updateDescRight( dc *descConf){
 	}
 }
 
-func SetAdmin(conf *AdminConf) {
-	App.Config = conf
+func SetAdmin() {
+	App.Config = OriginalAdminConf
 	App.InitApp(App.Config.globalMiddlewares...)
 	App.AddGlobalMiddle(gin.Logger(), gin.Recovery(), GetMenu())
 
@@ -553,8 +555,11 @@ func SetAuthenticate(handle digestHandler) {
 
 type digestHandler func(ac *AdminConf)
 
+var OriginalAdminConf *AdminConf
+
 func init() {
 	// 基本的配置文件
+	OriginalAdminConf = &AdminConf{}
 	Settings("")
 	pluginInit()
 	App = appAdmin{

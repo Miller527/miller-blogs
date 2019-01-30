@@ -21,7 +21,7 @@ func Register(ac *sugar.AdminConf) {
 		return
 	}
 	ac.VerifyLoginFunc = handlerVerifyLogin
-	ac.LoginFunc = handlerLogin
+	ac.LoginFunc = localLogin
 	ac.AddGroupMiddle(RbacLoginMiddle(), groupParamsMiddle(), BehaviorLog())
 
 }

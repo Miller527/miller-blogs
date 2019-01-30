@@ -248,7 +248,7 @@ func HandlerDelete(c *gin.Context) {
 //
 //}
 
-// 获取验证码
+// todo 获取验证码， 后端生成图片返回验证码
 func SlideCode(c *gin.Context) {
 	s := App.Config.Static
 

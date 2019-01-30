@@ -174,7 +174,7 @@ func ResMsg(status int, msg string) map[string]interface{} {
 	return map[string]interface{}{"status": status, "msg": msg}
 }
 
-func handlerLogin(c *gin.Context) {
+func localLogin(c *gin.Context) {
 	session := sessions.Default(c)
 	permiss := Permissions{Static:[]string{ParamsRbac.urlPrefix + "slidecode"}}
 	permissByte, _ := json.Marshal(permiss)
@@ -190,6 +190,30 @@ func handlerLogin(c *gin.Context) {
 		"urlprefix": ParamsRbac.urlPrefix,
 		"site": "bootstrap-cerulean",
 	})
+}
+
+
+
+
+
+func ldapLogin(c *gin.Context){
+
+
+}
+
+
+func verifySession(){
+
+}
+
+// 基于oauth2
+
+func verifyOauth(){
+
+}
+
+func verifyJwt(){
+
 }
 
 
