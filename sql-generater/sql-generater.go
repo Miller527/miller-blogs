@@ -35,13 +35,13 @@ func SetDriver(d DriverType) {
 
 var driverChecker IChecker
 
-type Condition struct {
+type ConditionBody struct {
 	Left     string
 	Operator string
 	Right    interface{}
 }
 
-func (c Condition) String() string {
+func (c ConditionBody) String() string {
 	left, ok := c.leftCheck()
 	if ! ok {
 		return ""
@@ -58,21 +58,21 @@ func (c Condition) String() string {
 }
 
 // 检查字段名字,
-func (c Condition) leftCheck() (string, bool) {
+func (c ConditionBody) leftCheck() (string, bool) {
 	if c.Left == "" {
 		return "", false
 	}
 	return strings.Trim(c.Left, " "), true
 }
 
-func (c Condition) operatorCheck() (string, bool) {
+func (c ConditionBody) operatorCheck() (string, bool) {
 	if c.Left == "" {
 		return "", false
 	}
 	return strings.Trim(c.Operator, " "), true
 }
 
-func (c Condition) rightCheck() (string, bool) {
+func (c ConditionBody) rightCheck() (string, bool) {
 
 	switch c.Right.(type) {
 	case float32, float64, int, int8, int32, int64, uint, uint8, uint16, uint32, uint64:
@@ -88,9 +88,24 @@ func (c Condition) rightCheck() (string, bool) {
 }
 
 type ConditionJoiner struct {
-	Left     Condition
+	Left     ConditionBody
 	Operator string
-	Right    Condition
+	Right    ConditionBody
+}
+
+type Querier struct {
+	Command  string
+	Fields []string
+	DbName string
+	TbName string
+}
+
+type SqlJoiner struct {
+    Query Querier
+	Condition ConditionJoiner
+
+	// limit、order by、子查询预留
+	Other string
 }
 
 func init() {
