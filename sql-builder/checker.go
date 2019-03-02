@@ -1,12 +1,12 @@
 /*
-# __author__ = "Mr.chai"
+# __author__ = "Miller"
 # Date: 2019-02-18
 */
-package sql_generater
+package sqlbuilder
 
 type IChecker interface {
 	// 条件体校验
-	Condition(ConditionBody) (string, bool)
+	//Condition(ConditionBody) (string, bool)
 	// 条件体字符串校验
 	ConditionStr(string) (string, bool)
 	// 请求体校验

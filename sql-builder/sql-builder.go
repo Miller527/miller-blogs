@@ -1,47 +1,97 @@
 /*
-# __author__ = "Mr.chai"
+# __author__ = "Miller"
 # Date: 2019-02-18
 */
-package sql_generater
+package sqlbuilder
 
-type QueryParams struct {
-	SourceType string
-	QueryType  string
-	Table      []map[string]string
+import "github.com/pkg/errors"
 
-	Filter []FilterInner
+type sourceType string
+type operatorType string
+
+const (
+	MySQL = sourceType("mysql")
+
+
+	//AND = operatorType("AND")
+	//NOT = operatorType("NOT")
+	//AND = operatorType("&")
+)
+
+//const Operator = map[string]string{
+//
+//
+//}
+
+func Builder(source sourceType)(IBuilder, error){
+	switch source {
+	case MySQL:
+		return MySqlBuilder{}, nil
+	default:
+		return nil, errors.New("Source Type error")
+	}
 }
 
-type FilterWrapper struct {
-	Op        string
-	Condition []FilterInner
+func BuilderJson(source sourceType)(IBuilder, error){
+	switch source {
+	case MySQL:
+		return MySqlBuilder{}, nil
+	default:
+		return nil, errors.New("Source Type error")
+	}
 }
-
-func (fw FilterWrapper) verify() error {
-
-	return nil
-}
-
-func (fw FilterWrapper) Build() (string, error) {
-
-	return "", nil
-}
-
-type FilterInner struct {
-	Left  string
-	Op    string
-	Right string
-}
-
-func (fi FilterInner) verify() error {
-	return nil
-}
-
-func (fi FilterInner) Build() (string, error) {
-
-	return "", nil
-}
-
+//
+//type QueryParams struct {
+//	SourceType string
+//	QueryType  string
+//	Table      []map[string]string
+//
+//	Filter []FilterWrapper
+//}
+//
+//
+//type filterOp struct {
+//	AND string
+//	OR string
+//	NOT string
+//}
+//
+//
+//type FilterWrapper struct {
+//	Op        string
+//	Condition []FilterInner
+//}
+//
+//func (fw FilterWrapper) verify() error {
+//
+//
+//	return nil
+//}
+//
+//func (fw FilterWrapper) Build() (string, error) {
+//
+//	return "", nil
+//}
+//
+//type FilterInner struct {
+//	Left  string
+//	Op    string
+//	Right string
+//}
+//
+//func (fi FilterInner) verify() error {
+//	return nil
+//}
+//
+//func (fi FilterInner) Build() (string, error) {
+//
+//	return "", nil
+//}
+//
+//type SqlGenerator interface {
+//
+//
+//}
 //type DriverType int
 //
 //const (
