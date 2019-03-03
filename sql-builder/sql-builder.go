@@ -7,6 +7,7 @@ package sqlbuilder
 import "github.com/pkg/errors"
 
 type sourceType string
+type queryType string
 type operatorType string
 
 const (
@@ -40,6 +41,7 @@ func BuilderJson(source sourceType)(IBuilder, error){
 		return nil, errors.New("Source Type error")
 	}
 }
+
 //
 //type QueryParams struct {
 //	SourceType string

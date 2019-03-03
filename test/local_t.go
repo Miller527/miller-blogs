@@ -5,8 +5,8 @@
 package main
 
 import (
-	"flag"
 	"fmt"
+	"reflect"
 )
 
 
@@ -15,20 +15,70 @@ var test string
 var level int
 
 func init(){
-	flag.StringVar(&test, "t", "def","rec")
-	flag.IntVar(&level, "l", 1,"rec")
-	flag.BoolVar(&recusive, "r", false,"rec")
+	//flag.StringVar(&test, "t", "def","rec")
+	//flag.IntVar(&level, "l", 1,"rec")
+	//flag.BoolVar(&recusive, "r", false,"rec")
 
-	flag.Parse()
 
+}
+
+func fieldIsNone(f interface{}){
+	x := reflect.ValueOf(f)
+	y := reflect.TypeOf(f)
+
+	for i:=0;i<x.NumField();i++{
+
+		fmt.Println(x.Field(i).Interface())
+		fmt.Println(y.Field(i).Type)
+	}
+
+	for ii := 0;ii<x.NumMethod();ii++{
+		fmt.Println(x.Method(ii).Interface())
+	}
+}
+
+
+type UserInfo struct {
+	Name string
+}
+func (ui UserInfo) Print(){
+	fmt.Println(ui.Name)
+}
+
+
+func hasfunc(x interface{}, name string)bool{
+	v := reflect.ValueOf(x)
+	m := v.MethodByName(name)
+	if m.IsValid(){
+		return true
+	}
+	return false
+}
+
+func getfunc(x interface{}, name string)reflect.Value{
+	v := reflect.ValueOf(x)
+	m := v.MethodByName(name)
+	return m
 }
 
 func main() {
 
-	fmt.Printf("%v\n", recusive)
-	fmt.Printf("%v\n", test)
-	fmt.Printf("%v\n", level)
-
+	//x:=1.11
+	//yy :=reflect.ValueOf(&x)
+	//fmt.Println(yy.Kind())
+	//qq := yy.Elem()
+	//fmt.Println(qq.CanSet())
+	//qq.SetFloat(2.22)
+	//fmt.Println(x)
+	//
+	//u := reflect.ValueOf(UserInfo{"Miller"})
+	//m:=u.Method(0)
+	//m.Call([]reflect.Value{})
+if hasfunc(UserInfo{"Miller"}, "Print"){
+	f := getfunc(UserInfo{"Miller"}, "Print")
+	args := []reflect.Value{}
+	f.Call(args)
+}
 }
 
 
