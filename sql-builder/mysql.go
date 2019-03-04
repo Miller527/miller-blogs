@@ -169,7 +169,6 @@ type mySQLCondition struct {
 	Format string
 }
 
-
 func (mc *mySQLCondition) verify() error {
 	if mc.Column == "" {
 		return errors.New("mySQLCondition params 'Column' is None")
@@ -177,17 +176,15 @@ func (mc *mySQLCondition) verify() error {
 	if mc.Op == "" {
 		return errors.New("mySQLCondition params 'Op' is None")
 	}
-	fmt.Println("xxxx",mc.Value, mc.Value=="", mc.Value==nil)
 
 	switch mc.Value.(type) {
 	case string:
-		fmt.Println("xxxxxxxx")
 
-		if mc.Value.(string) == ""{
+		if mc.Value.(string) == "" {
 			return errors.New("mySQLCondition params 'Value' is None")
 		}
 	default:
-		if mc.Value == nil{
+		if mc.Value == nil {
 			return errors.New("mySQLCondition params 'Value' is None")
 
 		}
@@ -235,28 +232,50 @@ type MySQLSelect struct {
 
 // 包含
 func (sb *MySQLSelect) IN(column, tb string, values ...interface{}) IBlock {
-	return nil
+
+	return sb.operator(column, " IN ", ArgsToString(values...), tb, "`%s`%s%v", "")
 
 }
+
+func ArgsToString(args ...interface{})string{
+	str := "( "
+	for i:=0;i<len(args);i++{
+		a := args[i]
+
+		switch a.(type) {
+		case string:
+			str = str + "`"+a.(string)+"`"
+		default:
+			str = str + fmt.Sprintf("%v",a)
+		}
+
+		if i != len(args) - 1{
+			str += ", "
+		}
+	}
+	return str+" )"
+
+}
+
 // 不包含
 func (sb *MySQLSelect) NotIN(column, tb string, values ...interface{}) IBlock {
-	return nil
+	return sb.operator(column, " NOT IN ", ArgsToString(values...), tb, "`%s`%s%v", "")
 
 }
 
 // 是否为空
 func (sb *MySQLSelect) IsNull(column, tb string) IBlock {
-	return nil
+	return sb.operator(column, " IS ", "NULL", tb, "`%s`%s%v", "")
 }
 func (sb *MySQLSelect) IsNotNull(column, tb string) IBlock {
-	return nil
+	return sb.operator(column, " IS NOT ", "NULL", tb, "`%s`%s%v", "")
 
 }
 
-func (sb *MySQLSelect) operator(col, op string, val interface{}, tb, format, strSep string ) IBlock {
+func (sb *MySQLSelect) operator(col, op string, val interface{}, tb, format, strSep string) IBlock {
 	switch val.(type) {
 	case string:
-		if val.(string) != ""{
+		if val.(string) != "" {
 			val = strSep + val.(string) + strSep
 
 		}
@@ -264,75 +283,76 @@ func (sb *MySQLSelect) operator(col, op string, val interface{}, tb, format, str
 	return &mySQLCondition{col, op, val, tb, format}
 }
 
-// less than 小于
+// less than
 func (sb *MySQLSelect) LT(column string, value interface{}, tb string) IBlock {
-	return sb.operator(column, "<", value, tb, "`%s`%s%v","'")
+	return sb.operator(column, "<", value, tb, "`%s`%s%v", "'")
 
 }
 
-// less than or equal to 小于等于
+// less than or equal to
 func (sb *MySQLSelect) LE(column string, value interface{}, tb string) IBlock {
-	return sb.operator(column, "<=", value, tb, "`%s`%s%v","'")
+	return sb.operator(column, "<=", value, tb, "`%s`%s%v", "'")
 
 }
 
 // equal to 等于
 func (sb *MySQLSelect) EQ(column string, value interface{}, tb string) IBlock {
-	return sb.operator(column, "=", value, tb, "`%s`%s%v","'")
+	return sb.operator(column, "=", value, tb, "`%s`%s%v", "'")
 
 }
 
-// not equal to 不等于
+// not equal to
 func (sb *MySQLSelect) NE(column string, value interface{}, tb string) IBlock {
-	return sb.operator(column, "!=", value, tb, "`%s`%s%v","'")
+	return sb.operator(column, "!=", value, tb, "`%s`%s%v", "'")
 
 }
 
-// greater than or equal to 大于等于
+// greater than or equal to
 func (sb *MySQLSelect) GE(column string, value interface{}, tb string) IBlock {
-	return sb.operator(column, ">=", value, tb, "`%s`%s%v","'")
+	return sb.operator(column, ">=", value, tb, "`%s`%s%v", "'")
 
 }
 
-// greater than 大于
+// greater than
 func (sb *MySQLSelect) GT(column string, value interface{}, tb string) IBlock {
-	return sb.operator(column, ">", value, tb, "`%s`%s%v","'")
+	return sb.operator(column, ">", value, tb, "`%s`%s%v", "'")
 
 }
+
 // like
 func (sb *MySQLSelect) LIKE(column, value, tb string) IBlock {
-	return sb.operator(column, " LIKE ", value, tb, "`%s`%s%v","'")
+	return sb.operator(column, " LIKE ", value, tb, "`%s`%s%v", "'")
 
 }
+
 // 与
 func (sb *MySQLSelect) AND(cols ...IBlock) IBlock {
 
-	if len(cols) == 0{
+	if len(cols) == 0 {
 		return nil
-	}else	if len(cols) == 1{
+	} else if len(cols) == 1 {
 		return cols[0]
 	}
-	s1,s2 := sb.logic(cols...)
-	if s1 =="" || s2 == ""{
+	s1, s2 := sb.logic(cols...)
+	if s1 == "" || s2 == "" {
 		return nil
 
 	}
-	fmt.Println("aaaaaa", sb.Err)
 
-	return sb.operator(s1, "AND", s2, "", "( %s %s %s )","")
+	return sb.operator(s1, "AND", s2, "", "( %s %s %s )", "")
 
 }
 
 func (sb *MySQLSelect) logic(cols ...IBlock) (string, string) {
 	s1, e1 := cols[0].Build()
-	if e1 != nil{
+	if e1 != nil {
 		sb.Err = e1
-		return "",""
+		return "", ""
 	}
 
-	s2,e2 := sb.publicBuild(cols[1:], nil, " OR ")
+	s2, e2 := sb.publicBuild(cols[1:], nil, " OR ")
 
-	if e2 != nil{
+	if e2 != nil {
 		sb.Err = e2
 		return "", ""
 	}
@@ -340,38 +360,38 @@ func (sb *MySQLSelect) logic(cols ...IBlock) (string, string) {
 	return s1, s2
 }
 
-
-
 // 或
 func (sb *MySQLSelect) OR(cols ...IBlock) IBlock {
-	if len(cols) == 0{
+	if len(cols) == 0 {
 		return nil
-	}else	if len(cols) == 1{
+	} else if len(cols) == 1 {
 		return cols[0]
 	}
-	s1,s2 := sb.logic(cols...)
-	if s1 =="" || s2 == ""{
+	s1, s2 := sb.logic(cols...)
+	if s1 == "" || s2 == "" {
 		return nil
 
 	}
-	fmt.Println(s1)
-	fmt.Println(s2)
-	return sb.operator(s1, "OR", s2, "", "( %s %s %s )","")
-
+	return sb.operator(s1, "OR", s2, "", "( %s %s %s )", "")
 
 }
 
 // 非
-func (sb *MySQLSelect) NOT(cols IBlock) IBlock {
-	return nil
+func (sb *MySQLSelect) NOT(col IBlock) IBlock {
+	s, err := col.Build()
+	if err != nil{
+		fmt.Println(err)
+		sb.Err = nil
+		return nil
+	}
+	// todo 这里col op 都不能为空，就只能拆开了
+	return sb.operator("N", "OT", s, "", "( %s%s %s )", "")
 
 }
 
-
-
 // 将column生成字符串
 func (sb *MySQLSelect) columnBuild(err error) (string, error) {
-	return sb.publicBuild(sb.column, err,", ")
+	return sb.publicBuild(sb.column, err, ", ")
 }
 
 // 各模块的公共构建方式
@@ -383,7 +403,7 @@ func (sb *MySQLSelect) publicBuild(blocks []IBlock, err error, sep string) (stri
 
 	var resList []string
 	for i := 0; i < len(blocks); i++ {
-		if sb.Err != nil{
+		if sb.Err != nil {
 			return "", sb.Err
 		}
 		res, err := blocks[i].Build()
@@ -424,8 +444,6 @@ func (sb *MySQLSelect) Table(names ...IBlock) ISelectBuilder {
 
 // 条件构建
 func (sb *MySQLSelect) whereBuild(err error) (string, error) {
-	x,c := sb.publicBuild(sb.where, err, " AND ")
-	fmt.Println("123",x,c)
 	return sb.publicBuild(sb.where, err, " AND ")
 }
 
@@ -462,7 +480,6 @@ func (sb *MySQLSelect) checkBuild() error {
 
 // 最终的构建
 func (sb *MySQLSelect) Build() (string, error) {
-	fmt.Println("errrrrrr", sb.Err)
 	err := sb.checkBuild()
 	if err != nil {
 		return "", err

@@ -47,7 +47,6 @@ type ICondition interface {
 	OR(cols ...IBlock) IBlock
 	// 非
 	NOT(cols IBlock) IBlock
-
 }
 
 type ISelectBuilder interface {
