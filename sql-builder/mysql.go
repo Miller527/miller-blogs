@@ -7,6 +7,7 @@ package sqlbuilder
 import (
 	"fmt"
 	"github.com/pkg/errors"
+	"reflect"
 	"strings"
 )
 
@@ -228,6 +229,8 @@ type MySQLSelect struct {
 	where     []IBlock
 	whereStr  string
 	Err       error
+
+	tableAlias map[string]string
 }
 
 // 包含
@@ -338,7 +341,6 @@ func (sb *MySQLSelect) AND(cols ...IBlock) IBlock {
 		return nil
 
 	}
-
 	return sb.operator(s1, "AND", s2, "", "( %s %s %s )", "")
 
 }
@@ -349,7 +351,6 @@ func (sb *MySQLSelect) logic(cols ...IBlock) (string, string) {
 		sb.Err = e1
 		return "", ""
 	}
-
 	s2, e2 := sb.publicBuild(cols[1:], nil, " OR ")
 
 	if e2 != nil {
@@ -429,7 +430,28 @@ func (sb *MySQLSelect) Column(cols ...IBlock) ISelectBuilder {
 
 // 表名构建
 func (sb *MySQLSelect) tableBuild(err error) (string, error) {
+	sb.tbAlias(sb.tbName)
 	return sb.publicBuild(sb.tbName, err, ", ")
+}
+
+func (sb *MySQLSelect) tbAlias(blocks []IBlock){
+	sb.tableAlias = make(map[string]string)
+	for i:=0;i<len(blocks);i++{
+		b := blocks[i]
+		fmt.Println(b)
+		v := reflect.ValueOf(b)
+		vv := v.Elem()
+		name := vv.FieldByName("Name")
+		alias := vv.FieldByName("Alias")
+		aliasStr := ""
+		if alias.IsValid(){
+			aliasStr = alias.String()
+		}
+
+		sb.tableAlias[name.String()]=aliasStr
+	}
+
+	fmt.Println(sb.tableAlias)
 }
 
 // 表名

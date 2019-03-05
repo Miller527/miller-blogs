@@ -10,10 +10,17 @@ type IBlock interface {
 	verify() (err error)
 }
 
+type ITable interface {
+	GetName() (result string)
+	GetAlias() (result string)
+
+}
+
 // 表名字
-//type ITableName interface {
-//	IColumn
-//}
+type ITableBlock interface {
+	IBlock
+	ITable
+}
 
 type IBuilder interface {
 	Select() ISelectBuilder
