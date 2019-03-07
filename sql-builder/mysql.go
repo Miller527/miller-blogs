@@ -241,6 +241,7 @@ func (sb *MySQLSelect) IN(column, tb string, values ...interface{}) IBlock {
 }
 
 func ArgsToString(args ...interface{})string{
+	// todo 注意子查询的类型
 	str := "( "
 	for i:=0;i<len(args);i++{
 		a := args[i]
@@ -283,7 +284,17 @@ func (sb *MySQLSelect) operator(col, op string, val interface{}, tb, format, str
 
 		}
 	}
+	tb = sb.getTableName(tb)
 	return &mySQLCondition{col, op, val, tb, format}
+}
+
+func(sb *MySQLSelect)getTableName(tb string)string{
+	name := tb
+	if tbName, ok:=sb.tableAlias[tb];ok && tbName != ""{
+		name = tbName
+	}
+	return name
+
 }
 
 // less than
@@ -510,6 +521,7 @@ func (sb *MySQLSelect) Build() (string, error) {
 	if sb.whereStr != "" {
 		cmd = cmd + " WHERE " + sb.whereStr
 	}
+	fmt.Println(sb.tableAlias)
 	return cmd, nil
 }
 

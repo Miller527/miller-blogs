@@ -56,6 +56,13 @@ type ICondition interface {
 	NOT(cols IBlock) IBlock
 }
 
+type IJoin interface {
+	LJOIN(sel ISelectBuilder) ISelectBuilder
+	RJOIN(sel ISelectBuilder) ISelectBuilder
+	IJOIN(sel ISelectBuilder)ISelectBuilder
+
+}
+
 type ISelectBuilder interface {
 	Table(names ...IBlock) ISelectBuilder
 	Column(cols ...IBlock) ISelectBuilder

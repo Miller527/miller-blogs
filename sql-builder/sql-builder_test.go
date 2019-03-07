@@ -22,7 +22,7 @@ func TestMySQLBuilder(t *testing.T) {
 		&MySQLColumnAlias{"age", "ages"},
 		&MySQLColumnAlias{&MySQLColumnFunc{"MIN", "ss"}, "SS"},
 	//todo MySQLTableAlias自动生成别名
-	).Table(&MySQLTableStatic{"t1"}, &MySQLTableAlias{"t2", "T2"}).
+	).Table(&MySQLTableStatic{"t1"}, &MySQLTableAlias{"t2", "T222222"}).
 		Where(
 			sel.OR(
 				sel.EQ("a", "b", "t1"),
@@ -47,4 +47,5 @@ func TestMySQLBuilder(t *testing.T) {
 
 		).Build()
 	fmt.Println("---", xx, e)
+
 }
